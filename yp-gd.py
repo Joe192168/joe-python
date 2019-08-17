@@ -18,8 +18,8 @@ browser.maximize_window()# 窗口最大化 <br>>>> #模拟鼠标悬浮
 wait =WebDriverWait(browser,50)#设置等待时间
 url = 'http://www.shanyaoo.com/'
 data_list= []#设置全局变量用来存储数据
-username = "xs25391"#用户名
-password = "123456"#登录密码
+username = ""#用户名
+password = ""#登录密码
 keyword ="中药"#关键词
 
 def search():
