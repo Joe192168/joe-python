@@ -2,7 +2,30 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9f6e0b5f-da5b-4614-9d99-160670f0c787" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/22.py" afterPath="" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/aa.xlsx" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/build/yp/PKG-00.pkg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/build/yp/PYZ-00.pyz" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/build/yp/base_library.zip" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/dist/tools/chromedriver.exe" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/dist/yp.exe" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/my.ico" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools/chromedriver.exe" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/yp.xlsx" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/build/yp/Analysis-00.toc" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/build/yp/EXE-00.toc" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/build/yp/PKG-00.toc" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/build/yp/PYZ-00.toc" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/build/yp/Tree-00.toc" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/build/yp/Tree-01.toc" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/build/yp/warn-yp.txt" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/build/yp/xref-yp.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/build/yp/yp.exe.manifest" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/dic.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/yp-gd.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/yp.spec" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/geckodriver.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/yp - 副本.csv" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/yp.py" afterPath="$PROJECT_DIR$/yp.py" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -13,10 +36,12 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="CoverageDataManager">
-    <SUITE FILE_PATH="coverage/joe_python$yp.coverage" NAME="yp Coverage Results" MODIFIED="1565961622474" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/joe_python$yp.coverage" NAME="yp Coverage Results" MODIFIED="1566028706919" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/joe_python$22.coverage" NAME="22 Coverage Results" MODIFIED="1565840106534" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/joe_python$xl.coverage" NAME="xl Coverage Results" MODIFIED="1565841442736" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/joe_python$jd2.coverage" NAME="jd2 Coverage Results" MODIFIED="1565841680307" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/joe_python$yp_gd.coverage" NAME="yp-gd Coverage Results" MODIFIED="1566035975388" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/joe_python$dic.coverage" NAME="dic Coverage Results" MODIFIED="1566030877511" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/joe_python$jd.coverage" NAME="jd Coverage Results" MODIFIED="1565920311857" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
   <component name="FileEditorManager">
@@ -36,7 +61,7 @@
       <file leaf-file-name="p-exlce.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/p-exlce.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3425">
+            <state relative-caret-position="725">
               <caret line="137" column="10" lean-forward="false" selection-start-line="137" selection-start-column="10" selection-end-line="137" selection-end-column="10" />
               <folding>
                 <element signature="e#0#11#0" expanded="true" />
@@ -48,8 +73,8 @@
       <file leaf-file-name="jd.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/jd.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="425">
-              <caret line="88" column="79" lean-forward="true" selection-start-line="88" selection-start-column="79" selection-end-line="88" selection-end-column="79" />
+            <state relative-caret-position="-700">
+              <caret line="88" column="79" lean-forward="false" selection-start-line="88" selection-start-column="79" selection-end-line="88" selection-end-column="79" />
               <folding>
                 <element signature="e#0#11#0" expanded="true" />
               </folding>
@@ -57,13 +82,47 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="yp.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="yp.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/yp.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1185">
-              <caret line="43" column="21" lean-forward="true" selection-start-line="43" selection-start-column="21" selection-end-line="43" selection-end-column="21" />
+            <state relative-caret-position="2675">
+              <caret line="170" column="27" lean-forward="true" selection-start-line="170" selection-start-column="27" selection-end-line="170" selection-end-column="27" />
               <folding>
                 <element signature="e#0#11#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="yp-gd.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/yp-gd.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="260">
+              <caret line="53" column="41" lean-forward="true" selection-start-line="53" selection-start-column="41" selection-end-line="53" selection-end-column="41" />
+              <folding>
+                <element signature="e#0#11#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="errorhandler.py" pinned="false" current-in-tab="false">
+        <entry file="file://D:/ProgramData/Anaconda3/Lib/site-packages/selenium/webdriver/remote/errorhandler.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="354">
+              <caret line="241" column="0" lean-forward="false" selection-start-line="241" selection-start-column="0" selection-end-line="241" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="dic.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/dic.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="425">
+              <caret line="20" column="39" lean-forward="false" selection-start-line="19" selection-start-column="4" selection-end-line="20" selection-end-column="39" />
+              <folding>
+                <element signature="e#0#15#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -91,11 +150,14 @@
       <find>data_dict</find>
       <find>save_html</find>
       <find>next_page</find>
-      <find>data_list</find>
       <find>prase_html</find>
       <find>driver</find>
       <find>头孢克洛干混悬剂(欣可诺)</find>
       <find>头孢克洛干混悬剂</find>
+      <find>data_list</find>
+      <find>None</find>
+      <find>明目上清丸</find>
+      <find>phantomjs</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -119,7 +181,9 @@
         <option value="$PROJECT_DIR$/22.py" />
         <option value="$PROJECT_DIR$/xl.py" />
         <option value="$PROJECT_DIR$/jd.py" />
+        <option value="$PROJECT_DIR$/dic.py" />
         <option value="$PROJECT_DIR$/yp.py" />
+        <option value="$PROJECT_DIR$/yp-gd.py" />
       </list>
     </option>
   </component>
@@ -213,25 +277,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.yp">
-    <configuration name="22" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <module name="joe-python" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/22.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-    </configuration>
+  <component name="RunManager" selected="Python.yp-gd">
     <configuration default="true" type="Applet" factoryName="Applet">
       <option name="WIDTH" value="400" />
       <option name="HEIGHT" value="300" />
@@ -312,6 +358,24 @@
       <properties />
       <listeners />
     </configuration>
+    <configuration name="dic" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="joe-python" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/dic.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+    </configuration>
     <configuration name="jd" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -348,7 +412,7 @@
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
     </configuration>
-    <configuration name="xl" type="PythonConfigurationType" factoryName="Python" temporary="true">
+    <configuration name="yp-gd" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <envs>
@@ -361,7 +425,7 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <module name="joe-python" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/xl.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/yp-gd.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -388,16 +452,16 @@
       <item index="0" class="java.lang.String" itemvalue="Python.jd" />
       <item index="1" class="java.lang.String" itemvalue="Python.jd2" />
       <item index="2" class="java.lang.String" itemvalue="Python.yp" />
-      <item index="3" class="java.lang.String" itemvalue="Python.xl" />
-      <item index="4" class="java.lang.String" itemvalue="Python.22" />
+      <item index="3" class="java.lang.String" itemvalue="Python.dic" />
+      <item index="4" class="java.lang.String" itemvalue="Python.yp-gd" />
     </list>
     <recent_temporary>
       <list size="5">
-        <item index="0" class="java.lang.String" itemvalue="Python.yp" />
-        <item index="1" class="java.lang.String" itemvalue="Python.jd" />
-        <item index="2" class="java.lang.String" itemvalue="Python.jd2" />
-        <item index="3" class="java.lang.String" itemvalue="Python.xl" />
-        <item index="4" class="java.lang.String" itemvalue="Python.22" />
+        <item index="0" class="java.lang.String" itemvalue="Python.yp-gd" />
+        <item index="1" class="java.lang.String" itemvalue="Python.dic" />
+        <item index="2" class="java.lang.String" itemvalue="Python.yp" />
+        <item index="3" class="java.lang.String" itemvalue="Python.jd" />
+        <item index="4" class="java.lang.String" itemvalue="Python.jd2" />
       </list>
     </recent_temporary>
   </component>
@@ -416,16 +480,15 @@
       <option name="presentableId" value="Default" />
       <updated>1565772386219</updated>
       <workItem from="1565772389857" duration="952000" />
-      <workItem from="1565774047478" duration="65590000" />
+      <workItem from="1565774047478" duration="85803000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="66542000" />
+    <option name="totallyTimeSpent" value="86755000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1176" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -434,12 +497,12 @@
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32906404" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32906404" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25266525" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25266525" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32906404" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -469,15 +532,15 @@
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/yp.py</url>
-          <line>99</line>
-          <option name="timeStamp" value="26" />
+          <url>file://$PROJECT_DIR$/dic.py</url>
+          <line>42</line>
+          <option name="timeStamp" value="33" />
         </line-breakpoint>
       </breakpoints>
       <breakpoints-dialog>
         <breakpoints-dialog />
       </breakpoints-dialog>
-      <option name="time" value="27" />
+      <option name="time" value="37" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -547,26 +610,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/p-exlce.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3425">
-          <caret line="137" column="10" lean-forward="false" selection-start-line="137" selection-start-column="10" selection-end-line="137" selection-end-column="10" />
-          <folding>
-            <element signature="e#0#11#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/jd.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="425">
-          <caret line="88" column="79" lean-forward="true" selection-start-line="88" selection-start-column="79" selection-end-line="88" selection-end-column="79" />
-          <folding>
-            <element signature="e#0#11#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$APPLICATION_PLUGINS_DIR$/python/helpers/pydev/pydevd.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="290">
@@ -587,14 +630,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="201">
           <caret line="309" column="0" lean-forward="false" selection-start-line="309" selection-start-column="0" selection-end-line="309" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://D:/ProgramData/Anaconda3/Lib/site-packages/selenium/webdriver/remote/errorhandler.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="330">
-          <caret line="241" column="0" lean-forward="false" selection-start-line="241" selection-start-column="0" selection-end-line="241" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -623,10 +658,66 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/p-exlce.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="725">
+          <caret line="137" column="10" lean-forward="false" selection-start-line="137" selection-start-column="10" selection-end-line="137" selection-end-column="10" />
+          <folding>
+            <element signature="e#0#11#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/jd.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-700">
+          <caret line="88" column="79" lean-forward="false" selection-start-line="88" selection-start-column="79" selection-end-line="88" selection-end-column="79" />
+          <folding>
+            <element signature="e#0#11#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dic.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="425">
+          <caret line="20" column="39" lean-forward="false" selection-start-line="19" selection-start-column="4" selection-end-line="20" selection-end-column="39" />
+          <folding>
+            <element signature="e#0#15#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://D:/ProgramData/Anaconda3/Lib/zipfile.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="218">
+          <caret line="1203" column="0" lean-forward="false" selection-start-line="1203" selection-start-column="0" selection-end-line="1203" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://D:/ProgramData/Anaconda3/Lib/site-packages/selenium/webdriver/remote/errorhandler.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="354">
+          <caret line="241" column="0" lean-forward="false" selection-start-line="241" selection-start-column="0" selection-end-line="241" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/yp.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1185">
-          <caret line="43" column="21" lean-forward="true" selection-start-line="43" selection-start-column="21" selection-end-line="43" selection-end-column="21" />
+        <state relative-caret-position="2675">
+          <caret line="170" column="27" lean-forward="true" selection-start-line="170" selection-start-column="27" selection-end-line="170" selection-end-column="27" />
+          <folding>
+            <element signature="e#0#11#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/yp-gd.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="260">
+          <caret line="53" column="41" lean-forward="true" selection-start-line="53" selection-start-column="41" selection-end-line="53" selection-end-column="41" />
           <folding>
             <element signature="e#0#11#0" expanded="true" />
           </folding>

@@ -1,28 +1,31 @@
 import time
+import openpyxl
+from openpyxl import Workbook
 from selenium import webdriver
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 import random
-import json
-import csv
+import re
 from lxml import etree
 
 #options = webdriver.ChromeOptions()
 #options.add_experimental_option('prefs', {'profile.managed_default_content_settings.images': 2})
 #不加载图片
-browser = webdriver.Chrome()
+chromeDriverPath = r'.\tools\chromedriver.exe'
+browser = webdriver.Chrome(executable_path=chromeDriverPath)
 browser.maximize_window()# 窗口最大化 <br>>>> #模拟鼠标悬浮
 wait =WebDriverWait(browser,50)#设置等待时间
 url = 'http://www.shanyaoo.com/'
 data_list= []#设置全局变量用来存储数据
-keyword ="药"#关键词
+username = input("用户名：")#用户名
+password = input("登录密码：")#登录密码
+keyword =input("请输入要搜索药品名称：")#关键词
 
 def search():
     browser.get(url)
-
-    browser.find_element_by_xpath('//input[@placeholder="用户名"]').send_keys('xs25391')
-    browser.find_element_by_xpath('//input[@placeholder="登录密码"]').send_keys('123456')
+    browser.find_element_by_xpath('//input[@placeholder="用户名"]').send_keys(username)
+    browser.find_element_by_xpath('//input[@placeholder="登录密码"]').send_keys(password)
     browser.find_element_by_xpath('//button[@class="loginBtn"]').click()
     try:
         input = wait.until(
@@ -33,22 +36,23 @@ def search():
         )#等到搜索按钮可以被点击
         input[0].send_keys(keyword)#向搜索框内输入关键词
         submit.click()#点击
-        # total = wait.until(
-        #     EC.presence_of_all_elements_located(
-        #         (By.XPATH, '/html/body/div[2]/div[2]/div[2]/div/table/tbody/tr/td[2]/div[3]/div[2]/div[42]/div/span/text()[1]')
-        #     )
-        # )
+        total = wait.until(
+            EC.presence_of_all_elements_located((By.XPATH, './/div[@class="pagebar"]//span'))
+        )
+        for tl in total:
+            total = re.findall(r"\d+\.?\d*", tl.text)[0]
+            print("总共页数："+total)
         #记录一下总页码,等到总页码加载出来
         # # 滑动到底部，加载出后三十个货物信息
-        # browser.execute_script("window.scrollTo(0, document.body.scrollHeight);")
-        # wait.until(
-        #     EC.presence_of_all_elements_located((By.CSS_SELECTOR, "#J_goodsList > ul > li:nth-child(60)"))
-        # )
+        browser.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+        wait.until(
+            EC.presence_of_all_elements_located((By.CSS_SELECTOR, "#nohide_one"))
+        )
         html = browser.page_source#获取网页信息
         time.sleep(20)#设置随机延迟
         prase_html(html)#调用提取数据的函数
         #返回总页数
-        return 10
+        return total
     except TimeoutError:
         search()
 
@@ -80,7 +84,7 @@ def next_page(page_number):
     except TimeoutError:
         return next_page(page_number)
 
-
+#提取页面数据
 def prase_html(html):
     html = etree.HTML(html)
     # 开始提取信息,找到ul标签下的全部li标签
@@ -105,63 +109,68 @@ def prase_html(html):
                 if sale:
                     sale = sale.text
                 else:
-                    sale = None
+                    sale = ""
                 if li_caption:
                     # for labx in li_caption:
                     if li_caption[0].text=="阶梯满减":
                         j_promt_caption = li_caption[1].get_attribute("innerHTML")
                         m_promt_caption = li_caption[3].get_attribute("innerHTML")
                     elif li_caption[0].text=="满减":
-                        j_promt_caption = li_caption[1].get_attribute("innerHTML")
-                        m_promt_caption = None
+                        m_promt_caption = li_caption[1].get_attribute("innerHTML")
+                        j_promt_caption = ""
                     elif li_caption[2].text=="满减":
-                        j_promt_caption = None
+                        j_promt_caption = ""
                         m_promt_caption = li_caption[3].get_attribute("innerHTML")
                     else:
-                        j_promt_caption = None
-                        m_promt_caption = None
+                        j_promt_caption = ""
+                        m_promt_caption = ""
                 else:
-                    j_promt_caption = None
-                    m_promt_caption = None
-                data_dict ={}#写入字典
-                data_dict["药名称"] = title
-                data_dict["售价"] = price
-                data_dict["销量"] = sale
-                data_dict["阶梯满减"] = j_promt_caption
-                data_dict["满减"] = m_promt_caption
+                    j_promt_caption = ""
+                    m_promt_caption = ""
+                data_dict = []#写入字典
+                data_dict.append(title)
+                data_dict.append( price)
+                data_dict.append(sale)
+                data_dict.append(j_promt_caption)
+                data_dict.append(m_promt_caption)
                 print(data_dict)
                 data_list.append(data_dict)#写入全局变量
     except TimeoutError:
         prase_html(html)
 
-def save_html():
-    content = json.dumps(data_list, ensure_ascii=False, indent=2)
-    #把全局变量转化为json数据
-    with open("yp.json", "a+", encoding="utf-8") as f:
-        f.write(content)
-        print("json文件写入成功")
+#新建excel
+def creatwb(wbname):
+    wb=openpyxl.Workbook()
+    wb.save(filename=wbname)
+    print ("新建Excel："+wbname+"成功")
 
-    with open('yp.csv', 'w', encoding='utf-8', newline='') as f:
-        # 表头
-        title = data_list[0].keys()
-        # 声明writer
-        writer = csv.DictWriter(f, title)
-        # 写入表头
-        writer.writeheader()
-        # 批量写入数据
-        writer.writerows(data_list)
-    print('csv文件写入完成')
+#保存页面数据
+def write_excel(fileName,d_list):
+    wb = Workbook()
+    #写入表头
+    dilei_head = ['药品名称','售价','销量','阶梯满减','满减']
+    sheet0Name = '药品数据信息'
+    sheet0 = wb.create_sheet(sheet0Name, index=0)
+    for i, item in enumerate(dilei_head):
+        sheet0.cell(row = 1,column=i+1,value=item.encode('utf-8'))
+    #写入数据
+    for i, data in enumerate(d_list):
+        for j, item in enumerate(data):
+            sheet0.cell(row = i+2,column=j+1,value=item.encode('utf-8'))
+    wb.save(fileName+'.xlsx')
+    print('excel文件写入完成')
 
 def main():
+    #初始化exlce文件
+    creatwb("yp.xlsx")
     print("第", 1, "页：")
     total = int(search())
-    for i in range(2, 5):
-        # for i in range(2, total + 1):
+    # for i in range(2, 5):
+    for i in range(2, total + 1):
         time.sleep(25)  # 设置随机延迟
         print("第", i, "页：")
         next_page(i)
-    save_html()
-
+    write_excel("yp",data_list)
 
 if __name__ == "__main__":
     main()
