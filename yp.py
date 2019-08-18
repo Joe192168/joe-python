@@ -32,6 +32,14 @@ chromeDriverPath = r'.\tools\chromedriver.exe'
 browser = webdriver.Chrome(executable_path=chromeDriverPath,chrome_options=chrome_options)
 wait =WebDriverWait(browser,50)#设置等待时间
 
+#页面加载计时器
+def download_web(c_time):
+    # 设置随机延迟
+    for k in range(c_time,-1,-1):
+        print('\r','距离页面数据加载结束还有 %s 秒！' % str(k).zfill(2),end='')
+        time.sleep(1)
+    print('\r','{:^20}'.format('页面加载结束！'))
+
 def search():
     try:
         browser.get(url)
@@ -63,11 +71,16 @@ def search():
         js_div = 'document.getElementsByClassName("followSearchPanel")[0].style="display: none;"'
         browser.execute_script(js_div)
         html = browser.page_source#获取网页信息
-        time.sleep(20)#设置随机延迟
+        # 设置计时器
+        download_web(20)
         prase_html(html)#调用提取数据的函数
         #返回总页数
         return total
-    except TimeoutError:
+    except (ConnectionError, TimeoutError):
+        print("Will retry again in a little bit")
+    except Exception as e:
+        print("没有该药品，请退出重新输入！")
+        print(e)
         search()
 
 def next_page(page_number):
@@ -99,7 +112,6 @@ def next_page(page_number):
             EC.text_to_be_present_in_element((By.CLASS_NAME, "cur"), str(page_number))
         )# 判断翻页成功,高亮的按钮数字与设置的页码一样
         html = browser.page_source#获取网页信息
-        time.sleep(20)#设置随机延迟
         #调用提取数据的函数
         prase_html(html)
     except TimeoutError:
@@ -190,9 +202,10 @@ def main():
     total = int(search())
     # for i in range(2, 5):
     for i in range(2, total + 1):
-        time.sleep(20)  # 设置随机延迟
         print("第", i, "页：")
-        next_page(i)
+        # 设置计时器
+        download_web(20)
+    next_page(i)
     #保存数据到exlce中
     write_excel(_exclName,data_list)
     #关闭浏览器
