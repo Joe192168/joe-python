@@ -1,33 +1,38 @@
+import re
 import time
+import random
 import openpyxl
+from lxml import etree
 from openpyxl import Workbook
 from selenium import webdriver
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
-import random
-import re
-from lxml import etree
 
-#options = webdriver.ChromeOptions()
-#options.add_experimental_option('prefs', {'profile.managed_default_content_settings.images': 2})
-#不加载图片
-chromeDriverPath = r'.\tools\chromedriver.exe'
-browser = webdriver.Chrome(executable_path=chromeDriverPath)
-browser.maximize_window()# 窗口最大化 <br>>>> #模拟鼠标悬浮
-wait =WebDriverWait(browser,50)#设置等待时间
 url = 'http://www.shanyaoo.com/'
 data_list= []#设置全局变量用来存储数据
+print("*************爬取数据操作界面***************")
 username = input("用户名：")#用户名
 password = input("登录密码：")#登录密码
 keyword =input("请输入要搜索药品名称：")#关键词
 
+#无界面 测试有问题暂时有问题
+chrome_options = webdriver.ChromeOptions()
+chrome_options.add_argument('--no-sandbox')# 无头模式启动
+#chrome_options.add_argument('--headless') #headless模式启动
+chrome_options.add_argument('--disable-gpu')# 谷歌文档提到需要加上这个属性来规避bug
+chrome_options.add_argument("--start-maximized") #最大化
+chrome_options.add_argument('blink-settings=imagesEnabled=false')#不加载图片
+chromeDriverPath = r'.\tools\chromedriver.exe'
+browser = webdriver.Chrome(executable_path=chromeDriverPath,chrome_options=chrome_options)
+wait =WebDriverWait(browser,50)#设置等待时间
+
 def search():
-    browser.get(url)
-    browser.find_element_by_xpath('//input[@placeholder="用户名"]').send_keys(username)
-    browser.find_element_by_xpath('//input[@placeholder="登录密码"]').send_keys(password)
-    browser.find_element_by_xpath('//button[@class="loginBtn"]').click()
     try:
+        browser.get(url)
+        browser.find_element_by_xpath('//input[@placeholder="用户名"]').send_keys(username)
+        browser.find_element_by_xpath('//input[@placeholder="登录密码"]').send_keys(password)
+        browser.find_element_by_xpath('//button[@class="loginBtn"]').click()
         input = wait.until(
             EC.presence_of_all_elements_located((By.CSS_SELECTOR, "input.search-input"))
         )  #等到搜索框加载出来
@@ -36,18 +41,22 @@ def search():
         )#等到搜索按钮可以被点击
         input[0].send_keys(keyword)#向搜索框内输入关键词
         submit.click()#点击
+        browser.find_element_by_link_text("只看有货").click()#模拟用户点击
         total = wait.until(
             EC.presence_of_all_elements_located((By.XPATH, './/div[@class="pagebar"]//span'))
         )
+        #记录一下总页码,等到总页码加载出来
         for tl in total:
             total = re.findall(r"\d+\.?\d*", tl.text)[0]
             print("总共页数："+total)
-        #记录一下总页码,等到总页码加载出来
-        # # 滑动到底部，加载出后三十个货物信息
+        #滑动到底部，加载出商品信息
         browser.execute_script("window.scrollTo(0, document.body.scrollHeight);")
         wait.until(
-            EC.presence_of_all_elements_located((By.CSS_SELECTOR, "#nohide_one"))
+            EC.presence_of_all_elements_located((By.XPATH, './/div[@class="pl-skin"]'))
         )
+        #隐藏搜索浮动框
+        js_div = 'document.getElementsByClassName("followSearchPanel")[0].style="display: none;"'
+        browser.execute_script(js_div)
         html = browser.page_source#获取网页信息
         time.sleep(20)#设置随机延迟
         prase_html(html)#调用提取数据的函数
@@ -59,26 +68,33 @@ def search():
 def next_page(page_number):
     try:
         # 滑动到底部
-        browser.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+        scroll_add_crowd_button = browser.find_element_by_xpath('.//div[@class="pages"]')
+        browser.execute_script("arguments[0].scrollIntoView();",scroll_add_crowd_button)
         time.sleep(random.randint(1, 3))#设置随机延迟
+        #隐藏搜索浮动框
+        js_div = 'document.getElementsByClassName("followSearchPanel")[0].style="display: none;"'
+        browser.execute_script(js_div)
         button = wait.until(
             EC.element_to_be_clickable((By.CLASS_NAME, 'nextpage'))
         )#翻页按钮
         button.click()# 翻页动作
         wait.until(
-            EC.presence_of_all_elements_located((By.XPATH, "//*[@id='nohide_one']"))
-        )#等到30个商品都加载出来
-        # 滑动到底部，加载出后三十个货物信息
-        browser.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+            EC.presence_of_all_elements_located((By.XPATH, './/div[@class="pl-skin"]'))
+        )#等到商品都加载出来
+        # 滑动到底部，加载出后商品信息
+        scroll_add_crowd_button = browser.find_element_by_xpath('.//div[@class="pages"]')
+        browser.execute_script("arguments[0].scrollIntoView();",scroll_add_crowd_button)
         wait.until(
-            EC.presence_of_all_elements_located((By.XPATH, "//*[@id='nohide_one']"))
-        )#等到60个商品都加载出来
+            EC.presence_of_all_elements_located((By.XPATH, './/div[@class="pl-skin"]'))
+        )#等到最后商品都加载出来
+        #隐藏搜索浮动框
+        js_div = 'document.getElementsByClassName("followSearchPanel")[0].style="display: none;"'
+        browser.execute_script(js_div)
         wait.until(
             EC.text_to_be_present_in_element((By.CLASS_NAME, "cur"), str(page_number))
         )# 判断翻页成功,高亮的按钮数字与设置的页码一样
         html = browser.page_source#获取网页信息
-        time.sleep(25)#设置随机延迟
-        #browser.find_element_by_link_text("只看有货").click()#模拟用户点击
+        time.sleep(20)#设置随机延迟
         #调用提取数据的函数
         prase_html(html)
     except TimeoutError:
@@ -157,6 +173,7 @@ def write_excel(fileName,d_list):
     for i, data in enumerate(d_list):
         for j, item in enumerate(data):
             sheet0.cell(row = i+2,column=j+1,value=item.encode('utf-8'))
+
     wb.save(fileName+'.xlsx')
     print('excel文件写入完成')
 
@@ -167,7 +184,7 @@ def main():
     total = int(search())
     # for i in range(2, 5):
     for i in range(2, total + 1):
-        time.sleep(25)  # 设置随机延迟
+        time.sleep(20)  # 设置随机延迟
         print("第", i, "页：")
         next_page(i)
     write_excel("yp",data_list)
