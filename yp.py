@@ -193,7 +193,10 @@ def main():
         time.sleep(20)  # 设置随机延迟
         print("第", i, "页：")
         next_page(i)
+    #保存数据到exlce中
     write_excel(_exclName,data_list)
+    #关闭浏览器
+    browser.close()
 
 if __name__ == "__main__":
     main()
