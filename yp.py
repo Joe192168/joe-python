@@ -1,5 +1,6 @@
 import re
 import time
+import datetime
 import random
 import openpyxl
 from lxml import etree
@@ -9,6 +10,10 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 
+#获取当前时间
+nowTime = datetime.datetime.now().strftime('%Y%m%d%H%M%S')
+#组装exlce文件名称
+_exclName = "yp" + nowTime + ".xlsx"
 url = 'http://www.shanyaoo.com/'
 data_list= []#设置全局变量用来存储数据
 print("*************爬取数据操作界面***************")
@@ -18,7 +23,7 @@ keyword =input("请输入要搜索药品名称：")#关键词
 
 #无界面 测试有问题暂时有问题
 chrome_options = webdriver.ChromeOptions()
-chrome_options.add_argument('--no-sandbox')# 无头模式启动
+chrome_options.add_argument('--no-sandbox')#非沙盒模式运行
 #chrome_options.add_argument('--headless') #headless模式启动
 chrome_options.add_argument('--disable-gpu')# 谷歌文档提到需要加上这个属性来规避bug
 chrome_options.add_argument("--start-maximized") #最大化
@@ -174,12 +179,13 @@ def write_excel(fileName,d_list):
         for j, item in enumerate(data):
             sheet0.cell(row = i+2,column=j+1,value=item.encode('utf-8'))
 
-    wb.save(fileName+'.xlsx')
+    wb.save(fileName)
     print('excel文件写入完成')
 
 def main():
     #初始化exlce文件
-    creatwb("yp.xlsx")
+    creatwb(_exclName)
+    print("*************开始爬取数据请稍等***************")
     print("第", 1, "页：")
     total = int(search())
     # for i in range(2, 5):
@@ -187,7 +193,7 @@ def main():
         time.sleep(20)  # 设置随机延迟
         print("第", i, "页：")
         next_page(i)
-    write_excel("yp",data_list)
+    write_excel(_exclName,data_list)
 
 if __name__ == "__main__":
     main()
