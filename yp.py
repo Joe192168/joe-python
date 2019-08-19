@@ -32,6 +32,11 @@ chromeDriverPath = r'.\tools\chromedriver.exe'
 browser = webdriver.Chrome(executable_path=chromeDriverPath,chrome_options=chrome_options)
 wait =WebDriverWait(browser,50)#设置等待时间
 
+browser.get(url)
+browser.find_element_by_xpath('//input[@placeholder="用户名"]').send_keys(username)
+browser.find_element_by_xpath('//input[@placeholder="登录密码"]').send_keys(password)
+browser.find_element_by_xpath('//button[@class="loginBtn"]').click()
+
 #页面加载计时器
 def download_web(c_time):
     # 设置随机延迟
@@ -42,10 +47,6 @@ def download_web(c_time):
 
 def search():
     try:
-        browser.get(url)
-        browser.find_element_by_xpath('//input[@placeholder="用户名"]').send_keys(username)
-        browser.find_element_by_xpath('//input[@placeholder="登录密码"]').send_keys(password)
-        browser.find_element_by_xpath('//button[@class="loginBtn"]').click()
         input = wait.until(
             EC.presence_of_all_elements_located((By.CSS_SELECTOR, "input.search-input"))
         )  #等到搜索框加载出来
@@ -54,14 +55,24 @@ def search():
         )#等到搜索按钮可以被点击
         input[0].send_keys(keyword)#向搜索框内输入关键词
         submit.click()#点击
+        #判断是否搜索到药品信息
+        falg1 = isElementExist(browser,".pl-skin")
+        if not falg1:
+            print("没有搜索到该药品数据，关闭当前程序重新进行搜索！")
+            #关闭浏览器
+            browser.close()
         browser.find_element_by_link_text("只看有货").click()#模拟用户点击
-        total = wait.until(
-            EC.presence_of_all_elements_located((By.XPATH, './/div[@class="pagebar"]//span'))
-        )
-        #记录一下总页码,等到总页码加载出来
-        for tl in total:
-            total = re.findall(r"\d+\.?\d*", tl.text)[0]
+        #判断是否有分页元素存在
+        falg2 = isElementExist(browser,".pagebar")
+        if falg2:
+            total = wait.until(
+                EC.presence_of_element_located((By.XPATH, './/div[@class="pagebar"]//span'))
+            )
+            total = re.sub("\D", "", total.text)
             print("总共页数："+total)
+        else :
+            print("############该商品只有一页数据#############")
+            total = 1#默认只有一页
         #滑动到底部，加载出商品信息
         browser.execute_script("window.scrollTo(0, document.body.scrollHeight);")
         wait.until(
@@ -76,12 +87,13 @@ def search():
         prase_html(html)#调用提取数据的函数
         #返回总页数
         return total
-    except (ConnectionError, TimeoutError):
-        print("Will retry again in a little bit")
-    except Exception as e:
-        print("没有该药品，请退出重新输入！")
-        print(e)
+    except TimeoutError:
+        print("请求超时，重新搜索该药品！。。。。。。。。")
         search()
+    except Exception as e:
+        print(e)
+        #关闭浏览器
+        browser.close()
 
 def next_page(page_number):
     try:
@@ -173,6 +185,14 @@ def prase_html(html):
     except TimeoutError:
         prase_html(html)
 
+#判断元素是否存在方法
+def isElementExist(browser,css):
+    try:
+        browser.find_element_by_css_selector(css)
+        return True
+    except:
+        return False
+
 #新建excel
 def creatwb(wbname):
     wb=openpyxl.Workbook()
@@ -199,7 +219,7 @@ def write_excel(fileName,d_list):
 def main():
     #初始化exlce文件
     creatwb(_exclName)
-    print("*************开始爬取数据请稍等***************")
+    print("*************开始爬取有货药品数据请稍等***************")
     print("第", 1, "页：")
     total = int(search())
     # for i in range(2, 5):
