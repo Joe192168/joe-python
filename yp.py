@@ -112,6 +112,8 @@ def next_page(page_number):
             EC.text_to_be_present_in_element((By.CLASS_NAME, "cur"), str(page_number))
         )# 判断翻页成功,高亮的按钮数字与设置的页码一样
         html = browser.page_source#获取网页信息
+        # 设置计时器
+        download_web(20)
         #调用提取数据的函数
         prase_html(html)
     except TimeoutError:
@@ -203,9 +205,7 @@ def main():
     # for i in range(2, 5):
     for i in range(2, total + 1):
         print("第", i, "页：")
-        # 设置计时器
-        download_web(20)
-    next_page(i)
+        next_page(i)
     #保存数据到exlce中
     write_excel(_exclName,data_list)
     #关闭浏览器
