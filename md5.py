@@ -10,4 +10,4 @@ hl.update(str.encode(encoding='utf-8'))# 若写法为hl.update(str)  报错为�
 if str:
     print('MD5加密前为：' + str)
     print('MD5加密后为：' + hl.hexdigest())#MD5加密后
-input("Please Enter is Exit:")
+input("请按回车键退出！")
