@@ -1,4 +1,5 @@
 import re
+import os
 import time
 import datetime
 import random
@@ -15,12 +16,10 @@ nowTime = datetime.datetime.now().strftime('%Y%m%d%H%M%S')
 #组装exlce文件名称
 _exclName = "yp" + nowTime + ".xlsx"
 data_list= []#设置全局变量用来存储数据
-print("*************爬取数据操作界面***************")
-url = input("如：www.baidu.com 请输入网址：")#爬虫网址 http://www.shanyaoo.com/
-username = input("用户名：")#用户名
-password = input("登录密码：")#登录密码
-keyword =input("请输入要搜索药品名称：")#关键词
 
+#杀死这个chromedriver进程，因为每次启动都会打开，所以需要kill，这里用的chrome浏览器
+os.system('chcp 65001')
+os.system("taskkill /f /im chromedriver.exe")
 #无界面 测试有问题暂时有问题
 chrome_options = webdriver.ChromeOptions()
 chrome_options.add_argument('--no-sandbox')#非沙盒模式运行
@@ -32,10 +31,16 @@ chromeDriverPath = r'.\tools\chromedriver.exe'
 browser = webdriver.Chrome(executable_path=chromeDriverPath,chrome_options=chrome_options)
 wait =WebDriverWait(browser,50)#设置等待时间
 
-browser.get("http://"+url)
-browser.find_element_by_xpath('//input[@placeholder="用户名"]').send_keys(username)
-browser.find_element_by_xpath('//input[@placeholder="登录密码"]').send_keys(password)
-browser.find_element_by_xpath('//button[@class="loginBtn"]').click()
+def login():
+    print("*************爬取数据操作界面***************")
+    url = input("如：www.baidu.com 请输入网址：")#爬虫网址
+    username = input("用户名：")#用户名
+    password = input("登录密码：")#登录密码
+
+    browser.get("http://" + url)
+    browser.find_element_by_xpath('//input[@placeholder="用户名"]').send_keys(username)
+    browser.find_element_by_xpath('//input[@placeholder="登录密码"]').send_keys(password)
+    browser.find_element_by_xpath('//button[@class="loginBtn"]').click()
 
 #页面加载计时器
 def download_web(c_time):
@@ -45,7 +50,7 @@ def download_web(c_time):
         time.sleep(1)
     print('\r','{:^20}'.format('页面加载结束！'))
 
-def search():
+def search(keyword):
     try:
         input = wait.until(
             EC.presence_of_all_elements_located((By.CSS_SELECTOR, "input.search-input"))
@@ -71,7 +76,7 @@ def search():
             total = re.sub("\D", "", total.text)
             print("总共页数："+total)
         else :
-            print("############该商品只有一页数据#############")
+            print("总共页数：1")
             total = 1#默认只有一页
         #滑动到底部，加载出商品信息
         browser.execute_script("window.scrollTo(0, document.body.scrollHeight);")
@@ -82,6 +87,7 @@ def search():
         js_div = 'document.getElementsByClassName("followSearchPanel")[0].style="display: none;"'
         browser.execute_script(js_div)
         html = browser.page_source#获取网页信息
+        print("第", 1, "页：")
         # 设置计时器
         download_web(20)
         prase_html(html)#调用提取数据的函数
@@ -220,8 +226,8 @@ def main():
     #初始化exlce文件
     creatwb(_exclName)
     print("*************开始爬取有货药品数据请稍等***************")
-    print("第", 1, "页：")
-    total = int(search())
+    keyword = input("请输入要搜索药品名称：")#关键词
+    total = int(search(keyword))
     # for i in range(2, 5):
     for i in range(2, total + 1):
         print("第", i, "页：")
@@ -232,4 +238,14 @@ def main():
     browser.close()
 
 if __name__ == "__main__":
-    main()
+    key_pass = input("请输入秘钥：")
+    #校验秘钥 默认用123 md5加密
+    if key_pass=="202cb962ac59075b964b07152d234b70":
+        #登陆
+        login()
+        #主方法入口
+        main()
+    else :
+        print("秘钥校验不正确，关闭该程序，重新运行！")
+        #关闭浏览器
+        browser.close()
