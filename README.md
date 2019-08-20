@@ -17,3 +17,7 @@ pyinstaller 常用命令参数
 -o DIR, --out=DIR 设置spec文件输出的目录，默认在PyInstaller同目录
 --icon=FILE.ICO  加入图标（Windows Only）
 -v FILE, --version=FILE 加入版本信息文件
+
+pip install pycrypto
+
+https://www.dlitz.net/software/pycrypto/
