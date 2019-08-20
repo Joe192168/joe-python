@@ -7,5 +7,7 @@ str = input("请输入要加密明文：")
 hl = hashlib.md5()# 创建md5对象
 hl.update(str.encode(encoding='utf-8'))# 若写法为hl.update(str)  报错为： Unicode-objects must be encoded before hashing
 
-print('MD5加密前为 ：' + str)
-print('MD5加密后为 ：' + hl.hexdigest())#MD5加密后
+if str:
+    print('MD5加密前为：' + str)
+    print('MD5加密后为：' + hl.hexdigest())#MD5加密后
+input("Please Enter is Exit:")
