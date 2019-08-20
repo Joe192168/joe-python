@@ -14,9 +14,9 @@ from selenium.webdriver.support.ui import WebDriverWait
 nowTime = datetime.datetime.now().strftime('%Y%m%d%H%M%S')
 #组装exlce文件名称
 _exclName = "yp" + nowTime + ".xlsx"
-url = 'http://www.shanyaoo.com/'
 data_list= []#设置全局变量用来存储数据
 print("*************爬取数据操作界面***************")
+url = input("如：www.baidu.com 请输入网址：")#爬虫网址 http://www.shanyaoo.com/
 username = input("用户名：")#用户名
 password = input("登录密码：")#登录密码
 keyword =input("请输入要搜索药品名称：")#关键词
@@ -32,7 +32,7 @@ chromeDriverPath = r'.\tools\chromedriver.exe'
 browser = webdriver.Chrome(executable_path=chromeDriverPath,chrome_options=chrome_options)
 wait =WebDriverWait(browser,50)#设置等待时间
 
-browser.get(url)
+browser.get("http://"+url)
 browser.find_element_by_xpath('//input[@placeholder="用户名"]').send_keys(username)
 browser.find_element_by_xpath('//input[@placeholder="登录密码"]').send_keys(password)
 browser.find_element_by_xpath('//button[@class="loginBtn"]').click()
