@@ -17,9 +17,6 @@ nowTime = datetime.datetime.now().strftime('%Y%m%d%H%M%S')
 _exclName = "yp" + nowTime + ".xlsx"
 data_list= []#设置全局变量用来存储数据
 
-#杀死这个chromedriver进程，因为每次启动都会打开，所以需要kill，这里用的chrome浏览器
-os.system('chcp 65001')
-os.system("taskkill /f /im chromedriver.exe")
 #无界面 测试有问题暂时有问题
 chrome_options = webdriver.ChromeOptions()
 chrome_options.add_argument('--no-sandbox')#非沙盒模式运行
@@ -31,6 +28,7 @@ chromeDriverPath = r'.\tools\chromedriver.exe'
 browser = webdriver.Chrome(executable_path=chromeDriverPath,chrome_options=chrome_options)
 wait =WebDriverWait(browser,50)#设置等待时间
 
+#登陆
 def login():
     print("*************爬取数据操作界面***************")
     url = input("如：www.baidu.com 请输入网址：")#爬虫网址
@@ -50,6 +48,7 @@ def download_web(c_time):
         time.sleep(1)
     print('\r','{:^20}'.format('页面加载结束！'))
 
+#搜索
 def search(keyword):
     try:
         input = wait.until(
@@ -101,6 +100,7 @@ def search(keyword):
         #关闭浏览器
         browser.close()
 
+#分页
 def next_page(page_number):
     try:
         # 滑动到底部
@@ -222,6 +222,13 @@ def write_excel(fileName,d_list):
     wb.save(fileName)
     print('excel文件写入完成')
 
+#杀死浏览器进程
+def kill_driver():
+    #杀死这个chromedriver进程，因为每次启动都会打开，所以需要kill，这里用的chrome浏览器
+    os.system('chcp 65001')
+    os.system("taskkill /f /im chromedriver.exe")
+
+#主方法
 def main():
     #初始化exlce文件
     creatwb(_exclName)
@@ -249,3 +256,6 @@ if __name__ == "__main__":
         print("秘钥校验不正确，关闭该程序，重新运行！")
         #关闭浏览器
         browser.close()
+    input("请按回车键退出！")
+    #关闭浏览器进程
+    kill_driver()
