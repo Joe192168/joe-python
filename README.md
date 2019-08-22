@@ -26,3 +26,6 @@ https://www.dlitz.net/software/pycrypto/
 
 4、ai智能抠图网址
 https://www.remove.bg/
+
+5、OpenCV-Python教程
+https://opencv-python-tutroals.readthedocs.io/en/latest/py_tutorials/py_tutorials.html
