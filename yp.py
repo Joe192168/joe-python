@@ -148,41 +148,42 @@ def prase_html(html):
         lis = browser.find_elements_by_class_name('pl-skin')
         # 遍历
         for pl in lis:
+            is_skus = pl.find_element_by_xpath('.//div[@class="pl"]').get_attribute('skus')
             #判断有禁售药品或下架
-            #if pl.get_attribute('skus') == 'single':
-            # 药品名称
-            title = pl.find_element_by_xpath('.//div[@class="p-caption"]//a').text
-            # 售价
-            price = pl.find_element_by_xpath('.//div[@class="p-priceInfo"]//span[@class="price"]//em')
-            # 销量
-            sale = pl.find_element_by_xpath('.//.//.//.//div[@class="p-countInfo"]//span[@class="p-sale"]//em')
-            # 阶梯满减或满减
-            li_caption = pl.find_elements_by_xpath('.//.//.//.//div[@class="promotions-list"]//li[@class="promt_li"]//a')
-            if price.text:
-                price = price.text
-            else:
-                price = "商家尚未定价"
-            if sale:
-                sale = sale.text
-            else:
-                sale = ""
-            if li_caption:
-                # for labx in li_caption:
-                if li_caption[0].text=="阶梯满减":
-                    j_promt_caption = li_caption[1].get_attribute("innerHTML")
-                    m_promt_caption = li_caption[3].get_attribute("innerHTML")
-                elif li_caption[0].text=="满减":
-                    m_promt_caption = li_caption[1].get_attribute("innerHTML")
-                    j_promt_caption = ""
-                elif li_caption[2].text=="满减":
-                    j_promt_caption = ""
-                    m_promt_caption = li_caption[3].get_attribute("innerHTML")
+            if is_skus == 'single':
+                # 药品名称
+                title = pl.find_element_by_xpath('.//div[@class="p-caption"]//a').text
+                # 售价
+                price = pl.find_element_by_xpath('.//div[@class="p-priceInfo"]//span[@class="price"]//em')
+                # 销量
+                sale = pl.find_element_by_xpath('.//.//.//.//div[@class="p-countInfo"]//span[@class="p-sale"]//em')
+                # 阶梯满减或满减
+                li_caption = pl.find_elements_by_xpath('.//.//.//.//div[@class="promotions-list"]//li[@class="promt_li"]//a')
+                if price.text:
+                    price = price.text
+                else:
+                    price = "商家尚未定价"
+                if sale:
+                    sale = sale.text
+                else:
+                    sale = ""
+                if li_caption:
+                    # for labx in li_caption:
+                    if li_caption[0].text=="阶梯满减":
+                        j_promt_caption = li_caption[1].get_attribute("innerHTML")
+                        m_promt_caption = li_caption[3].get_attribute("innerHTML")
+                    elif li_caption[0].text=="满减":
+                        m_promt_caption = li_caption[1].get_attribute("innerHTML")
+                        j_promt_caption = ""
+                    elif li_caption[2].text=="满减":
+                        j_promt_caption = ""
+                        m_promt_caption = li_caption[3].get_attribute("innerHTML")
+                    else:
+                        j_promt_caption = ""
+                        m_promt_caption = ""
                 else:
                     j_promt_caption = ""
                     m_promt_caption = ""
-                # else:
-                #     j_promt_caption = ""
-                #     m_promt_caption = ""
                 data_dict = []#写入字典
                 data_dict.append(title)
                 data_dict.append( price)
