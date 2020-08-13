@@ -53,11 +53,14 @@ def search(keyword):
     try:
         input = wait.until(
             EC.presence_of_all_elements_located((By.CSS_SELECTOR, "input.search-input"))
-        )  #等到搜索框加载出来
+        )
+        #等到搜索框加载出来
         submit = wait.until(
             EC.element_to_be_clickable((By.XPATH, "//*[@id='searchForm ']/div/button[1]"))
-        )#等到搜索按钮可以被点击
-        input[0].send_keys(keyword)#向搜索框内输入关键词
+        )
+        #等到搜索按钮可以被点击
+        #input[0].send_keys(keyword)#向搜索框内输入关键词
+        browser.find_element_by_xpath('//*[@id="searchForm "]/div/input').send_keys(keyword)
         submit.click()#点击
         #判断是否搜索到药品信息
         falg1 = isElementExist(browser,".pl-skin")
@@ -146,40 +149,40 @@ def prase_html(html):
         # 遍历
         for pl in lis:
             #判断有禁售药品或下架
-            if pl.get_attribute("id")=="nohide_one":
-                # 药品名称
-                title = pl.find_element_by_xpath('.//div[@class="p-caption"]//a').text
-                # 售价
-                price = pl.find_element_by_xpath('.//span[@class="price"]//em')
-                # 销量
-                sale = pl.find_element_by_xpath('.//span[@class="p-sale"]//em')
-                # 阶梯满减或满减
-                li_caption = pl.find_elements_by_xpath('.//li[@class="promt_li"]//a')
-                if price.text:
-                    price = price.text
-                else:
-                    price = "商家尚未定价"
-                if sale:
-                    sale = sale.text
-                else:
-                    sale = ""
-                if li_caption:
-                    # for labx in li_caption:
-                    if li_caption[0].text=="阶梯满减":
-                        j_promt_caption = li_caption[1].get_attribute("innerHTML")
-                        m_promt_caption = li_caption[3].get_attribute("innerHTML")
-                    elif li_caption[0].text=="满减":
-                        m_promt_caption = li_caption[1].get_attribute("innerHTML")
-                        j_promt_caption = ""
-                    elif li_caption[2].text=="满减":
-                        j_promt_caption = ""
-                        m_promt_caption = li_caption[3].get_attribute("innerHTML")
-                    else:
-                        j_promt_caption = ""
-                        m_promt_caption = ""
+            #if pl.get_attribute('skus') == 'single':
+            # 药品名称
+            title = pl.find_element_by_xpath('.//div[@class="p-caption"]//a').text
+            # 售价
+            price = pl.find_element_by_xpath('.//div[@class="p-priceInfo"]//span[@class="price"]//em')
+            # 销量
+            sale = pl.find_element_by_xpath('.//.//.//.//div[@class="p-countInfo"]//span[@class="p-sale"]//em')
+            # 阶梯满减或满减
+            li_caption = pl.find_elements_by_xpath('.//.//.//.//div[@class="promotions-list"]//li[@class="promt_li"]//a')
+            if price.text:
+                price = price.text
+            else:
+                price = "商家尚未定价"
+            if sale:
+                sale = sale.text
+            else:
+                sale = ""
+            if li_caption:
+                # for labx in li_caption:
+                if li_caption[0].text=="阶梯满减":
+                    j_promt_caption = li_caption[1].get_attribute("innerHTML")
+                    m_promt_caption = li_caption[3].get_attribute("innerHTML")
+                elif li_caption[0].text=="满减":
+                    m_promt_caption = li_caption[1].get_attribute("innerHTML")
+                    j_promt_caption = ""
+                elif li_caption[2].text=="满减":
+                    j_promt_caption = ""
+                    m_promt_caption = li_caption[3].get_attribute("innerHTML")
                 else:
                     j_promt_caption = ""
                     m_promt_caption = ""
+                # else:
+                #     j_promt_caption = ""
+                #     m_promt_caption = ""
                 data_dict = []#写入字典
                 data_dict.append(title)
                 data_dict.append( price)
@@ -245,17 +248,17 @@ def main():
     browser.close()
 
 if __name__ == "__main__":
-    key_pass = input("请输入秘钥：")
+    #key_pass = input("请输入秘钥：")
     #校验秘钥 默认用123 md5加密
-    if key_pass=="202cb962ac59075b964b07152d234b70":
-        #登陆
-        login()
-        #主方法入口
-        main()
-    else :
-        print("秘钥校验不正确，关闭该程序，重新运行！")
-        #关闭浏览器
-        browser.close()
+    #if key_pass=="202cb962ac59075b964b07152d234b70":
+    #登陆
+    login()
+    #主方法入口
+    main()
+    # else :
+    #     print("秘钥校验不正确，关闭该程序，重新运行！")
+    #     #关闭浏览器
+    #     browser.close()
     input("请按回车键退出！")
     #关闭浏览器进程
     kill_driver()
