@@ -4,6 +4,8 @@ import time
 import datetime
 import random
 import openpyxl
+import sys
+import traceback
 from lxml import etree
 from openpyxl import Workbook
 from selenium import webdriver
@@ -148,9 +150,9 @@ def prase_html(html):
         lis = browser.find_elements_by_class_name('pl-skin')
         # 遍历
         for pl in lis:
-            is_skus = pl.find_element_by_xpath('.//div[@class="pl"]').get_attribute('skus')
+            is_skus = pl.find_element_by_xpath('.//div')
             #判断有禁售药品或下架
-            if is_skus == 'single':
+            if is_skus.get_attribute('skus') == 'single':
                 # 药品名称
                 title = pl.find_element_by_xpath('.//div[@class="p-caption"]//a').text
                 # 售价
@@ -192,8 +194,17 @@ def prase_html(html):
                 data_dict.append(m_promt_caption)
                 print(data_dict)
                 data_list.append(data_dict)#写入全局变量
-    except TimeoutError:
-        prase_html(html)
+    except Exception as e:
+        print('str(Exception):\t', str(Exception))
+        print('str(e):\t\t', str(e))
+        print('repr(e):\t', repr(e))
+        # Get information about the exception that is currently being handled
+        exc_type, exc_value, exc_traceback = sys.exc_info()
+        print('e.message:\t', exc_value)
+        print("Note, object e and exc of Class %s is %s the same." %
+              (type(exc_value), ('not', '')[exc_value is e]))
+        print('traceback.print_exc(): ', traceback.print_exc())
+        print('traceback.format_exc():\n%s' % traceback.format_exc())
 
 #判断元素是否存在方法
 def isElementExist(browser,css):
