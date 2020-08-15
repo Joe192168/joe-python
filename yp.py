@@ -70,7 +70,8 @@ def search(keyword):
             print("没有搜索到该药品数据，关闭当前程序重新进行搜索！")
             #关闭浏览器
             browser.close()
-        browser.find_element_by_link_text("只看有货").click()#模拟用户点击
+        #模拟用户点击
+        browser.find_element_by_link_text("只看有货").click()
         #判断是否有分页元素存在
         falg2 = isElementExist(browser,".pagebar")
         if falg2:
