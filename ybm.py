@@ -6,7 +6,7 @@ import random
 import openpyxl
 import sys
 import traceback
-from lxml import etree
+import logging
 from openpyxl import Workbook
 from selenium import webdriver
 from selenium.webdriver.support import expected_conditions as EC
@@ -27,7 +27,7 @@ chrome_options.add_argument('--disable-gpu')# 谷歌文档提到需要加上这�
 chrome_options.add_argument("--start-maximized") #最大化
 chrome_options.add_argument('blink-settings=imagesEnabled=false')#不加载图片
 chromeDriverPath = r'.\tools\chromedriver.exe'
-browser = webdriver.Chrome(executable_path=chromeDriverPath,chrome_options=chrome_options)
+browser = webdriver.Chrome()
 wait =WebDriverWait(browser,50)#设置等待时间
 
 #登陆
@@ -39,8 +39,8 @@ def login():
     password = input("登录密码：")
     #爬虫网址
     browser.get('http://www.ybm100.com/login/login.htm')
-    browser.find_element_by_xpath('//*[@id="inputPhone"]').send_keys(username)
-    browser.find_element_by_xpath('//*[@id="inputPassword"]').send_keys(password)
+    browser.find_element_by_xpath('//*[@id="inputPhone"]').send_keys('13368049626')
+    browser.find_element_by_xpath('//*[@id="inputPassword"]').send_keys('qfgdyf100')
     browser.find_element_by_xpath('//*[@id="loginForm"]/div[3]/div/button').click()
 
 #页面加载计时器
@@ -54,6 +54,7 @@ def download_web(c_time):
 #搜索
 def search(keyword):
     try:
+        mainhandle = browser.current_window_handle#主页面句柄  每个浏览器标签页都有一个句柄
         input = wait.until(
             EC.presence_of_all_elements_located((By.ID, 'search'))
         )
@@ -66,18 +67,29 @@ def search(keyword):
         browser.find_element_by_xpath('//*[@id="search"]').send_keys(keyword)
         submit.click()#点击
         #判断是否搜索到药品信息
-        falg1 = isElementExist(browser,".mrth-new clearfix")
+        falg1 = isElementExist(browser,".mrth-new")
         if not falg1:
             print("没有搜索到该药品数据，关闭当前程序重新进行搜索！")
             #关闭浏览器
             browser.close()
         #browser.find_element_by_link_text("只看有货").click()#模拟用户点击
-        browser.find_element_by_xpath("//*[@name='hasStock']").click()
+        # 通过css 找到type = checkbox
+        #获取当前窗口句柄
+        handles = browser.window_handles
+        for handle in handles:# 轮流得出标签页的句柄 切换窗口
+            if handle != mainhandle:
+                browser.switch_to.window(handle)
+        checkboxes = browser.find_elements_by_xpath("//*[@name='hasStock']//input[@type='checkbox']")
+        if checkboxes:  # 判断是否有找到元素
+            for checkbox in checkboxes:  # 循环点击找到的元素
+                checkbox.click()  # 勾选复选框
+        else:
+            print("没有找到元素")
         #判断是否有分页元素存在
         falg2 = isElementExist(browser,".page")
         if falg2:
             total = wait.until(
-                EC.presence_of_element_located((By.XPATH, './/div[@class="pagebar"]//span'))
+                EC.presence_of_element_located((By.XPATH, './/.//div[@class="page"]//span'))
             )
             total = re.sub("\D", "", total.text)
             print("总共页数："+total)
@@ -86,16 +98,16 @@ def search(keyword):
             total = 1#默认只有一页
         #滑动到底部，加载出商品信息
         browser.execute_script("window.scrollTo(0, document.body.scrollHeight);")
-        wait.until(
-            EC.presence_of_all_elements_located((By.XPATH, './/div[@class="pl-skin"]'))
-        )
+        # wait.until(
+        #     EC.presence_of_all_elements_located((By.XPATH, './/div[@class="mrth-new"]'))
+        # )
         #隐藏搜索浮动框
-        js_div = 'document.getElementsByClassName("followSearchPanel")[0].style="display: none;"'
-        browser.execute_script(js_div)
+        #js_div = 'document.getElementsByClassName("followSearchPanel")[0].style="display: none;"'
+        #browser.execute_script(js_div)
         html = browser.page_source#获取网页信息
         print("第", 1, "页：")
         # 设置计时器
-        download_web(20)
+        download_web(3)
         prase_html(html)#调用提取数据的函数
         #返回总页数
         return total
@@ -111,34 +123,34 @@ def search(keyword):
 def next_page(page_number):
     try:
         # 滑动到底部
-        scroll_add_crowd_button = browser.find_element_by_xpath('.//div[@class="pages"]')
+        scroll_add_crowd_button = browser.find_element_by_xpath('.//div[@class="page"]')
         browser.execute_script("arguments[0].scrollIntoView();",scroll_add_crowd_button)
         time.sleep(random.randint(1, 3))#设置随机延迟
-        #隐藏搜索浮动框
-        js_div = 'document.getElementsByClassName("followSearchPanel")[0].style="display: none;"'
-        browser.execute_script(js_div)
+        # #隐藏搜索浮动框
+        # js_div = 'document.getElementsByClassName("followSearchPanel")[0].style="display: none;"'
+        # browser.execute_script(js_div)
         button = wait.until(
-            EC.element_to_be_clickable((By.CLASS_NAME, 'nextpage'))
+            EC.element_to_be_clickable((By.CLASS_NAME, 'next'))
         )#翻页按钮
         button.click()# 翻页动作
         wait.until(
-            EC.presence_of_all_elements_located((By.XPATH, './/div[@class="pl-skin"]'))
+            EC.presence_of_all_elements_located((By.XPATH, './/div[@class="main"]//ul/li'))
         )#等到商品都加载出来
         # 滑动到底部，加载出后商品信息
-        scroll_add_crowd_button = browser.find_element_by_xpath('.//div[@class="pages"]')
+        scroll_add_crowd_button = browser.find_element_by_xpath('.//div[@class="page"]')
         browser.execute_script("arguments[0].scrollIntoView();",scroll_add_crowd_button)
         wait.until(
-            EC.presence_of_all_elements_located((By.XPATH, './/div[@class="pl-skin"]'))
+            EC.presence_of_all_elements_located((By.XPATH, './/div[@class="main"]//ul/li'))
         )#等到最后商品都加载出来
         #隐藏搜索浮动框
-        js_div = 'document.getElementsByClassName("followSearchPanel")[0].style="display: none;"'
-        browser.execute_script(js_div)
-        wait.until(
-            EC.text_to_be_present_in_element((By.CLASS_NAME, "cur"), str(page_number))
-        )# 判断翻页成功,高亮的按钮数字与设置的页码一样
+        # js_div = 'document.getElementsByClassName("followSearchPanel")[0].style="display: none;"'
+        # browser.execute_script(js_div)
+        # wait.until(
+        #     EC.text_to_be_present_in_element((By.CLASS_NAME, "active"), str(page_number))
+        # )# 判断翻页成功,高亮的按钮数字与设置的页码一样
         html = browser.page_source#获取网页信息
         # 设置计时器
-        download_web(20)
+        download_web(3)
         #调用提取数据的函数
         prase_html(html)
     except TimeoutError:
@@ -146,56 +158,43 @@ def next_page(page_number):
 
 #提取页面数据
 def prase_html(html):
-    html = etree.HTML(html)
     # 开始提取信息,找到ul标签下的全部li标签
     try:
-        lis = browser.find_elements_by_class_name('pl-skin')
+        ul = browser.find_elements_by_xpath('.//div[@class="main"]//ul[@class="mrth-new clearfix"]/li')
         # 遍历
-        for pl in lis:
-            is_skus = pl.find_element_by_xpath('.//div')
-            #判断有禁售药品或下架
-            if is_skus.get_attribute('skus') == 'single':
-                # 药品名称
-                title = pl.find_element_by_xpath('.//div[@class="p-caption"]//a').text
-                # 售价
-                price = pl.find_element_by_xpath('.//div[@class="p-priceInfo"]//span[@class="price"]//em')
-                # 销量
-                sale = pl.find_element_by_xpath('.//.//.//.//div[@class="p-countInfo"]//span[@class="p-sale"]//em')
-                # 阶梯满减或满减
-                li_caption = pl.find_elements_by_xpath('.//.//.//.//div[@class="promotions-list"]//li[@class="promt_li"]//a')
-                if price.text:
-                    price = price.text
+        for li in ul:
+            # 药品名称
+            title = li.find_element_by_xpath('.//div[@class="row2"]//a').text
+            # 售价 零售价 毛利
+            row3 = li.find_element_by_xpath('.//div[@class="row3"]')
+            # 药品公司名称
+            li_ccompany = li.find_element_by_xpath('.//div[@class="row5 text-overflow"]').text
+            if row3:
+                li_price = row3.find_element_by_xpath('span')
+                if li_price:
+                    price = li_price.text
                 else:
                     price = "商家尚未定价"
-                if sale:
-                    sale = sale.text
+                row_last = row3.find_element_by_xpath('//div[@class="row-last"]')
+                #零售价
+                kongxiao_box = row_last.find_elements_by_xpath('//div[@class="kongxiao-box"]//span')
+                if kongxiao_box:
+                    retail_price = kongxiao_box[1].text
                 else:
-                    sale = ""
-                if li_caption:
-                    # for labx in li_caption:
-                    if li_caption[0].text=="阶梯满减":
-                        j_promt_caption = li_caption[1].get_attribute("innerHTML")
-                        m_promt_caption = li_caption[3].get_attribute("innerHTML")
-                    elif li_caption[0].text=="满减":
-                        m_promt_caption = li_caption[1].get_attribute("innerHTML")
-                        j_promt_caption = ""
-                    elif li_caption[2].text=="满减":
-                        j_promt_caption = ""
-                        m_promt_caption = li_caption[3].get_attribute("innerHTML")
-                    else:
-                        j_promt_caption = ""
-                        m_promt_caption = ""
+                    retail_price = ""
+                maoli = row_last.find_elements_by_xpath('//div[@class="maoli-box"]//span')
+                if maoli:
+                    maoli = maoli[1].text
                 else:
-                    j_promt_caption = ""
-                    m_promt_caption = ""
-                data_dict = []#写入字典
-                data_dict.append(title)
-                data_dict.append( price)
-                data_dict.append(sale)
-                data_dict.append(j_promt_caption)
-                data_dict.append(m_promt_caption)
-                print(data_dict)
-                data_list.append(data_dict)#写入全局变量
+                    maoli = ""
+            data_dict = []#写入字典
+            data_dict.append(title)
+            data_dict.append(price)
+            data_dict.append(retail_price)
+            data_dict.append(maoli)
+            data_dict.append(li_ccompany)
+            print(data_dict)
+            data_list.append(data_dict)#写入全局变量
     except Exception as e:
         print('str(Exception):\t', str(Exception))
         print('str(e):\t\t', str(e))
@@ -226,7 +225,7 @@ def creatwb(wbname):
 def write_excel(fileName,d_list):
     wb = Workbook()
     #写入表头
-    dilei_head = ['药品名称','售价','销量','阶梯满减','满减']
+    dilei_head = ['药品名称','售价','零售价','毛利','药品公司名称']
     sheet0Name = '药品数据信息'
     sheet0 = wb.create_sheet(sheet0Name, index=0)
     for i, item in enumerate(dilei_head):
