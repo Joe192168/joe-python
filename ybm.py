@@ -76,13 +76,6 @@ def search(keyword):
         # 等到搜索按钮可以被点击
         browser.find_element_by_xpath('//*[@id="search"]').send_keys(keyword)
         submit.click()#点击
-        # 判断是否搜索到药品信息
-        div_text = browser.find_elements_by_xpath('.//div[@class="main"]/div')
-        if div_text[4].text.find("抱歉，没有找到商品")>=0:
-            print("没有搜索到该药品数据，重新进行搜索！")
-            # 重新开始搜索
-            main()
-        # browser.find_element_by_link_text("只看有货").click()#模拟用户点击
         # 获取当前窗口句柄
         handles = browser.window_handles
         # 轮流得出标签页的句柄 切换窗口
@@ -90,6 +83,13 @@ def search(keyword):
             if handle != mainhandle:
                 browser.close() # 关闭第一个窗口
                 browser.switch_to.window(handle)
+        # 判断是否搜索到药品信息
+        div_text = browser.find_elements_by_xpath('.//div[@class="main"]/div')
+        if div_text[4].text.find("抱歉，没有找到商品")>=0:
+            print("没有搜索到该药品数据，重新进行搜索！")
+            # 重新开始搜索
+            main()
+        # browser.find_element_by_link_text("只看有货").click()#模拟用户点击
         # 通过css 找到type = checkbox
         # browser.find_element_by_name('hasStock').click()
         # 判断是否有分页元素存在
@@ -120,12 +120,12 @@ def search(keyword):
         # 总页数转换int
         total = int(total)
         # 调用提取数据的函数
-        prase_html(html)
+        extract_html(html)
         # 返回总页数
         return total
     except TimeoutError:
         print("请求超时，重新搜索该药品！。。。。。。。。")
-        search()
+        main()
     except Exception as e:
         print(e)
         # 关闭浏览器
@@ -171,12 +171,12 @@ def next_page(page_number):
         # 设置计时器
         download_web(3)
         # 调用提取数据的函数
-        prase_html(html)
+        extract_html(html)
     except TimeoutError:
         return next_page(page_number)
 
 # 提取页面数据
-def prase_html(html):
+def extract_html(html):
     # 开始提取信息,找到ul标签下的全部li标签
     try:
         ul = browser.find_elements_by_xpath('.//div[@class="main"]//ul[@class="mrth-new clearfix"]/li')
@@ -254,7 +254,7 @@ def isElementPresent(driver, path):
         return True
 
 # 新建excel
-def creatwb(wbname):
+def creat_excel(wbname):
     wb=openpyxl.Workbook()
     wb.save(filename=wbname)
     print("新建Excel："+wbname+"成功")
@@ -299,7 +299,6 @@ def get_varieties():
         all_span = all_yjlm.find_elements_by_xpath('./span')
         # 点击全部分类span单击事件
         all_span[0].click()
-        # 模拟点击A标签进行搜索
         # 判断是否有分页元素存在
         falg2 = isElementExist(browser,".page")
         if falg2:
@@ -318,7 +317,7 @@ def get_varieties():
         # 总页数转换int
         total = int(total)
         # 调用提取数据的函数
-        prase_html(browser.page_source)
+        extract_html(browser.page_source)
         # 返回总页数
         return total
     except TimeoutError:
@@ -342,7 +341,7 @@ def export_exlce(keyword):
     # 判断总页数大于0 并创建exlce
     if total > 0:
         # 初始化exlce文件
-        creatwb(_exclName)
+        creat_excel(_exclName)
     # 保存数据到exlce中
     write_excel(keyword,_exclName,data_list)
     # 清空全局数据集合
@@ -361,7 +360,7 @@ def all_export_exlce():
     # 判断总页数大于0 并创建exlce
     if total > 0:
         # 初始化exlce文件
-        creatwb(_exclName)
+        creat_excel(_exclName)
     # 保存数据到exlce中
     write_excel('全部药品',_exclName,data_list)
 
@@ -398,17 +397,10 @@ def main():
     browser.close()
 
 if __name__ == "__main__":
-    # key_pass = input("请输入秘钥：")
-    # 校验秘钥 默认用123 md5加密
-    # if key_pass=="202cb962ac59075b964b07152d234b70":
     # 登陆
     login()
     # 主方法入口
     main()
-    # else :
-    #     print("秘钥校验不正确，关闭该程序，重新运行！")
-    #     # 关闭浏览器
-    #     browser.close()
     input("请按回车键退出！")
     # 关闭浏览器进程
     kill_driver()
