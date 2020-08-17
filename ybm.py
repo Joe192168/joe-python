@@ -23,14 +23,14 @@ data_list = []
 data_varieties = []
 
 # 无界面 测试有问题暂时有问题
-# chrome_options = webdriver.ChromeOptions()
+chrome_options = webdriver.ChromeOptions()
 # chrome_options.add_argument('--no-sandbox')#非沙盒模式运行
 # chrome_options.add_argument('--headless') #headless模式启动
 # chrome_options.add_argument('--disable-gpu')# 谷歌文档提到需要加上这个属性来规避bug
-# chrome_options.add_argument("--start-maximized") #最大化
-# chrome_options.add_argument('blink-settings=imagesEnabled=false')#不加载图片
-# chromeDriverPath = r'.\tools\chromedriver.exe'
-browser = webdriver.Chrome()
+chrome_options.add_argument("--start-maximized") #最大化
+chrome_options.add_argument('blink-settings=imagesEnabled=false')#不加载图片
+chromeDriverPath = r'.\tools\chromedriver.exe'
+browser = webdriver.Chrome(executable_path=chromeDriverPath,chrome_options=chrome_options)
 # 设置等待时间
 wait = WebDriverWait(browser, 50)
 
@@ -44,7 +44,7 @@ def login():
     # 爬虫网址
     try:
         # 页面窗口最大化
-        browser.maximize_window()
+        # browser.maximize_window()
         browser.get('http://www.ybm100.com/login/login.htm')
         browser.find_element_by_xpath('//*[@id="inputPhone"]').send_keys('13368049626')
         browser.find_element_by_xpath('//*[@id="inputPassword"]').send_keys('qfgdyf100')
@@ -71,29 +71,27 @@ def search(keyword):
         submit = wait.until(
             EC.element_to_be_clickable((By.XPATH, '//*[@id="search-btn"]'))
         )
+        # 在搜索之前清空搜索框内容
+        browser.find_element_by_xpath('//*[@id="search"]').clear()
         # 等到搜索按钮可以被点击
         browser.find_element_by_xpath('//*[@id="search"]').send_keys(keyword)
         submit.click()#点击
         # 判断是否搜索到药品信息
-        falg1 = browser.find_element_by_xpath('/html/body/div[2]/div[5]').text
-        if falg1 in "抱歉，没有找到商品":
-            print("没有搜索到该药品数据，关闭当前程序重新进行搜索！")
-            #关闭浏览器
-            browser.close()
+        div_text = browser.find_elements_by_xpath('.//div[@class="main"]/div')
+        if div_text[4].text.find("抱歉，没有找到商品")>=0:
+            print("没有搜索到该药品数据，重新进行搜索！")
+            # 重新开始搜索
+            main()
         # browser.find_element_by_link_text("只看有货").click()#模拟用户点击
-        # 通过css 找到type = checkbox
         # 获取当前窗口句柄
         handles = browser.window_handles
         # 轮流得出标签页的句柄 切换窗口
         for handle in handles:
             if handle != mainhandle:
+                browser.close() # 关闭第一个窗口
                 browser.switch_to.window(handle)
-        checkboxes = browser.find_elements_by_xpath("//*[@name='hasStock']//input[@type='checkbox']")
-        if checkboxes:  # 判断是否有找到元素
-            for checkbox in checkboxes:  # 循环点击找到的元素
-                checkbox.click()  # 勾选复选框
-        else:
-            print("没有找到元素")
+        # 通过css 找到type = checkbox
+        # browser.find_element_by_name('hasStock').click()
         # 判断是否有分页元素存在
         falg2 = isElementExist(browser,".page")
         if falg2:
@@ -133,39 +131,13 @@ def search(keyword):
         # 关闭浏览器
         browser.close()
 
-# 模拟A标签点击搜索
-def click_a(a_text):
-    try:
-        # 获取本网站商品品种
-        ul = browser.find_elements_by_xpath('//*[@class="leimu-TC"]/ul[@class="two-box-ul"]/li')
-        for li in ul:
-            _li = li.find_elements_by_xpath('.//div[@class="hangbox"]/div[@class="hang-col1"]/div[@class="com-info"]/a')
-            for _a in _li:
-                if a_text == _a.get_attribute('text'):
-                    _a.click()
-
-    except Exception as e:
-        print('str(Exception):\t', str(Exception))
-        print('str(e):\t\t', str(e))
-        print('repr(e):\t', repr(e))
-        # Get information about the exception that is currently being handled
-        exc_type, exc_value, exc_traceback = sys.exc_info()
-        print('e.message:\t', exc_value)
-        print("Note, object e and exc of Class %s is %s the same." %
-              (type(exc_value), ('not', '')[exc_value is e]))
-        print('traceback.print_exc(): ', traceback.print_exc())
-        print('traceback.format_exc():\n%s' % traceback.format_exc())
-
 # 分页
 def next_page(page_number):
     try:
         # 滑动到底部
         scroll_add_crowd_button = browser.find_element_by_xpath('.//div[@class="page"]')
         browser.execute_script("arguments[0].scrollIntoView();",scroll_add_crowd_button)
-        falg1 = browser.find_element_by_xpath('/html/body/div[2]/div[5]').text
-        if falg1 in "抱歉，没有找到商品":
-            print("没有搜索到该药品数据，继续下一页！")
-            next_page(page_number+1)
+        div_text = browser.find_elements_by_xpath('.//div[@class="main"]/div')
         # 设置随机延迟
         time.sleep(random.randint(1, 3))
         # # 隐藏搜索浮动框
@@ -211,38 +183,39 @@ def prase_html(html):
         # 遍历
         for li in ul:
             # 药品名称
-            title = li.find_element_by_xpath('.//div[@class="row2"]//a').text
-            # 售价 零售价 毛利
-            row3 = li.find_element_by_xpath('.//div[@class="row3"]')
+            title = li.find_element_by_xpath('.//div[@class="row2"]/a').text
+            # 售价
+            sp_price = li.find_element_by_xpath('.//div[@class="row3"]')
+            # 零售价
+            sp_kongxiao = li.find_elements_by_xpath('.//div[@class="row-last"]//div[@class="kongxiao-box"]/span')
+            # 毛利
+            sp_maoli = li.find_elements_by_xpath('.//div[@class="row-last"]//div[@class="maoli-box"]/span')
             # 药品生成商
-            ccompany = li.find_element_by_xpath('.//div[@class="row5 text-overflow"]').text
+            company = li.find_element_by_xpath('.//div[@class="row5 text-overflow"]').text
             # 药品供应商
-            gys = li.find_element_by_xpath('.//div[@class="row7"]//a').text
-            if row3:
-                li_price = row3.find_element_by_xpath('span')
-                if li_price:
-                    price = li_price.text
-                else:
-                    price = "商家尚未定价"
-                row_last = row3.find_element_by_xpath('//div[@class="row-last"]')
-                # 零售价
-                kongxiao_box = row_last.find_elements_by_xpath('//div[@class="kongxiao-box"]//span')
-                if kongxiao_box:
-                    retail_price = kongxiao_box[1].text
-                else:
-                    retail_price = ""
-                maoli = row_last.find_elements_by_xpath('//div[@class="maoli-box"]//span')
-                if maoli:
-                    maoli = maoli[1].text
-                else:
-                    maoli = ""
+            gys = li.find_element_by_xpath('.//div[@class="row7"]/a').text
+            # 售价
+            if sp_price.find_element_by_xpath('//span[@class="price"]'):
+                price = sp_price.text
+            else:
+                price = "价格签署协议可见"
+            # 零售价
+            if sp_kongxiao:
+                retail_price = sp_kongxiao[1].text
+            else:
+                retail_price = ""
+            # 毛利
+            if sp_maoli:
+                maoli = sp_maoli[1].text
+            else:
+                maoli = ""
             # 写入字典
             data_dict = []
             data_dict.append(title)
             data_dict.append(price)
             data_dict.append(retail_price)
             data_dict.append(maoli)
-            data_dict.append(ccompany)
+            data_dict.append(company)
             data_dict.append(gys)
             print(data_dict)
             # 写入全局变量
@@ -309,38 +282,52 @@ def write_excel(sheet_name,file_name,d_list):
 def kill_driver():
     # 杀死这个chromedriver进程，因为每次启动都会打开，所以需要kill，这里用的chrome浏览器
     os.system('chcp 65001')
-    # os.system("taskkill /f /im chromedriver.exe")
+    os.system("taskkill /f /im chromedriver.exe")
 
-# 获取网站的商品品种
+# 获取网站的商品品种总页数
 def get_varieties():
     try:
-        # 获取本网站商品品种
-        ul = browser.find_elements_by_class_name('hang-col1')
-        for li in ul:
-            _li = li.find_elements_by_xpath('./div[@class="com-info"]/a')
-            for _a in _li:
-                # 鼠标悬停
-                above = browser.find_element_by_link_text("中西成药")
-                # move_to_element移到设置的元素,avove上面定位到的设置.然后执行操作
-                ActionChains(browser).move_to_element(above).perform()
-                # 根据名称点击操作
-                mc = _a.text
-                _a.click()
-                sleep(3)
-                browser.find_element_by_link_text("抗高血压病药").click()
-                data_varieties.append(mc)
-
+        # 根据a内容进行定位
+        all_yp = browser.find_element_by_link_text('全部药品')
+        # 单击全药品
+        all_yp.click()
+        # 获取全药品href，并访问
+        browser.get(all_yp.get_property('href'))
+        # 定位全部分类
+        all_yjlm = browser.find_element_by_id('defaultOnelevelLm')
+        # 全部分类span
+        all_span = all_yjlm.find_elements_by_xpath('./span')
+        # 点击全部分类span单击事件
+        all_span[0].click()
+        # 模拟点击A标签进行搜索
+        # 判断是否有分页元素存在
+        falg2 = isElementExist(browser,".page")
+        if falg2:
+            total = wait.until(
+                EC.presence_of_element_located((By.XPATH, './/.//div[@class="page"]/div/div/span'))
+            )
+            total = re.sub("\D", "", total.text)
+            print("总共页数："+total)
+        else:
+            print("总共页数：1")
+            # 默认只有一页
+            total = 1
+        print("第", 1, "页：")
+        # 设置计时器
+        download_web(3)
+        # 总页数转换int
+        total = int(total)
+        # 调用提取数据的函数
+        prase_html(browser.page_source)
+        # 返回总页数
+        return total
+    except TimeoutError:
+        print("请求超时，重新搜索该药品！。。。。。。。。")
+        get_varieties()
     except Exception as e:
-        print('str(Exception):\t', str(Exception))
-        print('str(e):\t\t', str(e))
-        print('repr(e):\t', repr(e))
-        # Get information about the exception that is currently being handled
-        exc_type, exc_value, exc_traceback = sys.exc_info()
-        print('e.message:\t', exc_value)
-        print("Note, object e and exc of Class %s is %s the same." %
-              (type(exc_value), ('not', '')[exc_value is e]))
-        print('traceback.print_exc(): ', traceback.print_exc())
-        print('traceback.format_exc():\n%s' % traceback.format_exc())
+        print(e)
+        # 关闭浏览器
+        browser.close()
 
 # 根据关键字搜索导出exlce
 def export_exlce(keyword):
@@ -358,13 +345,15 @@ def export_exlce(keyword):
         creatwb(_exclName)
     # 保存数据到exlce中
     write_excel(keyword,_exclName,data_list)
+    # 清空全局数据集合
+    data_list.clear()
 
-# 根据品种点击搜索导出exlce
-def a_export_exlce(keyword):
-    # 模拟点击A标签进行搜索
-    total = click_a(keyword)
+# 根据全部品种导出exlce
+def all_export_exlce():
+    # 根据搜索名称调用查询方法，并返回总页数
+    total = get_varieties()
     # 组装exlce文件名称
-    _exclName = keyword + "_" + nowTime + ".xlsx"
+    _exclName = '全部药品' + "_" + nowTime + ".xlsx"
     # for i in range(2, 5):
     for i in range(2, total + 1):
         print("第", i, "页：")
@@ -374,30 +363,31 @@ def a_export_exlce(keyword):
         # 初始化exlce文件
         creatwb(_exclName)
     # 保存数据到exlce中
-    write_excel(keyword,_exclName,data_list)
+    write_excel('全部药品',_exclName,data_list)
 
 # 主方法
 def main():
     print("*************开始爬取有货药品数据请稍等***************")
-    num = int(input("请选择爬取数据选项数字：1、取文本  2、自动批量  3、单品手动输入："))
-    if num == 3:
+    num = input("请选择爬取数据选项数字：1、取文本  2、自动批量  3、单品手动输入：")
+    if num == '3':
         # 关键词
         keyword = input("请输入要搜索药品名称：")
         # 导出exlce
         export_exlce(keyword)
-    elif num == 2:
+    elif num == '2':
         # 获取所有商品品种
-        get_varieties()
-        for i, item in enumerate(data_varieties):
-            # 根据品种点击搜索导出exlce
-            a_export_exlce(item)
-    elif num == 1:
+        all_export_exlce()
+    elif num == '1':
         if os.path.exists("药品品种.txt"):
-            with open("药品品种.txt", "r", encoding="utf-8") as f:  # 打开文件
+            # 打开文件
+            with open("药品品种.txt", "r", encoding="utf-8") as f:
                 for line in f.readlines():
-                    data = line.strip('\n')  #去掉列表中每一个元素的换行符
+                    # 去掉列表中每一个元素的换行符
+                    data = line.strip('\n')
+                    print("开始加载品种：",data)
                     # 导出exlce
                     export_exlce(data)
+
         else:
             print("读取文本文件不存在，请检查！")
     else:
