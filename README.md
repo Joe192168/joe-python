@@ -30,3 +30,15 @@ http://ai.baidu.com/tech/body/seg
 
 5、OpenCV-Python教程
 https://opencv-python-tutroals.readthedocs.io/en/latest/py_tutorials/py_tutorials.html
+
+6、解决FileNotFoundError: [Errno 2] No such file or directory:'C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\1\\_MEI54762\\jieba\\dict.txt'问题
+上面就是没把python库jieba的dict.txt打包进来，导致了错误 那么，解决问题也很简单，自己写个hook，然后放进pyinstaller的hooks里面即可
+hook文件的命名规范为: hook-【库名】.py，以结巴分词为例，即为hook-jieba.py，然后简单敲入以下两行：
+
+from PyInstaller.utils.hooks import collect_data_files
+
+datas = collect_data_files("jieba")
+
+接下来，找到pyinstaller的hooks文件夹，大概位于：
+
+python根目录\Lib\site-packages\PyInstaller\hooks下，然后把hook-jieba.py丢进去
