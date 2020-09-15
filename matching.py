@@ -5,6 +5,7 @@ import time
 import datetime
 import xlrd,xlwt
 import logging
+from openpyxl import Workbook
 import Levenshtein
 
 #log日志
@@ -12,50 +13,50 @@ logging.basicConfig(filename='log.txt', level=logging.DEBUG,
                     format='%(asctime)s - %(levelname)s - %(message)s')
 
 #全局字典
-data = []
+data_list = []
 
 #设置单元格样式
 def set_style(name,height,bold=False):
     style = xlwt.XFStyle() # 初始化样式
-
     font = xlwt.Font() # 为样式创建字体
     font.name = name # 'Times New Roman'
     font.bold = bold
     font.color_index = 4
     font.height = height
-
     # borders= xlwt.Borders()
     # borders.left= 6
     # borders.right= 6
     # borders.top= 6
     # borders.bottom= 6
-
     style.font = font
     # style.borders = borders
-
     return style
 
-
 #写入excel文件
-def write_excel(url, data): #传入文件存储路径、excel的sheet名称、以及要插入的数据
+def write_excel(file_name,d_list):
     try:
-        #data = (('biqi', 963, 177), ('editor_Intern1', 912, 154), ('editor_Intern10', 840, 163), ('editor_Intern11', 644, 173)) #模板数据
-        myWorkbook = xlwt.Workbook(encoding="utf-8") #创建excel
-        #创建第一个sheet
-        sheet1 = myWorkbook.add_sheet(u'sheet1',cell_overwrite_ok=True) #创建sheet
-        row0 = [u'品名A',u'产地A',u'规格A',u'品名B',u'产地B',u'规格B']
-        #生成第一行
-        for i in range(0,len(row0)):
-            sheet1.write(0,i,row0[i],set_style('Times New Roman',220,True))
-
-        for i, val in enumerate(data):
-            for j, value in enumerate(val):
-                sheet1.write(i+1, j, value) #遍历数据插入sheet中
-        myWorkbook.save(url) #将创建的excel保存在该路径下
+        wb = Workbook()
+        #sheet名称
+        sheet = wb.create_sheet("匹配结果",index=0)#新建一个excel，sheet表
+        # 写入表头
+        fields = [u'品名A',u'产地A',u'规格A',u'批文A',u'品名B',u'产地B',u'规格B',u'批文B',u'商品编号B',u'价格']
+        # 设置表头信息
+        field=1
+        for field in range(1,len(fields)+1):   # 写入表头
+            sheet.cell(row=1,column=field,value=str(fields[field-1]))
+        # 写入数据
+        row1=1
+        col1=0
+        for row1 in range(2,len(d_list)+2):  # 写入数据
+            for col1 in range(1,len(d_list[row1-2])+1):
+                sheet.cell(row=row1,column=col1,value=str(d_list[row1-2][col1-1]))
+        # 保存数据
+        wb.save(file_name)
+        print('匹配完成，并保存完毕')
     except:
         logging.exception('write_excel exception：')
 
-def checkText(file_dir,kh_mc,kh_cd,kh_gg,mc_xsd,cd_xsd,gg_xsd):
+def checkText(file_dir,kh_cp,kh_cd,kh_gg,kh_pw,mc_xsd,cd_xsd):
     try:
         wb = xlrd.open_workbook(file_dir) #打开excel表
         #获取所有sheet工作簿名称
@@ -79,9 +80,14 @@ def checkText(file_dir,kh_mc,kh_cd,kh_gg,mc_xsd,cd_xsd,gg_xsd):
                 mb_cd = str(sheet.cell_value(i,1)).strip();
                 #规格
                 mb_gg = str(sheet.cell_value(i,2)).strip();
-                #print('queryText:'+queryText+'\tcp_a:'+cp_a)
+                #批文
+                mb_pw = str(sheet.cell_value(i,3)).strip();
+                #商品编号
+                mb_bh = str(sheet.cell_value(i,4)).strip();
+                #价格
+                mb_jg = str(sheet.cell_value(i,5)).strip();
                 #产品名称
-                a = acquaintance(mb_cp,kh_mc)
+                a = acquaintance(mb_cp,kh_cp)
                 if a >= float(mc_xsd):
                     ret_mc = True
                 else:
@@ -93,28 +99,43 @@ def checkText(file_dir,kh_mc,kh_cd,kh_gg,mc_xsd,cd_xsd,gg_xsd):
                 else:
                     ret_cd = False
                 #规格
-                c = jaccrad(mb_gg,kh_gg)
-                if c >= float(gg_xsd):
+                c = KMP_algorithm(mb_gg.lower(),kh_gg.lower())
+                if c >= 0:
                     ret_gg = True
                 else:
                     ret_gg = False
-                if ret_mc and ret_cd and ret_gg:
-                    print('根据相似度匹配成功的品名：'+mb_cp+'\t产地：'+mb_cd+'\t规格：'+mb_gg)
-                    #print('客户数据品牌名：'+_mc+'\t客户数据产地：'+_cd+'\t客户数据规格：'+_gg)
+                #批文
+                d = KMP_algorithm(mb_pw.lower(),kh_pw.lower())
+                if d >= 0:
+                    ret_pw = True
+                else:
+                    ret_pw = False
+                if ret_pw and ret_mc and ret_cd and ret_gg:
+                    print('根据相似度匹配成功的品名：'+mb_cp+'\t产地：'+mb_cd+'\t规格：'+mb_gg+'\t批准文号：'+mb_pw+'\t商品编号：'+mb_bh+'\t价格：'+mb_jg)
                     data_dict = []
-                    data_dict.append(kh_mc)
+                    data_dict.append(kh_cp)
                     data_dict.append(kh_cd)
                     data_dict.append(kh_gg)
+                    data_dict.append(kh_pw)
                     data_dict.append(mb_cp)
                     data_dict.append(mb_cd)
                     data_dict.append(mb_gg)
-                    data.append(data_dict)
+                    data_dict.append(mb_pw)
+                    data_dict.append(mb_bh)
+                    data_dict.append(mb_jg)
+                    data_list.append(data_dict)
+                    ret = False
+                    break
+                else:
+                    ret = True
+                    continue
+            return ret
 
     except:
         logging.exception('checkText exception：')
 
 #根据文件夹 截取文件名称
-def getFileList(path_a,path_b,mc_xsd,cd_xsd,gg_xsd):
+def getFileList(path_a,path_b,mc_xsd,cd_xsd):
     try:
         #获取excel文件内容，并判断是否包含
         wb = xlrd.open_workbook(path_a) #打开excel表
@@ -132,7 +153,22 @@ def getFileList(path_a,path_b,mc_xsd,cd_xsd,gg_xsd):
                 cd = str(sheet.cell_value(i,1)).strip();
                 #规格
                 gg = str(sheet.cell_value(i,2)).strip();
-                checkText(path_b,cp,cd,gg,mc_xsd,cd_xsd,gg_xsd)
+                #批文
+                pw = str(sheet.cell_value(i,3)).strip();
+                falg = checkText(path_b,cp,cd,gg,pw,mc_xsd,cd_xsd)
+                if falg:
+                    data_dict = []
+                    data_dict.append(cp)
+                    data_dict.append(cd)
+                    data_dict.append(gg)
+                    data_dict.append(pw)
+                    data_dict.append('')
+                    data_dict.append('')
+                    data_dict.append('')
+                    data_dict.append('')
+                    data_dict.append('')
+                    data_dict.append('')
+                    data_list.append(data_dict)
     except:
         logging.exception('getFileList exception：')
 
@@ -156,29 +192,73 @@ def jaccrad(model, reference):  # terms_reference为源句子，terms_model为�
     jaccard_coefficient = float(temp / fenmu)  # 交集
     return jaccard_coefficient
 
+def KMP_algorithm(string, substring):
+    '''
+    KMP字符串匹配的主函数
+    若存在字串返回字串在字符串中开始的位置下标，或者返回-1
+    '''
+    pnext = gen_pnext(substring)
+    n = len(string)
+    m = len(substring)
+    i, j = 0, 0
+    while (i<n) and (j<m):
+        if (string[i]==substring[j]):
+            i += 1
+            j += 1
+        elif (j!=0):
+            j = pnext[j-1]
+        else:
+            i += 1
+    if (j == m):
+        return i-j
+    else:
+        return -1
+
+def gen_pnext(substring):
+    """
+    构造临时数组pnext
+    """
+    index, m = 0, len(substring)
+    pnext = [0]*m
+    i = 1
+    while i < m:
+        if (substring[i] == substring[index]):
+            pnext[i] = index + 1
+            index += 1
+            i += 1
+        elif (index!=0):
+            index = pnext[index-1]
+        else:
+            pnext[i] = 0
+            i += 1
+    return pnext
+
 if __name__ == '__main__':
     mc_xsd = input("品名相似度(如：0-1之间，0.6相当于百分之60的概率)：")
     cd_xsd = input("产地相似度(如：0-1之间，0.6相当于百分之60的概率)：")
-    gg_xsd = input("规格相似度(如：0-1之间，0.6相当于百分之60的概率)：")
+    #gg_xsd = input("规格相似度(如：0-1之间，0.6相当于百分之60的概率)：")
     #不接受09这样的为整数
     regInt='^0$|^[1-9]\d*$'
     #接受0.00、0.360这样的为小数，不接受00.36，思路:若整数位为零,小数位可为任意整数，但小数位数至少为1位，若整数位为自然数打头，后面可添加任意多个整数，小数位至少1位
     regFloat='^0\.\d+$|^[1-9]\d*\.\d+$'
     regIntOrFloat=regInt+'|'+regFloat#整数或小数
     patternIntOrFloat=re.compile(regIntOrFloat)#创建pattern对象，以便后续可以复用
-    if patternIntOrFloat.search(mc_xsd) or patternIntOrFloat.search(cd_xsd) or patternIntOrFloat.search(gg_xsd):
+    if patternIntOrFloat.search(mc_xsd) or patternIntOrFloat.search(cd_xsd):
         path_a = input("请输入客户数据的excel文件路径(如：C:/A.xlsx)：")
         path_b = input("请输入目录表的excel文件路径(如：C:/B.xlsx)：")
         start = time.time()
+        print("正在匹配，请稍后。。。")
         #匹配数据字典
-        getFileList(path_a,path_b,mc_xsd,cd_xsd,gg_xsd)
+        getFileList(path_a,path_b,mc_xsd,cd_xsd)
         # 获取当前时间
         nowTime = datetime.datetime.now().strftime('%Y%m%d%H%M%S')
         # 判断字典是否非空
-        if data:
+        if data_list:
+            #创建excel名称
+            excelName = '匹配结果_'+nowTime+'.xlsx';
+            print("正在处理数据，请稍等。。。")
             #导出exlce结果
-            write_excel('匹配结果_'+nowTime+'.xls',data)
-            print("匹配完成，并保存完毕")
+            write_excel(excelName,data_list)
         else:
             print("没有匹配的数据，请重新检查")
         end = time.time()
