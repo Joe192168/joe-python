@@ -5,6 +5,7 @@ import time
 import datetime
 import xlrd,xlwt
 import logging
+from openpyxl.styles import Font,colors
 from openpyxl import Workbook
 import Levenshtein
 
@@ -14,23 +15,6 @@ logging.basicConfig(filename='log.txt', level=logging.DEBUG,
 
 #全局字典
 data_list = []
-
-#设置单元格样式
-def set_style(name,height,bold=False):
-    style = xlwt.XFStyle() # 初始化样式
-    font = xlwt.Font() # 为样式创建字体
-    font.name = name # 'Times New Roman'
-    font.bold = bold
-    font.color_index = 4
-    font.height = height
-    # borders= xlwt.Borders()
-    # borders.left= 6
-    # borders.right= 6
-    # borders.top= 6
-    # borders.bottom= 6
-    style.font = font
-    # style.borders = borders
-    return style
 
 #写入excel文件
 def write_excel(file_name,d_list):
@@ -43,7 +27,7 @@ def write_excel(file_name,d_list):
         # 设置表头信息
         field=1
         for field in range(1,len(fields)+1):   # 写入表头
-            sheet.cell(row=1,column=field,value=str(fields[field-1]))
+            sheet.cell(row=1,column=field,value=str(fields[field-1])).font = Font(name='微软雅黑', size=12, italic=False, color=colors.RED, bold=False)
         # 写入数据
         row1=1
         col1=0
@@ -56,7 +40,7 @@ def write_excel(file_name,d_list):
     except:
         logging.exception('write_excel exception：')
 
-def checkText(file_dir,kh_cp,kh_cd,kh_gg,kh_pw,mc_xsd,cd_xsd):
+def checkText(file_dir,kh_cp,kh_cd,kh_gg,kh_pw,mc_xsd,cd_xsd,gg_xsd):
     try:
         wb = xlrd.open_workbook(file_dir) #打开excel表
         #获取所有sheet工作簿名称
@@ -99,8 +83,8 @@ def checkText(file_dir,kh_cp,kh_cd,kh_gg,kh_pw,mc_xsd,cd_xsd):
                 else:
                     ret_cd = False
                 #规格
-                c = KMP_algorithm(mb_gg.lower(),kh_gg.lower())
-                if c >= 0:
+                c = jaccrad(mb_gg.lower(),kh_gg.lower())
+                if c >= float(gg_xsd):
                     ret_gg = True
                 else:
                     ret_gg = False
@@ -135,7 +119,7 @@ def checkText(file_dir,kh_cp,kh_cd,kh_gg,kh_pw,mc_xsd,cd_xsd):
         logging.exception('checkText exception：')
 
 #根据文件夹 截取文件名称
-def getFileList(path_a,path_b,mc_xsd,cd_xsd):
+def getFileList(path_a,path_b,mc_xsd,cd_xsd,gg_xsd):
     try:
         #获取excel文件内容，并判断是否包含
         wb = xlrd.open_workbook(path_a) #打开excel表
@@ -155,7 +139,7 @@ def getFileList(path_a,path_b,mc_xsd,cd_xsd):
                 gg = str(sheet.cell_value(i,2)).strip();
                 #批文
                 pw = str(sheet.cell_value(i,3)).strip();
-                falg = checkText(path_b,cp,cd,gg,pw,mc_xsd,cd_xsd)
+                falg = checkText(path_b,cp,cd,gg,pw,mc_xsd,cd_xsd,gg_xsd)
                 if falg:
                     data_dict = []
                     data_dict.append(cp)
@@ -236,20 +220,20 @@ def gen_pnext(substring):
 if __name__ == '__main__':
     mc_xsd = input("品名相似度(如：0-1之间，0.6相当于百分之60的概率)：")
     cd_xsd = input("产地相似度(如：0-1之间，0.6相当于百分之60的概率)：")
-    #gg_xsd = input("规格相似度(如：0-1之间，0.6相当于百分之60的概率)：")
+    gg_xsd = input("规格相似度(如：0-1之间，0.6相当于百分之60的概率)：")
     #不接受09这样的为整数
     regInt='^0$|^[1-9]\d*$'
     #接受0.00、0.360这样的为小数，不接受00.36，思路:若整数位为零,小数位可为任意整数，但小数位数至少为1位，若整数位为自然数打头，后面可添加任意多个整数，小数位至少1位
     regFloat='^0\.\d+$|^[1-9]\d*\.\d+$'
     regIntOrFloat=regInt+'|'+regFloat#整数或小数
     patternIntOrFloat=re.compile(regIntOrFloat)#创建pattern对象，以便后续可以复用
-    if patternIntOrFloat.search(mc_xsd) or patternIntOrFloat.search(cd_xsd):
+    if patternIntOrFloat.search(mc_xsd) or patternIntOrFloat.search(cd_xsd) or patternIntOrFloat.search(gg_xsd):
         path_a = input("请输入客户数据的excel文件路径(如：C:/A.xlsx)：")
         path_b = input("请输入目录表的excel文件路径(如：C:/B.xlsx)：")
         start = time.time()
         print("正在匹配，请稍后。。。")
         #匹配数据字典
-        getFileList(path_a,path_b,mc_xsd,cd_xsd)
+        getFileList(path_a,path_b,mc_xsd,cd_xsd,gg_xsd)
         # 获取当前时间
         nowTime = datetime.datetime.now().strftime('%Y%m%d%H%M%S')
         # 判断字典是否非空
