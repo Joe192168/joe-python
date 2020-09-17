@@ -42,3 +42,5 @@ datas = collect_data_files("jieba")
 接下来，找到pyinstaller的hooks文件夹，大概位于：
 
 python根目录\Lib\site-packages\PyInstaller\hooks下，然后把hook-jieba.py丢进去
+
+打包 pyinstaller -F --icon=favicon.ico matching.py

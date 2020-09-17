@@ -1,11 +1,10 @@
 #-*- coding:utf-8 -*-
 import re
-import jieba
 import time
 import datetime
 import xlrd,xlwt
 import logging
-from openpyxl.styles import Font,colors
+from openpyxl.styles import Font
 from openpyxl import Workbook
 import Levenshtein
 
@@ -27,7 +26,7 @@ def write_excel(file_name,d_list):
         # 设置表头信息
         field=1
         for field in range(1,len(fields)+1):   # 写入表头
-            sheet.cell(row=1,column=field,value=str(fields[field-1])).font = Font(name='微软雅黑', size=12, italic=False, color=colors.RED, bold=False)
+            sheet.cell(row=1,column=field,value=str(fields[field-1])).font = Font(name='微软雅黑', size=12, italic=False, color='FF0004', bold=False)
         # 写入数据
         row1=1
         col1=0
@@ -83,36 +82,58 @@ def checkText(file_dir,kh_cp,kh_cd,kh_gg,kh_pw,mc_xsd,cd_xsd,gg_xsd):
                 else:
                     ret_cd = False
                 #规格
-                c = jaccrad(mb_gg.lower(),kh_gg.lower())
+                c = acquaintance(mb_gg.lower(),kh_gg.lower())
                 if c >= float(gg_xsd):
                     ret_gg = True
                 else:
                     ret_gg = False
-                #批文
-                d = KMP_algorithm(mb_pw.lower(),kh_pw.lower())
-                if d >= 0:
-                    ret_pw = True
+                #判断批文是否非空
+                if kh_pw:
+                    #批文
+                    d = KMP_algorithm(mb_pw.lower(),kh_pw.lower())
+                    if len(mb_pw)>0 and len(kh_pw)>0 and d >= 0:
+                        ret_pw = True
+                    else:
+                        ret_pw = False
+                    if ret_pw and ret_mc and ret_cd and ret_gg:
+                        print('根据相似度匹配成功的品名：'+mb_cp+'\t产地：'+mb_cd+'\t规格：'+mb_gg+'\t批准文号：'+mb_pw+'\t商品编号：'+mb_bh+'\t价格：'+mb_jg)
+                        data_dict = []
+                        data_dict.append(kh_cp)
+                        data_dict.append(kh_cd)
+                        data_dict.append(kh_gg)
+                        data_dict.append(kh_pw)
+                        data_dict.append(mb_cp)
+                        data_dict.append(mb_cd)
+                        data_dict.append(mb_gg)
+                        data_dict.append(mb_pw)
+                        data_dict.append(mb_bh)
+                        data_dict.append(mb_jg)
+                        data_list.append(data_dict)
+                        ret = False
+                        break
+                    else:
+                        ret = True
+                        continue
                 else:
-                    ret_pw = False
-                if ret_pw and ret_mc and ret_cd and ret_gg:
-                    print('根据相似度匹配成功的品名：'+mb_cp+'\t产地：'+mb_cd+'\t规格：'+mb_gg+'\t批准文号：'+mb_pw+'\t商品编号：'+mb_bh+'\t价格：'+mb_jg)
-                    data_dict = []
-                    data_dict.append(kh_cp)
-                    data_dict.append(kh_cd)
-                    data_dict.append(kh_gg)
-                    data_dict.append(kh_pw)
-                    data_dict.append(mb_cp)
-                    data_dict.append(mb_cd)
-                    data_dict.append(mb_gg)
-                    data_dict.append(mb_pw)
-                    data_dict.append(mb_bh)
-                    data_dict.append(mb_jg)
-                    data_list.append(data_dict)
-                    ret = False
-                    break
-                else:
-                    ret = True
-                    continue
+                    if  ret_mc and ret_cd and ret_gg:
+                        print('根据相似度匹配成功的品名：'+mb_cp+'\t产地：'+mb_cd+'\t规格：'+mb_gg+'\t批准文号：'+mb_pw+'\t商品编号：'+mb_bh+'\t价格：'+mb_jg)
+                        data_dict = []
+                        data_dict.append(kh_cp)
+                        data_dict.append(kh_cd)
+                        data_dict.append(kh_gg)
+                        data_dict.append(kh_pw)
+                        data_dict.append(mb_cp)
+                        data_dict.append(mb_cd)
+                        data_dict.append(mb_gg)
+                        data_dict.append(mb_pw)
+                        data_dict.append(mb_bh)
+                        data_dict.append(mb_jg)
+                        data_list.append(data_dict)
+                        ret = False
+                        break
+                    else:
+                        ret = True
+                        continue
             return ret
 
     except:
@@ -159,22 +180,6 @@ def getFileList(path_a,path_b,mc_xsd,cd_xsd,gg_xsd):
 #计算相似度算法
 def acquaintance(a,b):
     return Levenshtein.ratio(a,b)
-
-# 计算jaccard系数
-def jaccrad(model, reference):  # terms_reference为源句子，terms_model为候选句子
-    #jieba.set_dictionary("dict.txt")
-    #jieba.initialize()
-    terms_reference = jieba.cut(reference,cut_all=True)  # 默认精准模式
-    terms_model = jieba.cut(model)
-    grams_reference = set(terms_reference)  # 去重；如果不需要就改为list
-    grams_model = set(terms_model)
-    temp = 0
-    for i in grams_reference:
-        if i in grams_model:
-            temp = temp + 1
-    fenmu = len(grams_model) + len(grams_reference) - temp  # 并集
-    jaccard_coefficient = float(temp / fenmu)  # 交集
-    return jaccard_coefficient
 
 def KMP_algorithm(string, substring):
     '''
