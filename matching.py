@@ -222,35 +222,45 @@ def gen_pnext(substring):
             i += 1
     return pnext
 
+def now():
+    return time.strftime('%Y-%m-%d',time.localtime(time.time()))
+
 if __name__ == '__main__':
-    mc_xsd = input("品名相似度(如：0-1之间，0.6相当于百分之60的概率)：")
-    cd_xsd = input("产地相似度(如：0-1之间，0.6相当于百分之60的概率)：")
-    gg_xsd = input("规格相似度(如：0-1之间，0.6相当于百分之60的概率)：")
-    #不接受09这样的为整数
-    regInt='^0$|^[1-9]\d*$'
-    #接受0.00、0.360这样的为小数，不接受00.36，思路:若整数位为零,小数位可为任意整数，但小数位数至少为1位，若整数位为自然数打头，后面可添加任意多个整数，小数位至少1位
-    regFloat='^0\.\d+$|^[1-9]\d*\.\d+$'
-    regIntOrFloat=regInt+'|'+regFloat#整数或小数
-    patternIntOrFloat=re.compile(regIntOrFloat)#创建pattern对象，以便后续可以复用
-    if patternIntOrFloat.search(mc_xsd) or patternIntOrFloat.search(cd_xsd) or patternIntOrFloat.search(gg_xsd):
-        path_a = input("请输入客户数据的excel文件路径(如：C:/A.xlsx)：")
-        path_b = input("请输入目录表的excel文件路径(如：C:/B.xlsx)：")
-        start = time.time()
-        print("正在匹配，请稍后。。。")
-        #匹配数据字典
-        getFileList(path_a,path_b,mc_xsd,cd_xsd,gg_xsd)
-        # 获取当前时间
-        nowTime = datetime.datetime.now().strftime('%Y%m%d%H%M%S')
-        # 判断字典是否非空
-        if data_list:
-            #创建excel名称
-            excelName = '匹配结果_'+nowTime+'.xlsx';
-            print("正在处理数据，请稍等。。。")
-            #导出exlce结果
-            write_excel(excelName,data_list)
-        else:
-            print("没有匹配的数据，请重新检查")
-        end = time.time()
-        print("耗时: %.3fs" % (end - start))
+    #到期时间
+    expire = '2020-10-20 00:00:00'
+    #根据有效期限进行判断
+    if expire < now():
+        print('已过期,无法正常使用')
     else:
-        print("输入的相似度不是数字，请重新输入")
+        print('未过期,可以正常使用')
+        mc_xsd = input("品名相似度(如：0-1之间，0.6相当于百分之60的概率)：")
+        cd_xsd = input("产地相似度(如：0-1之间，0.6相当于百分之60的概率)：")
+        gg_xsd = input("规格相似度(如：0-1之间，0.6相当于百分之60的概率)：")
+        #不接受09这样的为整数
+        regInt='^0$|^[1-9]\d*$'
+        #接受0.00、0.360这样的为小数，不接受00.36，思路:若整数位为零,小数位可为任意整数，但小数位数至少为1位，若整数位为自然数打头，后面可添加任意多个整数，小数位至少1位
+        regFloat='^0\.\d+$|^[1-9]\d*\.\d+$'
+        regIntOrFloat=regInt+'|'+regFloat#整数或小数
+        patternIntOrFloat=re.compile(regIntOrFloat)#创建pattern对象，以便后续可以复用
+        if patternIntOrFloat.search(mc_xsd) or patternIntOrFloat.search(cd_xsd) or patternIntOrFloat.search(gg_xsd):
+            path_a = input("请输入客户数据的excel文件路径(如：C:/A.xlsx)：")
+            path_b = input("请输入目录表的excel文件路径(如：C:/B.xlsx)：")
+            start = time.time()
+            print("正在匹配，请稍后。。。")
+            #匹配数据字典
+            getFileList(path_a,path_b,mc_xsd,cd_xsd,gg_xsd)
+            # 获取当前时间
+            nowTime = datetime.datetime.now().strftime('%Y%m%d%H%M%S')
+            # 判断字典是否非空
+            if data_list:
+                #创建excel名称
+                excelName = '匹配结果_'+nowTime+'.xlsx';
+                print("正在处理数据，请稍等。。。")
+                #导出exlce结果
+                write_excel(excelName,data_list)
+            else:
+                print("没有匹配的数据，请重新检查")
+            end = time.time()
+            print("耗时: %.3fs" % (end - start))
+        else:
+            print("输入的相似度不是数字，请重新输入")

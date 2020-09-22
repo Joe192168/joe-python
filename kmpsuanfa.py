@@ -1,6 +1,9 @@
 import jieba
+import datetime
+from dateutil.relativedelta import relativedelta
 from fuzzywuzzy import fuzz
 from fuzzywuzzy import process
+import time
 import Levenshtein
 
 # 计算jaccard系数
@@ -61,13 +64,32 @@ def gen_pnext(substring):
             i += 1
     return pnext
 
+def now():
+    return time.strftime('%Y-%m-%d',time.localtime(time.time()))
+
+def time_long(time1, time2, type="day"):
+    """
+    计算时间差
+    :param time1: 较小的时间（datetime类型）
+    :param time2: 较大的时间（datetime类型）
+    :param type: 返回结果的时间类型（暂时就是返回相差天数）
+    :return: 相差的天数
+    """
+    day1 = time.strptime(str(time1), '%Y-%m-%d')
+    day2 = time.strptime(str(time2), '%Y-%m-%d')
+    if type == 'day':
+        day_num = (int(time.mktime(day2)) - int(time.mktime(day1))) / (
+                24 * 60 * 60)
+    return abs(int(day_num))
+
+
 if __name__ == "__main__":
     string = '25mg*20片'.lower()
     substring = '25mg*20片/瓶'.lower()
     out = KMP_algorithm(string, substring)
     print(out)
-    a = '10ml*6'.lower()
-    b = '10ml*5支'.lower()
+    a = '0.25g*100s'.lower()
+    b = '0.25g*100T'.lower()
     # out = fuzz.token_sort_ratio(a, b)
     # print(out)
     # g = process.extractOne(a, b)
@@ -78,3 +100,23 @@ if __name__ == "__main__":
     print(d)
     if d>float(0.78):
         print('正确')
+    jlist = jieba.cut(string,cut_all=True)
+    for vax in jlist:
+        print(vax)
+
+    now1 = now()
+    sdate  = datetime.datetime.strptime('2020.09.22','%Y.%m.%d')
+    delta7 = datetime.timedelta(days=7)
+    edate  = sdate + delta7
+    print(edate)
+    s = '2020-10-20 00:00:00'
+    # print(now())
+    if s < now():
+        print('已过期,无法正常使用')
+    else:
+        print('未过期,可以正常使用')
+    print(time_long('2020-09-22','2020-09-29'))
+    now = datetime.date.today()
+    print(now + relativedelta(months = 1))
+    print(now + relativedelta(years = 1))
+    print(now + relativedelta(days = 20))
