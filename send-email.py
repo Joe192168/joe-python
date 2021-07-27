@@ -17,10 +17,10 @@ to_addr = input('To: ')
 #SMTP服务器是 smtp.qq.com ，smtp.sohu.com ，smtp.sina.com
 smtp_server = input('SMTP server: ')
 
-msg = MIMEText('hello, send by Python...', 'plain', 'utf-8')
+msg = MIMEText('你好, 中国加油...', 'plain', 'utf-8')
 msg['From'] = _format_addr('Python爱好者 <%s>' % from_addr)
 msg['To'] = _format_addr('管理员 <%s>' % to_addr)
-msg['Subject'] = Header('来自SMTP的问候……', 'utf-8').encode()
+msg['Subject'] = Header('来自外星人的问候……', 'utf-8').encode()
 
 server = smtplib.SMTP(smtp_server, 25)
 server.set_debuglevel(1)
