@@ -377,9 +377,9 @@ def main():
         # 获取所有商品品种
         all_export_exlce()
     elif num == '1':
-        if os.path.exists("药品品种.txt"):
+        if os.path.exists("../药品品种.txt"):
             # 打开文件
-            with open("药品品种.txt", "r", encoding="utf-8") as f:
+            with open("../药品品种.txt", "r", encoding="utf-8") as f:
                 for line in f.readlines():
                     # 去掉列表中每一个元素的换行符
                     data = line.strip('\n')
