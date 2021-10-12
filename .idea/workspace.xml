@@ -19,32 +19,19 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9f6e0b5f-da5b-4614-9d99-160670f0c787" name="Default" comment="hdfs测试">
+    <list default="true" id="9f6e0b5f-da5b-4614-9d99-160670f0c787" name="Default" comment="sql解析">
+      <change afterPath="$PROJECT_DIR$/爬虫例子/active.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/爬虫例子/daweilai.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/爬虫例子/saikr.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/爬虫例子/test.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/爬虫例子/验证码.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/药品/xmyc.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/药品/感冒灵20211012173552.xlsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ai-pic.py" beforeDir="false" afterPath="$PROJECT_DIR$/图片处理/ai-pic.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dic.py" beforeDir="false" afterPath="$PROJECT_DIR$/药品/dic.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hdfs_test.py" beforeDir="false" afterPath="$PROJECT_DIR$/大数据/hdfs_test.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hook-jieba.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/jd.py" beforeDir="false" afterPath="$PROJECT_DIR$/爬虫例子/jd.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/kmpsuanfa.py" beforeDir="false" afterPath="$PROJECT_DIR$/药品/kmpsuanfa.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/matching.py" beforeDir="false" afterPath="$PROJECT_DIR$/药品/matching.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/md5.py" beforeDir="false" afterPath="$PROJECT_DIR$/算法/md5.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/p-exlce.py" beforeDir="false" afterPath="$PROJECT_DIR$/爬虫例子/p-exlce.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/p_mdx.py" beforeDir="false" afterPath="$PROJECT_DIR$/爬虫例子/p_mdx.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pic-tp.py" beforeDir="false" afterPath="$PROJECT_DIR$/图片处理/pic-tp.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/qrcode-card.py" beforeDir="false" afterPath="$PROJECT_DIR$/二维码/qrcode-card.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/qrcode-url.py" beforeDir="false" afterPath="$PROJECT_DIR$/二维码/qrcode-url.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/remove-pic.py" beforeDir="false" afterPath="$PROJECT_DIR$/图片处理/remove-pic.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/send-email.py" beforeDir="false" afterPath="$PROJECT_DIR$/邮箱/send-email.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tb.py" beforeDir="false" afterPath="$PROJECT_DIR$/爬虫例子/tb.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/weix-logo.py" beforeDir="false" afterPath="$PROJECT_DIR$/微信/weix-logo.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/wifi-qrcode.py" beforeDir="false" afterPath="$PROJECT_DIR$/wifi/wifi-qrcode.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/xl.py" beforeDir="false" afterPath="$PROJECT_DIR$/爬虫例子/xl.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/xzqh.py" beforeDir="false" afterPath="$PROJECT_DIR$/行政区域/xzqh.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ybm.py" beforeDir="false" afterPath="$PROJECT_DIR$/药品/ybm.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/yp.py" beforeDir="false" afterPath="$PROJECT_DIR$/药品/yp.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/yxuan.py" beforeDir="false" afterPath="$PROJECT_DIR$/药品/yxuan.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/joe-python.iml" beforeDir="false" afterPath="$PROJECT_DIR$/joe-python.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tools/chromedriver.exe" beforeDir="false" afterPath="$PROJECT_DIR$/tools/chromedriver.exe" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/药品/yp.py" beforeDir="false" afterPath="$PROJECT_DIR$/药品/yp.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -76,7 +63,7 @@
       <GitPushTagMode />
     </option>
   </component>
-  <component name="JupyterTrust" id="9fc259d5-6048-4445-85a3-e3684987c98c" />
+  <component name="JupyterTrust" id="772c7e35-1f08-4d16-9473-29aa71f61bec" />
   <component name="MavenImportPreferences">
     <option name="generalSettings">
       <MavenGeneralSettings>
@@ -95,18 +82,24 @@
     <option name="showMembers" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="go.import.settings.migrated" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../Git/moz-sql-parser" />
     <property name="nodejs_interpreter_path" value="node" />
     <property name="nodejs_package_manager_path" value="npm" />
-    <property name="project.structure.last.edited" value="Global Libraries" />
-    <property name="project.structure.proportion" value="0.0" />
+    <property name="project.structure.last.edited" value="Project" />
+    <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
-    <property name="settings.editor.selected.configurable" value="configurable.group.appearance" />
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="H:\joe-python\数码测色计" />
+      <recent name="H:\joe-python" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="H:\joe-python\算法" />
       <recent name="H:\joe-python\图片处理" />
@@ -114,11 +107,8 @@
       <recent name="H:\joe-python\药品" />
       <recent name="H:\joe-python\行政区域" />
     </key>
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="H:\joe-python" />
-    </key>
   </component>
-  <component name="RunManager" selected="Python.qq_dowload">
+  <component name="RunManager" selected="Python.xmyc">
     <configuration default="true" type="Applet">
       <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
       <method v="2">
@@ -151,7 +141,7 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="hdfs_test" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+    <configuration name="daweilai" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="joe-python" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -159,12 +149,12 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/爬虫例子" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="H:\joe-python\大数据\hdfs_test.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/爬虫例子/daweilai.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -173,7 +163,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="hdfs_test" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+    <configuration name="saikr" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="joe-python" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -181,12 +171,12 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/爬虫例子" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="H:\joe-python\大数据\hdfs_test.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/爬虫例子/saikr.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -195,7 +185,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="qq_dowload" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+    <configuration name="sql_ma" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="joe-python" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -203,12 +193,12 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/下载歌曲" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/SQL解析" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/下载歌曲/qq_dowload.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/SQL解析/sql_ma.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -217,7 +207,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="send-email" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+    <configuration name="sql_ps (1)" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="joe-python" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -225,12 +215,12 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/SQL解析" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="H:\joe-python\邮箱\send-email.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/SQL解析/sql_ps.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -239,7 +229,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="xzqh" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+    <configuration name="xmyc" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="joe-python" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -247,12 +237,12 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/药品" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="H:\joe-python\行政区域\xzqh.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/药品/xmyc.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -280,19 +270,19 @@
       </method>
     </configuration>
     <list>
-      <item itemvalue="Python.send-email" />
-      <item itemvalue="Python.hdfs_test" />
-      <item itemvalue="Python.hdfs_test (1)" />
-      <item itemvalue="Python.xzqh" />
-      <item itemvalue="Python.qq_dowload" />
+      <item itemvalue="Python.sql_ma" />
+      <item itemvalue="Python.sql_ps (1)" />
+      <item itemvalue="Python.xmyc" />
+      <item itemvalue="Python.saikr" />
+      <item itemvalue="Python.daweilai" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.qq_dowload" />
-        <item itemvalue="Python.xzqh" />
-        <item itemvalue="Python.hdfs_test (1)" />
-        <item itemvalue="Python.hdfs_test" />
-        <item itemvalue="Python.send-email" />
+        <item itemvalue="Python.xmyc" />
+        <item itemvalue="Python.daweilai" />
+        <item itemvalue="Python.saikr" />
+        <item itemvalue="Python.sql_ps (1)" />
+        <item itemvalue="Python.sql_ma" />
       </list>
     </recent_temporary>
   </component>
@@ -312,7 +302,17 @@
       <workItem from="1565774047478" duration="85803000" />
       <workItem from="1566129735016" duration="204000" />
       <workItem from="1626325293845" duration="1758000" />
-      <workItem from="1627296528359" duration="5746000" />
+      <workItem from="1627296528359" duration="7162000" />
+      <workItem from="1627364547319" duration="1515000" />
+      <workItem from="1629701779433" duration="3104000" />
+      <workItem from="1630993511302" duration="3818000" />
+      <workItem from="1630997457284" duration="2211000" />
+      <workItem from="1631000084548" duration="496000" />
+      <workItem from="1631000682559" duration="770000" />
+      <workItem from="1631001908953" duration="454000" />
+      <workItem from="1631003744679" duration="3073000" />
+      <workItem from="1631069843226" duration="5354000" />
+      <workItem from="1634000554135" duration="28326000" />
     </task>
     <task id="LOCAL-00001" summary="行政获取">
       <created>1626325437578</created>
@@ -328,11 +328,35 @@
       <option name="project" value="LOCAL" />
       <updated>1627352577319</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="数码测色">
+      <created>1629769552611</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1629769552611</updated>
+    </task>
+    <task id="LOCAL-00004" summary="sql解析">
+      <created>1631079714573</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1631079714573</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.History.Properties">
+    <option name="COLUMN_ORDER">
+      <list>
+        <option value="0" />
+        <option value="2" />
+        <option value="3" />
+        <option value="1" />
+      </list>
+    </option>
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
@@ -349,13 +373,15 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="行政获取" />
     <MESSAGE value="hdfs测试" />
-    <option name="LAST_COMMIT_MESSAGE" value="hdfs测试" />
+    <MESSAGE value="数码测色" />
+    <MESSAGE value="sql解析" />
+    <option name="LAST_COMMIT_MESSAGE" value="sql解析" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="582" y="243" key="#Inspections" timestamp="1627351409549">
+    <state x="582" y="243" key="#Inspections" timestamp="1630994169611">
       <screen x="0" y="0" width="1920" height="1160" />
     </state>
-    <state x="582" y="243" key="#Inspections/0.0.1920.1160@0.0.1920.1160" timestamp="1627351409549" />
+    <state x="582" y="243" key="#Inspections/0.0.1920.1160@0.0.1920.1160" timestamp="1630994169611" />
     <state x="452" y="156" key="#Intentions" timestamp="1627351955818">
       <screen x="0" y="0" width="1920" height="1160" />
     </state>
@@ -364,42 +390,86 @@
       <screen x="0" y="0" width="1920" height="1160" />
     </state>
     <state x="312" y="51" key="#Project_Structure/0.0.1920.1160@0.0.1920.1160" timestamp="1626325503220" />
-    <state x="92" y="92" width="1736" height="976" key="DiffContextDialog" timestamp="1627297138625">
+    <state width="1457" height="582" key="DebuggerActiveHint" timestamp="1634025469202">
       <screen x="0" y="0" width="1920" height="1160" />
     </state>
-    <state x="92" y="92" width="1736" height="976" key="DiffContextDialog/0.0.1920.1160@0.0.1920.1160" timestamp="1627297138625" />
-    <state width="1867" height="187" key="GridCell.Tab.0.bottom" timestamp="1627353290283">
+    <state width="1457" height="582" key="DebuggerActiveHint/0.0.1920.1160@0.0.1920.1160" timestamp="1634025469202" />
+    <state x="92" y="92" width="1736" height="976" maximized="true" key="DiffContextDialog" timestamp="1634001007042">
       <screen x="0" y="0" width="1920" height="1160" />
     </state>
-    <state width="1867" height="187" key="GridCell.Tab.0.bottom/0.0.1920.1160@0.0.1920.1160" timestamp="1627353290283" />
-    <state width="1867" height="187" key="GridCell.Tab.0.center" timestamp="1627353290283">
+    <state x="92" y="92" width="1736" height="976" maximized="true" key="DiffContextDialog/0.0.1920.1160@0.0.1920.1160" timestamp="1634001007042" />
+    <state x="254" y="242" key="FileChooserDialogImpl" timestamp="1631070103061">
       <screen x="0" y="0" width="1920" height="1160" />
     </state>
-    <state width="1867" height="187" key="GridCell.Tab.0.center/0.0.1920.1160@0.0.1920.1160" timestamp="1627353290283" />
-    <state width="1867" height="187" key="GridCell.Tab.0.left" timestamp="1627353290283">
+    <state x="254" y="242" key="FileChooserDialogImpl/0.0.1920.1160@0.0.1920.1160" timestamp="1631070103061" />
+    <state width="1867" height="294" key="GridCell.Tab.0.bottom" timestamp="1634033755548">
       <screen x="0" y="0" width="1920" height="1160" />
     </state>
-    <state width="1867" height="187" key="GridCell.Tab.0.left/0.0.1920.1160@0.0.1920.1160" timestamp="1627353290283" />
-    <state width="1867" height="187" key="GridCell.Tab.0.right" timestamp="1627353290283">
+    <state width="1867" height="294" key="GridCell.Tab.0.bottom/0.0.1920.1160@0.0.1920.1160" timestamp="1634033755548" />
+    <state width="1867" height="294" key="GridCell.Tab.0.center" timestamp="1634033755548">
       <screen x="0" y="0" width="1920" height="1160" />
     </state>
-    <state width="1867" height="187" key="GridCell.Tab.0.right/0.0.1920.1160@0.0.1920.1160" timestamp="1627353290283" />
+    <state width="1867" height="294" key="GridCell.Tab.0.center/0.0.1920.1160@0.0.1920.1160" timestamp="1634033755548" />
+    <state width="1867" height="294" key="GridCell.Tab.0.left" timestamp="1634033755548">
+      <screen x="0" y="0" width="1920" height="1160" />
+    </state>
+    <state width="1867" height="294" key="GridCell.Tab.0.left/0.0.1920.1160@0.0.1920.1160" timestamp="1634033755548" />
+    <state width="1867" height="294" key="GridCell.Tab.0.right" timestamp="1634033755548">
+      <screen x="0" y="0" width="1920" height="1160" />
+    </state>
+    <state width="1867" height="294" key="GridCell.Tab.0.right/0.0.1920.1160@0.0.1920.1160" timestamp="1634033755548" />
+    <state width="1867" height="296" key="GridCell.Tab.1.bottom" timestamp="1634031352269">
+      <screen x="0" y="0" width="1920" height="1160" />
+    </state>
+    <state width="1867" height="296" key="GridCell.Tab.1.bottom/0.0.1920.1160@0.0.1920.1160" timestamp="1634031352269" />
+    <state width="1867" height="296" key="GridCell.Tab.1.center" timestamp="1634031352268">
+      <screen x="0" y="0" width="1920" height="1160" />
+    </state>
+    <state width="1867" height="296" key="GridCell.Tab.1.center/0.0.1920.1160@0.0.1920.1160" timestamp="1634031352268" />
+    <state width="1867" height="296" key="GridCell.Tab.1.left" timestamp="1634031352268">
+      <screen x="0" y="0" width="1920" height="1160" />
+    </state>
+    <state width="1867" height="296" key="GridCell.Tab.1.left/0.0.1920.1160@0.0.1920.1160" timestamp="1634031352268" />
+    <state width="1867" height="296" key="GridCell.Tab.1.right" timestamp="1634031352268">
+      <screen x="0" y="0" width="1920" height="1160" />
+    </state>
+    <state width="1867" height="296" key="GridCell.Tab.1.right/0.0.1920.1160@0.0.1920.1160" timestamp="1634031352268" />
     <state x="437" y="252" key="IDE.errors.dialog" timestamp="1626327551453">
       <screen x="0" y="0" width="1920" height="1160" />
     </state>
     <state x="437" y="252" key="IDE.errors.dialog/0.0.1920.1160@0.0.1920.1160" timestamp="1626327551453" />
-    <state x="312" y="51" key="SettingsEditor" timestamp="1627349738877">
+    <state x="312" y="51" key="SettingsEditor" timestamp="1631001947697">
       <screen x="0" y="0" width="1920" height="1160" />
     </state>
-    <state x="312" y="51" key="SettingsEditor/0.0.1920.1160@0.0.1920.1160" timestamp="1627349738877" />
-    <state x="452" y="248" key="Vcs.Push.Dialog.v2" timestamp="1627352580711">
+    <state x="312" y="51" key="SettingsEditor/0.0.1920.1160@0.0.1920.1160" timestamp="1631001947697" />
+    <state x="452" y="248" key="Vcs.Push.Dialog.v2" timestamp="1631079715888">
       <screen x="0" y="0" width="1920" height="1160" />
     </state>
-    <state x="452" y="248" key="Vcs.Push.Dialog.v2/0.0.1920.1160@0.0.1920.1160" timestamp="1627352580711" />
+    <state x="452" y="248" key="Vcs.Push.Dialog.v2/0.0.1920.1160@0.0.1920.1160" timestamp="1631079715888" />
+    <state width="968" height="588" key="XDebugger.FullValuePopup" timestamp="1634018416198">
+      <screen x="0" y="0" width="1920" height="1160" />
+    </state>
+    <state width="968" height="588" key="XDebugger.FullValuePopup/0.0.1920.1160@0.0.1920.1160" timestamp="1634018416198" />
+    <state x="731" y="475" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1634033792715">
+      <screen x="0" y="0" width="1920" height="1160" />
+    </state>
+    <state x="731" y="475" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1920.1160@0.0.1920.1160" timestamp="1634033792715" />
+    <state x="400" y="244" key="com.intellij.xdebugger.impl.breakpoints.ui.BreakpointsDialogFactory$2" timestamp="1634007893993">
+      <screen x="0" y="0" width="1920" height="1160" />
+    </state>
+    <state x="400" y="244" key="com.intellij.xdebugger.impl.breakpoints.ui.BreakpointsDialogFactory$2/0.0.1920.1160@0.0.1920.1160" timestamp="1634007893993" />
     <state x="1051" y="334" width="742" height="722" key="find.popup" timestamp="1627353219664">
       <screen x="0" y="0" width="1920" height="1160" />
     </state>
     <state x="1051" y="334" width="742" height="722" key="find.popup/0.0.1920.1160@0.0.1920.1160" timestamp="1627353219664" />
+    <state x="532" y="267" key="run.anything.popup" timestamp="1630995546741">
+      <screen x="0" y="0" width="1920" height="1160" />
+    </state>
+    <state x="532" y="267" key="run.anything.popup/0.0.1920.1160@0.0.1920.1160" timestamp="1630995546741" />
+    <state x="539" y="125" width="840" height="1034" key="search.everywhere.popup" timestamp="1631005117710">
+      <screen x="0" y="0" width="1920" height="1160" />
+    </state>
+    <state x="539" y="125" width="840" height="1034" key="search.everywhere.popup/0.0.1920.1160@0.0.1920.1160" timestamp="1631005117710" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -410,6 +480,13 @@
           <option name="timeStamp" value="33" />
         </line-breakpoint>
       </breakpoints>
+      <default-breakpoints>
+        <breakpoint type="python-exception">
+          <properties notifyOnTerminate="true" exception="BaseException">
+            <option name="notifyOnTerminate" value="true" />
+          </properties>
+        </breakpoint>
+      </default-breakpoints>
     </breakpoint-manager>
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
@@ -417,11 +494,19 @@
     <select />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/joe_python$send_email.coverage" NAME="send-email Coverage Results" MODIFIED="1627350117444" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/joe_python$sql_json.coverage" NAME="sql_json Coverage Results" MODIFIED="1631079684665" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/SQL解析" />
+    <SUITE FILE_PATH="coverage/joe_python$daweilai.coverage" NAME="daweilai Coverage Results" MODIFIED="1634002485188" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/爬虫例子" />
     <SUITE FILE_PATH="coverage/joe_python$hdfs.coverage" NAME="hdfs Coverage Results" MODIFIED="1627352060126" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/joe_python$xzqh.coverage" NAME="xzqh Coverage Results" MODIFIED="1627352686461" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/joe_python$tb.coverage" NAME="tb Coverage Results" MODIFIED="1627349825472" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/joe_python$saikr.coverage" NAME="saikr Coverage Results" MODIFIED="1634001066490" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/爬虫例子" />
+    <SUITE FILE_PATH="coverage/joe_python$sql_ps__1_.coverage" NAME="sql_ps (1) Coverage Results" MODIFIED="1631080304460" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/SQL解析" />
     <SUITE FILE_PATH="coverage/joe_python$qq_dowload.coverage" NAME="qq_dowload Coverage Results" MODIFIED="1627353085173" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/下载歌曲" />
+    <SUITE FILE_PATH="coverage/joe_python$sql.coverage" NAME="sql Coverage Results" MODIFIED="1630994050059" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/SQL解析" />
+    <SUITE FILE_PATH="coverage/joe_python$xmyc.coverage" NAME="xmyc Coverage Results" MODIFIED="1634031352260" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/药品" />
+    <SUITE FILE_PATH="coverage/joe_python$send_email.coverage" NAME="send-email Coverage Results" MODIFIED="1627350117444" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/joe_python$frog.coverage" NAME="frog Coverage Results" MODIFIED="1629703773559" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/数码测色计" />
+    <SUITE FILE_PATH="coverage/joe_python$xzqh.coverage" NAME="xzqh Coverage Results" MODIFIED="1627352686461" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/joe_python$sql_ma.coverage" NAME="sql_ma Coverage Results" MODIFIED="1631079694290" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/SQL解析" />
+    <SUITE FILE_PATH="coverage/joe_python$tb.coverage" NAME="tb Coverage Results" MODIFIED="1627349825472" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/joe_python$hdfs_test__1_.coverage" NAME="hdfs_test (1) Coverage Results" MODIFIED="1627352268084" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>

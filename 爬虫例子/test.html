@@ -1,0 +1,950 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>大未来 - 登录</title>
+    <style>
+        @font-face {
+            font-family: 'Glyphicons Halflings';
+            src: url('/Content/font/glyphicons-halflings-regular.eot');
+            src: url('/Content/font/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'), url('/Content/font/glyphicons-halflings-regular.woff2') format('woff2'), url('/Content/font/glyphicons-halflings-regular.woff') format('woff'), url('/Content/font/glyphicons-halflings-regular.ttf') format('truetype'), url('/Content/font/glyphicons-halflings-regular.svg#glyphicons_halflingsregular') format('svg');
+        }
+    </style>
+    
+    <script>
+        //        var allprovinces = "北京,天津,江苏,辽宁,山东,湖南,湖北,安徽,山西,河南,陕西,河北,宁夏,广东,四川,广西,黑龙江,云南";
+        //        var allpid = "11,12,32,21,37,43,42,34,14,41,61,13,64,44,51,45,23,53";
+        var areaid = '11';
+        //        if (areaid) {
+        //            if (areaid.length != 2 || allpid.indexOf(areaid) == -1) {
+        //                if (lo) {
+        //                    lo = lo.replace(/省/, '').replace(/市/, '');
+        //                    allpid = allpid.split(',');
+        //                    var index = allprovinces.indexOf(lo);
+        //                    if (index == 0) {
+        //                        areaid = 11;
+        //                    }
+        //                    else {
+        //                        var str = allprovinces.substring(0, index);
+        //                        if (str[str.length - 1] === ',') {
+        //                            str = str.substring(0, str.length - 1);
+        //                        }
+        //                        var provinces = str.split(',');
+        //                        areaid = allpid[provinces.length];
+        //                    }
+        //                }
+        //                else {
+        //                    areaid = 11;
+        //                    lo = '北京';
+        //                }
+        //                location.href = '/Account/Login/' + areaid;
+        //            }
+        //        } else {
+        //            if (lo) {
+        //                lo = lo.replace(/省/, '').replace(/市/, '');
+        //            }
+        //            if (!lo || allprovinces.indexOf(lo) == -1) {
+        //                areaid = 11;
+        //                lo = '北京';
+        //            }
+        //            if (!areaid) {
+        //                allpid = allpid.split(',');
+        //                var index = allprovinces.indexOf(lo);
+        //                if (index == 0) {
+        //                    areaid = 11;
+        //                }
+        //                else {
+        //                    var str = allprovinces.substring(0, index);
+        //                    if (str[str.length - 1] === ',') {
+        //                        str = str.substring(0, str.length - 1);
+        //                    }
+        //                    var provinces = str.split(',');
+        //                    areaid = allpid[provinces.length];
+        //                }
+        //            }
+        //            location.href = '/Account/Login/' + areaid;
+        //        }
+    </script>
+    <link href="http://static.daweilai211.com/Content/bootstrap.css" rel="stylesheet" />
+    <link href="http://static.daweilai211.com/Content/style.css" rel="stylesheet" />
+    <link href="http://static.daweilai211.com/Content/nav.css?v=2" rel="stylesheet" />
+    <style>
+        input[type=text], input[type=password] {
+            width: 100%;
+            height: 32px;
+        }
+
+        td {
+            height: 50px;
+        }
+
+            td:first-child {
+                padding-right: 15px;
+            }
+
+            td.h30 {
+                height: 30px;
+            }
+    </style>
+    <style>
+        .arealink {
+            color: #333;
+        }
+    </style>
+    <style>
+        /*********通用对话框**start*********/
+        .div_dialog_mask {
+            position: fixed;
+            z-index: 9999;
+            left: 0px;
+            top: 0px;
+            width: 100%;
+            height: 100%;
+            background-color: black;
+            opacity: 0.5;
+        }
+
+        .div_dialog {
+            position: fixed;
+            top: 40%;
+            left: 50%;
+            -webkit-transform: translate(-50%,-50%);
+            -moz-transform: translate(-50%,-50%);
+            -ms-transform: translate(-50%,-50%);
+            -o-transform: translate(-50%,-50%);
+            transform: translate(-50%,-50%);
+            width: 430px;
+            text-align: center;
+            z-index: 9999;
+        }
+
+        .div_dialog_head {
+            padding: 0 10px;
+            height: 48px;
+            line-height: 48px;
+            background-color: #2f9688;
+            text-align: left;
+            color: #fff;
+            border: 1px solid #2f9688;
+            font-size: 20px;
+            cursor: move;
+            border-top-left-radius: 5px;
+            border-top-right-radius: 5px;
+        }
+
+        .div_dialog_body {
+            position: relative;
+            padding: 10px;
+            text-align: left;
+            vertical-align: middle;
+            background-color: #fff;
+            line-height: 26px;
+        }
+
+        .div_dialog_foot {
+            height: 57px;
+            line-height: 57px;
+            background-color: #fff;
+            text-align: right;
+            vertical-align: middle;
+            border: 1px solid #eee;
+            border-top: none;
+            border-bottom-left-radius: 5px;
+            border-bottom-right-radius: 5px;
+            text-align: center;
+        }
+
+            .div_dialog_foot > button, .div_dialog_foot > a {
+                margin: 0 15px;
+            }
+
+        .div_dialog .close {
+            color: #fff;
+            opacity: .9;
+            text-shadow: none;
+            line-height: inherit;
+            font-size: 28px;
+        }
+
+            .div_dialog .close:hover {
+                color: #fff;
+                opacity: 1;
+                text-shadow: none;
+            }
+
+        .div_tooltip {
+            position: fixed;
+            top: 40%;
+            left: 50%;
+            -webkit-transform: translate(-50%,-50%);
+            -moz-transform: translate(-50%,-50%);
+            -ms-transform: translate(-50%,-50%);
+            -o-transform: translate(-50%,-50%);
+            transform: translate(-50%,-50%);
+            width: 360px;
+            text-align: center;
+            background-color: #000;
+            padding: 20px;
+            opacity: .55;
+            color: white;
+            border-radius: 6px;
+            font-weight: bold;
+            z-index: 99999;
+        }
+
+        .div_tooltip_text {
+            position: fixed;
+            top: 40%;
+            left: 50%;
+            -webkit-transform: translate(-50%,-50%);
+            -moz-transform: translate(-50%,-50%);
+            -ms-transform: translate(-50%,-50%);
+            -o-transform: translate(-50%,-50%);
+            transform: translate(-50%,-50%);
+            width: 360px;
+            text-align: center;
+            color: White;
+            z-index: 999999;
+        }
+        /*********通用对话框**end*********/
+    </style>
+    <script src="http://static.daweilai211.com/Scripts/jquery.min.js"></script>
+    <script src="http://static.daweilai211.com/Scripts/jquery.validate.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            //            var $areas = $('#dropdownbar .submenu.area').find('.item');
+            //            for (var i = 0, area; area = $areas[i]; i++) {
+            //                var sid = $(area).attr('sid');
+            //                var name = $(area).text();
+            //                if (areaid && areaid == sid) {
+            //                    lo = name;
+            //                    break;
+            //                }
+            //            }
+            //            $('.curprovince').text($.trim(lo));
+            //            $.cookie('areaname', lo, { expires: 365, path: '/' });
+            //            if ($('#scrolltopfixed').length) {
+            //                $(window).scroll(function (e) {
+            //                    $('#dropdownbar').height(0);
+            //                    var offsetY = $('.kv').height() - $('.columns').height();
+            //                    if ($(document).scrollTop() >= offsetY) {
+            //                        $('#scrolltopfixed').show();
+            //                    }
+            //                    else {
+            //                        $('#scrolltopfixed').hide();
+            //                    }
+            //                });
+            //            }
+            //            $.each($('.arealink'), function (i, item) {
+            //                var column = $(item).attr('column');
+            //                var href = $(item).attr('href');
+            //                if (column) {
+            //                    $(item).attr('href', href + areaid + '#' + column);
+            //                }
+            //                else {
+            //                    $(item).attr('href', href + areaid);
+            //                }
+            //            });
+        });
+    </script>
+</head>
+<body>
+    <div id="header">
+        <div class="layout">
+            <img class="logo" src="/images/logo.png" alt="大未来" onclick="location.href='/'">
+            <div class="left area" submenuid="area" dropdown>
+                <div class="pointer">
+                    <span class="curprovince"></span><span class="glyphicon glyphicon-chevron-down">
+                    </span><span class="glyphicon glyphicon-chevron-up"></span>
+                </div>
+            </div>
+            <ul class="left nav">
+                <li class="on" submenuid="1" dropdown>
+                    <div>
+                        <a href="/">首页 </a>
+                    </div>
+                </li>
+                <li submenuid="2" dropdown>
+                    <div>
+                        <a href="/fangan/selflist">填报中心</a>
+                    </div>
+                </li>
+                <li submenuid="10">
+                    <div>
+                        <a href="http://zz.daweilai211.com/">自主选拔</a>
+                    </div>
+                </li>
+                <li submenuid="3">
+                    <div>
+                        <a href="/school/listv1">高校库</a>
+                    </div>
+                </li>
+                <li submenuid="4">
+                    <div>
+                        <a href="/major/index">专业库</a>
+                    </div>
+                </li>
+                <li submenuid="7">
+                    <div>
+                        <a href="/ZhiYuanDai/index">档案袋</a>
+                    </div>
+                </li>
+                <li submenuid="9" dropdown>
+                    <div>
+                        <a href="/Student/Job">测评</a>
+                    </div>
+                </li>
+                <li class="bottomline" width="0" left="" style="width: 0; left: 592px; z-index: 1;">
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div id="dropdownbar">
+        <div class="layout dropdownbar">
+            <div class="submenu area" submenuid="area">
+                <div class="topline">
+                </div>
+                    <div class="item" sid="11">
+                        <a href="/Account/Login/11">北京</a>
+                    </div>
+                    <div class="item" sid="12">
+                        <a href="/Account/Login/12">天津</a>
+                    </div>
+                    <div class="item" sid="13">
+                        <a href="/Account/Login/13">河北</a>
+                    </div>
+                    <div class="item" sid="14">
+                        <a href="/Account/Login/14">山西</a>
+                    </div>
+                    <div class="item" sid="21">
+                        <a href="/Account/Login/21">辽宁</a>
+                    </div>
+                    <div class="item" sid="22">
+                        <a href="/Account/Login/22">吉林</a>
+                    </div>
+                    <div class="item" sid="23">
+                        <a href="/Account/Login/23">黑龙江</a>
+                    </div>
+                    <div class="item" sid="31">
+                        <a href="/Account/Login/31">上海</a>
+                    </div>
+                    <div class="item" sid="32">
+                        <a href="/Account/Login/32">江苏</a>
+                    </div>
+                    <div class="item" sid="33">
+                        <a href="/Account/Login/33">浙江</a>
+                    </div>
+                    <div class="item" sid="34">
+                        <a href="/Account/Login/34">安徽</a>
+                    </div>
+                    <div class="item" sid="35">
+                        <a href="/Account/Login/35">福建</a>
+                    </div>
+                    <div class="item" sid="36">
+                        <a href="/Account/Login/36">江西</a>
+                    </div>
+                    <div class="item" sid="37">
+                        <a href="/Account/Login/37">山东</a>
+                    </div>
+                    <div class="item" sid="41">
+                        <a href="/Account/Login/41">河南</a>
+                    </div>
+                    <div class="item" sid="42">
+                        <a href="/Account/Login/42">湖北</a>
+                    </div>
+                    <div class="item" sid="43">
+                        <a href="/Account/Login/43">湖南</a>
+                    </div>
+                    <div class="item" sid="44">
+                        <a href="/Account/Login/44">广东</a>
+                    </div>
+                    <div class="item" sid="45">
+                        <a href="/Account/Login/45">广西</a>
+                    </div>
+                    <div class="item" sid="50">
+                        <a href="/Account/Login/50">重庆</a>
+                    </div>
+                    <div class="item" sid="51">
+                        <a href="/Account/Login/51">四川</a>
+                    </div>
+                    <div class="item" sid="52">
+                        <a href="/Account/Login/52">贵州</a>
+                    </div>
+                    <div class="item" sid="53">
+                        <a href="/Account/Login/53">云南</a>
+                    </div>
+                    <div class="item" sid="61">
+                        <a href="/Account/Login/61">陕西</a>
+                    </div>
+                    <div class="item" sid="62">
+                        <a href="/Account/Login/62">甘肃</a>
+                    </div>
+                    <div class="item" sid="64">
+                        <a href="/Account/Login/64">宁夏</a>
+                    </div>
+            </div>
+            <div class="submenu" submenuid="1" style="width: 450px;margin-left: -35px;">
+                <div class="topline">
+                </div>
+                <div class="item">
+                    <a href="/Home/About/11" target="_blank">关于大未来</a>
+                </div>
+                <div class="item">
+                    <a href="/Home/Service/11" target="_blank">产品与服务</a>
+                </div>
+                <div class="item">
+                    <a href="/Article/ZZXB/11" target="_blank">自主选拔</a>
+                </div>
+                <div class="item">
+                    <a href="/Article/GK/11" target="_blank">高考进行时</a>
+                </div>
+                <div class="item">
+                    <a href="/Article/ParentsGO/11" target="_blank">家长向前冲</a>
+                </div>
+                <div class="item" style=" display:none;">
+                    <a href="/Article/YKTB/11" target="_blank">艺考填报</a>
+                </div>
+                <div class="item">
+                    <a href="/Article/SchoolRank/11" target="_blank">大学榜单</a>
+                </div>
+                <div class="item">
+                    <a href="/Article/SuccessCase/11" target="_blank">成功案例</a>
+                </div>
+            </div>
+            <div class="submenu" submenuid="2" style="width:450px;margin-left: -35px;">
+                <div class="topline">
+                </div>
+                <div class="item">
+                    <a href="/fangan/selflist">启航卡报志愿</a>
+                </div>
+                <div class="item">
+                    <a href="/fangan20/index/">领航专家服务</a>
+                </div>
+                <div class="item">
+                    <a href="/fangan20/index/">金航一对一服务</a>
+                </div>
+                <div class="item">
+                    <a href="/MoNi/SchoolListT">录取分数查询</a>
+                </div>
+                <div class="item">
+                    <a href="/ScoreRank/Index/">分数与排名变化</a>
+                </div>
+                <div class="item">
+                    <a href="/Article/List?articletype=313">报考讲堂</a>
+                </div>
+                <div class="item">
+                    <a href="/ScoreRank/GetAreaFenDuanScoreData/">一分一段表</a>
+                </div>
+                <div class="item">
+                    <a href="/ZYPICI/ZYPiCiList/">志愿批次表</a>
+                </div>
+                <div class="item">
+                    <a href="/ZYPICI/PiCiSearch/">历年批次线查询</a>
+                </div>
+            </div>
+            <div class="submenu" submenuid="3" style="margin-left: -35px;">
+                <div class="topline">
+                </div>
+                <div class="item">
+                    <a href="/School/ListDirect?schoolType=1" target="_blank">985院校</a>
+                </div>
+                <div class="item">
+                    <a href="/School/ListDirect?schoolType=2" target="_blank">211院校</a>
+                </div>
+                <div class="item">
+                    <a href="/School/ListDirect?schoolType=3" target="_blank">中外合作办学</a>
+                </div>
+                <div class="item">
+                    <a href="/School/YiliuSchoolList" target="_blank">“双一流”大学</a>
+                </div>
+            </div>
+            <div class="submenu" submenuid="4" style="margin-left: -35px;">
+                <div class="topline">
+                </div>
+                <div class="item">
+                    <a href="/School/YiliuSubjectList" target="_blank">”双一流“学科</a>
+                </div>
+            </div>
+            <div class="submenu" submenuid="9" usertype="1">
+                <div class="topline">
+                </div>
+                <div class="item">
+                    <a href="/Student/Job/">职业与专业倾向</a>
+                </div>
+                <div class="item">
+                    <a href="/Student/JobValue">职业价值观</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="left full">
+        <div class="layout" style="margin-top: 20px; margin-bottom: 20px;">
+            <div class="container-fluid">
+                <div class="container-fluid">
+                    <h3 style="padding: 10px; position: relative;">
+                        欢迎使用大未来高考志愿专家平台！
+                    </h3>
+                    <hr />
+                    <div style="margin-top: 35px;">
+<form action="/" class="form-horizontal" id="valideForm_set" method="post">                            <table id="logintable" align="center" width="521" cellpadding="0" cellspacing="0"
+                                   style="border: 1px solid #ccc; margin: auto;">
+                                <thead>
+                                    <tr>
+                                        <th width="25%">
+                                        </th>
+                                        <th width="35%">
+                                        </th>
+                                        <th width="40%">
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td colspan="3" style="padding: 10px 40px; background-color: #3C464C; color: white;
+                                            font-size: 16px;">
+                                            请登录
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="3" style="height: 15px;"></td>
+                                    </tr>
+                                    <tr>
+                                        <td align="right">
+                                            帐&nbsp; &nbsp;号：
+                                        </td>
+                                        <td align="left">
+                                            <input data-val="true" data-val-required="User name 字段是必需的。" id="UserName" name="UserName" placeholder="卡号或手机号" type="text" value="" />
+                                            <span class="field-validation-valid" data-valmsg-for="UserName" data-valmsg-replace="true"></span>
+                                        </td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td align="right">
+                                            密&nbsp; &nbsp;码：
+                                        </td>
+                                        <td align="left">
+                                            <input data-val="true" data-val-required="Password 字段是必需的。" id="Password" name="Password" type="password" />
+                                            <span class="field-validation-valid" data-valmsg-for="Password" data-valmsg-replace="true"></span>
+                                        </td>
+                                        <td>
+                                            <a id="fpwdbtn" href="/Account/ForgotPassword" style="color: Black; text-decoration: none;
+                                                margin-left: 10px;">找回密码</a>
+                                        </td>
+                                    </tr>
+                                    <tr style="padding-bottom: 10px;">
+                                        <td align="right">
+                                            验证码：
+                                        </td>
+                                        <td align="left">
+                                            <input id="CheckCode" name="CheckCode" type="text" value="" />
+                                            <span class="field-validation-valid" data-valmsg-for="CheckCode" data-valmsg-replace="true"></span>
+                                        </td>
+                                        <td>
+                                            <div style="margin-left: 10px;">
+                                                <img height="22" width="75" alt="点击重新获取验证码" onclick="this.src='/Account/CodeImg/'+(new Date().getTime().toString(36));"
+                                                     src="/Account/CodeImg/" id="codeimg" />
+                                                <span style="cursor: pointer; margin-right: 28px;" onclick="document.getElementById('codeimg').src = '/Account/CodeImg/' + (new Date().getTime().toString(36));">
+                                                    看不清，刷新
+                                                </span>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="3" align="center" style="padding: 20px 0 30px 0;">
+                                            <button id="sub_btn" type="submit" class="btn btn-primary" style="padding: 10px 30px;">
+                                                登&nbsp;&nbsp;录
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+</form>                        <table id="welcometable" align="center" width="521" cellpadding="0" cellspacing="0"
+                               style="border: 1px solid #ccc; margin: auto; display: none">
+                            <thead>
+                                <tr>
+                                    <th width="50%">
+                                    </th>
+                                    <th width="50%">
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td colspan="2" style="padding: 10px 65px; background-color: #3C464C; color: white;
+                                        font-size: 16px;">
+                                        欢迎！
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2" style="height: 15px;"></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2" style="padding-left: 65px; height: 70px;">
+                                        请确认如下账户信息，如有疑问，请马上联系大未来客服咨询。
+                                        <br />
+                                        请记好您的卡号和密码。
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td align="right" class="h30">
+                                        卡号：
+                                    </td>
+                                    <td align="left" class="h30" id="cardNum"></td>
+                                </tr>
+                                <tr style="padding-bottom: 10px;">
+                                    <td align="right" class="h30">
+                                        您使用的产品服务是：
+                                    </td>
+                                    <td align="left" class="h30" id="service"></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2" align="center" style="padding: 20px 0 30px 0;">
+                                        <button class="btn btn-primary" style="padding: 10px 30px;" onclick="javascript:location.href='/fangan/selflist'">
+                                            继&nbsp;&nbsp;续
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="footer">
+        <div class="layout">
+            <div class="left">
+                <img src="/Images/logo2.png" alt="" />
+            </div>
+            <div class="left" style="line-height: 2.5; margin: 36px 0 0 60px; float: left;">
+                <div>
+                    Copyright &copy; 2016 版权所有 | 大未来高考志愿研究院 北京远大未来教育科技有限责任公司
+                </div>
+                <div>
+                    京ICP备16051507号-1
+                </div>
+            </div>
+            <div class="left" style="line-height: 2; margin: 25px 53px 0 60px; float: left;">
+                <div style="font-size: 24px;">
+                    咨询热线： <span style="color: #00B0F0;">400-659-1066</span>
+                </div>
+                <div style="font-size: 14px;">
+                    工作日9:00-19:00
+                </div>
+            </div>
+            <div class="left">
+                <img src="/Images/er2.png" alt="" />
+            </div>
+        </div>
+    </div>
+    <script>
+        window.getHeight = function () {
+            if (window.innerHeight != undefined) {
+                return window.innerHeight;
+            }
+            else {
+                var B = document.body, D = document.documentElement;
+                return Math.min(D.clientHeight, B.clientHeight);
+            }
+        }
+        function footerPosition() {
+            $("#footer").removeClass("fixed-bottom");
+            var contentHeight = document.body.scrollHeight, //网页正文全文高度
+                winHeight = window.getHeight(); //可视窗口高度，不包括浏览器顶部工具栏
+            if (!(contentHeight > winHeight)) {
+                //当网页正文高度小于可视窗口高度时，为footer添加类fixed-bottom
+                $("#footer").addClass("fixed-bottom");
+            } else {
+                $("#footer").removeClass("fixed-bottom");
+            }
+        }
+        $(document).ready(function () {
+
+            $('#header [submenuid]').not('.area').mouseenter(function (e) {
+                var width = $(this).width();
+                var left = $(this).position().left;
+                $('#header .bottomline').css({
+                    width: width,
+                    left: left + "px"
+                });
+                $('#header .area').removeClass('active');
+                $('#dropdownbar').find('.submenu.active').removeClass('active');
+                $('#dropdownbar').height(124);
+                var submenuid = $(this).attr('submenuid');
+                var $submenu = $('#dropdownbar').find('.submenu[submenuid=' + submenuid + ']');
+                if ($submenu.length && !$(this).hasClass('area')) {
+                    $submenu.addClass('active');
+                }
+                else {
+                    $('#dropdownbar').find('.active').removeClass('active');
+                    $('#dropdownbar').height(0);
+                }
+                return false;
+            }).mouseleave(function () {
+                var submenuid = $(this).attr('submenuid');
+                var $submenu = $('#dropdownbar').find('.submenu[submenuid=' + submenuid + ']');
+                if ($submenu.length) {
+
+                }
+                else {
+                    $('#header .bottomline').css({
+                        width: 0
+                    });
+                }
+                return false;
+            });
+            $('#header .area').click(function () {
+                $('#header .bottomline').css({
+                    width: 0
+                });
+                $('#dropdownbar').find('.active').removeClass('active');
+                if ($(this).hasClass('active')) {
+                    $('#header .area').removeClass('active');
+                    $('#dropdownbar').height(0);
+                }
+                else {
+                    $('#header .area').addClass('active');
+                    var submenuid = $(this).attr('submenuid');
+                    var $submenu = $('#dropdownbar').find('.submenu[submenuid=' + submenuid + ']');
+                    $submenu.addClass('active');
+                    $('#dropdownbar').height(124);
+                }
+            }).mouseenter(function () {
+                $('#header .bottomline').css({
+                    width: 0
+                });
+                if (!$('#dropdownbar').find('.active').hasClass('area')) {
+                    $('#dropdownbar').find('.active').removeClass('active');
+                    $('#header .area').removeClass('active');
+                    $('#dropdownbar').height(0);
+                }
+            });
+            $('#dropdownbar').mouseleave(function () {
+                if (!$('#dropdownbar').find('.active').hasClass('area')) {
+                    $('#header .bottomline').css({
+                        width: 0
+                    });
+                    $('#header .area').removeClass('active');
+                    $('#dropdownbar').find('.active').removeClass('active');
+                    $('#dropdownbar').height(0);
+                }
+            });
+            $('#header').mouseenter(function (e) {
+                if (!$('#dropdownbar').find('.active').hasClass('area')) {
+                    $('#header .bottomline').css({
+                        width: 0
+                    });
+                    $('#dropdownbar').find('.active').removeClass('active');
+                    $('#header .area').removeClass('active');
+                    $('#dropdownbar').height(0);
+                }
+            });
+        });
+    </script>
+    <script src="/Scripts/jquery.cookie.js"></script>
+    <script type="text/javascript">
+
+        $(document).ready(
+               function () {
+                   $('.loginbtn').hide();
+                   ValidateForm();
+
+                   footerPosition();
+                   $(window).resize(footerPosition);
+                   //$('input').keyup(function (e) {
+                   //    var code = e.charCode || e.keyCode;
+                   //    if (code == 13) {
+                   //        $('#sub_btn').click();
+                   //    }
+                   //});
+                   if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent))
+                   { }
+                   else {
+                       IsGoogleChrome();
+                   }
+
+               });
+
+        function ValidateForm() {
+
+            $("form").validate({
+                rules: {
+                    UserName:
+                        {
+                            required: true,
+                        },
+                    Password:
+                        {
+                            required: true,
+                        },
+                    CheckCode:
+                        {
+                            required: true,
+                        }
+                },
+                messages: {
+                    UserName: { required: '请输入你的卡号' },
+                    Password: { required: '请输入你的密码' },
+                    CheckCode: { required: '请输入验证码' }
+                },
+                errorPlacement: function (error, element) {
+                    error.insertAfter(element);
+                },
+                submitHandler: function (form) {
+                    checkUser();
+                }
+            });
+        }
+
+
+        function checkUser() {
+            var checkcode = $.cookie("checkcode");
+            if ($('#CheckCode').val() != checkcode) {
+                alert('验证码不正确！');
+                return false;
+            }
+            $('#sub_btn').text('登录中...');
+            $.post("/Account/Login", { username: $('#UserName').val(), password: $('#Password').val(), CheckCode: $('#CheckCode').val() }, function (result) {
+                result.url = '';
+                if (result.msg == 'success') {
+                    location.href = result.url + "/fangan/selflist";
+                    //location.href = result.url + "/LoginHome/Index";
+
+                }
+                else if (result.msg == 'linghang') {
+                    location.href = result.url + "/fangan20/index";
+                    //location.href = result.url + "/fangan20/index?first=1";
+                    //location.href = result.url + "/LoginHome/Index";
+
+                }
+                else if (result.msg == 'jinhang') {
+                    location.href = result.url + "/fangan20/index";
+                    //location.href = result.url + "/fangan20/index?first=1";
+                    // location.href = result.url + "/LoginHome/Index";
+
+                }
+                else if (result.msg.indexOf('irstLogin') > 0) {
+                    var array = result.msg.split(',');
+
+                    $("#logintable").css("display", "none");
+                    $("#welcometable").css("display", "table");
+
+                    $("#cardNum").text(array[1]);
+                    $("#service").text(array[2] + " " + array[3] + "  高考志愿" + array[4]);
+                }
+                else if (result.msg.indexOf('uperuser') > 0) {
+                    var array = result.msg.split(',');
+                    var falg = array[1];
+                    if (falg == "0") {
+                        alert('系统检测到你的密码是初始密码，请先修改密码之后才能登录使用');
+                        location.href = "/User/ModifyPassword";
+
+                    }
+                    else {
+                        location.href = "/fangan/SuperUserSubmitForm";
+                    }
+                }
+                else {
+                    alert(result.msg);
+                }
+                $('#sub_btn').html('登&nbsp;&nbsp;录');
+            });
+        }
+    </script>
+    <script>
+        function IsGoogleChrome() {
+            var browserType = getBrowserInfo();
+            if (browserType != null) {
+                showDialog("官方提示", "当前浏览器可能存在兼容性问题而影响您操作，建议您使用<a href='../../Content/ChromeSetup.exe' title='去下载' style='color:#009883'>谷歌浏览器(GoogleChrome)</a>登录，您可以继续使用本浏览器，若遇无法选填学校和专业等情况，更换为<a href='../../Content/ChromeSetup.exe' title='去下载' style='color:#009883'>谷歌浏览器(GoogleChrome)</a>登录后即可正常使用。", ["继续使用当前浏览器 ", "下载并安装谷歌浏览器"], 1, function (idx) {
+                    if (idx == 1) {
+                        window.location.href = "../../Content/ChromeSetup.exe";
+                    } else {
+                        return;
+                    }
+                });
+            }
+        }
+
+        function getBrowserInfo() {
+            var ua = navigator.userAgent.toLocaleLowerCase();
+            var browserType = null;
+            if (ua.match(/msie/) != null || ua.match(/trident/) != null) {
+                browserType = "IE";
+                browserVersion = ua.match(/msie ([\d.]+)/) != null ? ua.match(/msie ([\d.]+)/)[1] : ua.match(/rv:([\d.]+)/)[1];
+            } else if (ua.match(/firefox/) != null) {
+                browserType = "火狐";
+            } else if (ua.match(/ubrowser/) != null) {
+                browserType = "UC";
+            } else if (ua.match(/opera/) != null) {
+                browserType = "欧朋";
+            } else if (ua.match(/bidubrowser/) != null) {
+                browserType = "百度";
+            } else if (ua.match(/metasr/) != null) {
+                browserType = "搜狗";
+            } else if (ua.match(/tencenttraveler/) != null || ua.match(/qqbrowse/) != null) {
+                browserType = "QQ";
+            } else if (ua.match(/maxthon/) != null) {
+                browserType = "遨游";
+            } else if (ua.match(/chrome/) != null) {
+                var is360 = _mime("type", "application/vnd.chromium.remoting-viewer");
+                function _mime(option, value) {
+                    var mimeTypes = navigator.mimeTypes;
+                    for (var mt in mimeTypes) {
+                        if (mimeTypes[mt][option] == value) {
+                            return true;
+                        }
+                    }
+                    return false;
+                }
+                if (is360) {
+                    browserType = '360';
+                }
+            } else if (ua.match(/safari/) != null) {
+                browserType = "Safari";
+            }
+            return browserType;
+        }
+
+        //对话框     showDialog("对话框", "确定关闭吗？", ["确定", "取消"], 0, clickfun);
+        function showDialog(title, message, buttons, defaultindex, callback, isHyperLink) {
+            var mask = $("<div></div>").addClass("div_dialog_mask").appendTo($("body"));
+            var root = $('<div id="mov"></div>').addClass("div_dialog").appendTo($("body"));
+            var head = $("<div></div>").addClass("div_dialog_head").appendTo(root);
+            var body = $("<div></div>").addClass("div_dialog_body").appendTo(root);
+            var foot = $("<div></div>").addClass("div_dialog_foot").appendTo(root);
+
+            head.html(title);
+            //    var btnClose = $("<buton></button>").addClass("close").html("×");
+            //    btnClose.on("click", function () { mask.remove(); root.remove(); });
+            //    head.append(btnClose);
+
+            body.html(message);
+            if (buttons == null || buttons.length == 0) {
+                buttons = new Array();
+                buttons.push("确定");
+            }
+            for (var i = 0; i < buttons.length; i++) {
+                var btn = null;
+                if (isHyperLink) {
+                    btn = $(buttons[i]).appendTo(foot);
+                }
+                else
+                    btn = $("<button></button>").html(buttons[i]).appendTo(foot);
+
+                if (i == defaultindex)
+                    btn.addClass("btn btn_Igreen mymargin-top");
+                else
+                    btn.addClass("btn btn_Igray mymargin-top");
+                btn.attr("button-index", i);
+                btn.on("click", function (evt) {
+                    mask.remove();
+                    root.remove();
+                    if (callback != null)
+                        callback($(evt.currentTarget).attr("button-index"));
+                });
+            }
+        }
+    </script>
+</body>
+</html>
