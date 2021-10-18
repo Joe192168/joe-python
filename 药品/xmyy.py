@@ -129,10 +129,10 @@ class Duologin(object):
         print('\r', '{:^20}'.format('页面数据加载结束！'))
 
 if __name__ == "__main__":
-    login = Duologin()
-    print("*************开始爬取有货药品数据请稍等***************")
+    print("*************开始爬数据***************")
     username = input("请输入登陆账号：\n")
     password = input("请输入登陆密码：\n")
+    login = Duologin()
     # 登陆
     login.login(username, password)
     if login.msg["code"] == 200:

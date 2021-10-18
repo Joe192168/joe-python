@@ -3,7 +3,7 @@
 1、爬虫jd时，需要安装谷歌驱动
 https://www.cnblogs.com/blogwangwang/p/9608131.html
 2、python打包命令
-pyinstaller -c -F --key 123 --icon=my.ico yp.py
+pyinstaller -c -F --icon=my.ico yp.py
 
 pyinstaller 常用命令参数
 
