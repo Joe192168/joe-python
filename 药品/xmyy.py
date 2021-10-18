@@ -44,7 +44,6 @@ class Duologin(object):
         except Exception as e:
             print(e)
 
-
     # 搜索
     def search(self, keyword):
         self.headers = {
