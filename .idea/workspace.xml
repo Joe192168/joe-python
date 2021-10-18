@@ -19,19 +19,10 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9f6e0b5f-da5b-4614-9d99-160670f0c787" name="Default" comment="sql解析">
-      <change afterPath="$PROJECT_DIR$/爬虫例子/active.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/爬虫例子/daweilai.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/爬虫例子/saikr.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/爬虫例子/test.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/爬虫例子/验证码.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/药品/xmyc.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/药品/感冒灵20211012173552.xlsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="9f6e0b5f-da5b-4614-9d99-160670f0c787" name="Default" comment="新增request爬取数据">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/joe-python.iml" beforeDir="false" afterPath="$PROJECT_DIR$/joe-python.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tools/chromedriver.exe" beforeDir="false" afterPath="$PROJECT_DIR$/tools/chromedriver.exe" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/药品/yp.py" beforeDir="false" afterPath="$PROJECT_DIR$/药品/yp.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/药品/xmyc.py" beforeDir="false" afterPath="$PROJECT_DIR$/药品/xmyc.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -63,7 +54,7 @@
       <GitPushTagMode />
     </option>
   </component>
-  <component name="JupyterTrust" id="772c7e35-1f08-4d16-9473-29aa71f61bec" />
+  <component name="JupyterTrust" id="d31ae379-5204-4207-b8a5-ffdf7f46bc29" />
   <component name="MavenImportPreferences">
     <option name="generalSettings">
       <MavenGeneralSettings>
@@ -108,7 +99,7 @@
       <recent name="H:\joe-python\行政区域" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.xmyc">
+  <component name="RunManager" selected="Python.xmyy">
     <configuration default="true" type="Applet">
       <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
       <method v="2">
@@ -121,15 +112,13 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration default="true" type="ArquillianTestNG" factoryName="" nameIsGenerated="true">
+    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
       <option name="arquillianRunConfiguration">
         <value>
           <option name="containerStateName" value="" />
         </value>
       </option>
-      <option name="TEST_OBJECT" value="CLASS" />
-      <properties />
-      <listeners />
+      <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -185,28 +174,6 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="sql_ma" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="joe-python" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/SQL解析" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/SQL解析/sql_ma.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
     <configuration name="sql_ps (1)" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="joe-python" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -251,6 +218,28 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="xmyy" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="joe-python" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/药品" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/药品/xmyy.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration default="true" type="TestNG">
       <option name="TEST_OBJECT" value="CLASS" />
       <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
@@ -270,19 +259,19 @@
       </method>
     </configuration>
     <list>
-      <item itemvalue="Python.sql_ma" />
       <item itemvalue="Python.sql_ps (1)" />
       <item itemvalue="Python.xmyc" />
       <item itemvalue="Python.saikr" />
       <item itemvalue="Python.daweilai" />
+      <item itemvalue="Python.xmyy" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.xmyy" />
         <item itemvalue="Python.xmyc" />
         <item itemvalue="Python.daweilai" />
         <item itemvalue="Python.saikr" />
         <item itemvalue="Python.sql_ps (1)" />
-        <item itemvalue="Python.sql_ma" />
       </list>
     </recent_temporary>
   </component>
@@ -312,7 +301,8 @@
       <workItem from="1631001908953" duration="454000" />
       <workItem from="1631003744679" duration="3073000" />
       <workItem from="1631069843226" duration="5354000" />
-      <workItem from="1634000554135" duration="28326000" />
+      <workItem from="1634000554135" duration="30893000" />
+      <workItem from="1634174107217" duration="15342000" />
     </task>
     <task id="LOCAL-00001" summary="行政获取">
       <created>1626325437578</created>
@@ -342,7 +332,21 @@
       <option name="project" value="LOCAL" />
       <updated>1631079714573</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="优化，新增熊猫药品">
+      <created>1634033859553</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1634033859553</updated>
+    </task>
+    <task id="LOCAL-00006" summary="新增request爬取数据">
+      <created>1634530500104</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1634530500104</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -375,7 +379,9 @@
     <MESSAGE value="hdfs测试" />
     <MESSAGE value="数码测色" />
     <MESSAGE value="sql解析" />
-    <option name="LAST_COMMIT_MESSAGE" value="sql解析" />
+    <MESSAGE value="优化，新增熊猫药品" />
+    <MESSAGE value="新增request爬取数据" />
+    <option name="LAST_COMMIT_MESSAGE" value="新增request爬取数据" />
   </component>
   <component name="WindowStateProjectService">
     <state x="582" y="243" key="#Inspections" timestamp="1630994169611">
@@ -390,10 +396,10 @@
       <screen x="0" y="0" width="1920" height="1160" />
     </state>
     <state x="312" y="51" key="#Project_Structure/0.0.1920.1160@0.0.1920.1160" timestamp="1626325503220" />
-    <state width="1457" height="582" key="DebuggerActiveHint" timestamp="1634025469202">
+    <state width="1457" height="582" key="DebuggerActiveHint" timestamp="1634529126851">
       <screen x="0" y="0" width="1920" height="1160" />
     </state>
-    <state width="1457" height="582" key="DebuggerActiveHint/0.0.1920.1160@0.0.1920.1160" timestamp="1634025469202" />
+    <state width="1457" height="582" key="DebuggerActiveHint/0.0.1920.1160@0.0.1920.1160" timestamp="1634529126851" />
     <state x="92" y="92" width="1736" height="976" maximized="true" key="DiffContextDialog" timestamp="1634001007042">
       <screen x="0" y="0" width="1920" height="1160" />
     </state>
@@ -402,38 +408,38 @@
       <screen x="0" y="0" width="1920" height="1160" />
     </state>
     <state x="254" y="242" key="FileChooserDialogImpl/0.0.1920.1160@0.0.1920.1160" timestamp="1631070103061" />
-    <state width="1867" height="294" key="GridCell.Tab.0.bottom" timestamp="1634033755548">
+    <state width="1867" height="294" key="GridCell.Tab.0.bottom" timestamp="1634530437236">
       <screen x="0" y="0" width="1920" height="1160" />
     </state>
-    <state width="1867" height="294" key="GridCell.Tab.0.bottom/0.0.1920.1160@0.0.1920.1160" timestamp="1634033755548" />
-    <state width="1867" height="294" key="GridCell.Tab.0.center" timestamp="1634033755548">
+    <state width="1867" height="294" key="GridCell.Tab.0.bottom/0.0.1920.1160@0.0.1920.1160" timestamp="1634530437236" />
+    <state width="1867" height="294" key="GridCell.Tab.0.center" timestamp="1634530437236">
       <screen x="0" y="0" width="1920" height="1160" />
     </state>
-    <state width="1867" height="294" key="GridCell.Tab.0.center/0.0.1920.1160@0.0.1920.1160" timestamp="1634033755548" />
-    <state width="1867" height="294" key="GridCell.Tab.0.left" timestamp="1634033755548">
+    <state width="1867" height="294" key="GridCell.Tab.0.center/0.0.1920.1160@0.0.1920.1160" timestamp="1634530437236" />
+    <state width="1867" height="294" key="GridCell.Tab.0.left" timestamp="1634530437236">
       <screen x="0" y="0" width="1920" height="1160" />
     </state>
-    <state width="1867" height="294" key="GridCell.Tab.0.left/0.0.1920.1160@0.0.1920.1160" timestamp="1634033755548" />
-    <state width="1867" height="294" key="GridCell.Tab.0.right" timestamp="1634033755548">
+    <state width="1867" height="294" key="GridCell.Tab.0.left/0.0.1920.1160@0.0.1920.1160" timestamp="1634530437236" />
+    <state width="1867" height="294" key="GridCell.Tab.0.right" timestamp="1634530437236">
       <screen x="0" y="0" width="1920" height="1160" />
     </state>
-    <state width="1867" height="294" key="GridCell.Tab.0.right/0.0.1920.1160@0.0.1920.1160" timestamp="1634033755548" />
-    <state width="1867" height="296" key="GridCell.Tab.1.bottom" timestamp="1634031352269">
+    <state width="1867" height="294" key="GridCell.Tab.0.right/0.0.1920.1160@0.0.1920.1160" timestamp="1634530437236" />
+    <state width="1867" height="296" key="GridCell.Tab.1.bottom" timestamp="1634529154112">
       <screen x="0" y="0" width="1920" height="1160" />
     </state>
-    <state width="1867" height="296" key="GridCell.Tab.1.bottom/0.0.1920.1160@0.0.1920.1160" timestamp="1634031352269" />
-    <state width="1867" height="296" key="GridCell.Tab.1.center" timestamp="1634031352268">
+    <state width="1867" height="296" key="GridCell.Tab.1.bottom/0.0.1920.1160@0.0.1920.1160" timestamp="1634529154112" />
+    <state width="1867" height="296" key="GridCell.Tab.1.center" timestamp="1634529154112">
       <screen x="0" y="0" width="1920" height="1160" />
     </state>
-    <state width="1867" height="296" key="GridCell.Tab.1.center/0.0.1920.1160@0.0.1920.1160" timestamp="1634031352268" />
-    <state width="1867" height="296" key="GridCell.Tab.1.left" timestamp="1634031352268">
+    <state width="1867" height="296" key="GridCell.Tab.1.center/0.0.1920.1160@0.0.1920.1160" timestamp="1634529154112" />
+    <state width="1867" height="296" key="GridCell.Tab.1.left" timestamp="1634529154112">
       <screen x="0" y="0" width="1920" height="1160" />
     </state>
-    <state width="1867" height="296" key="GridCell.Tab.1.left/0.0.1920.1160@0.0.1920.1160" timestamp="1634031352268" />
-    <state width="1867" height="296" key="GridCell.Tab.1.right" timestamp="1634031352268">
+    <state width="1867" height="296" key="GridCell.Tab.1.left/0.0.1920.1160@0.0.1920.1160" timestamp="1634529154112" />
+    <state width="1867" height="296" key="GridCell.Tab.1.right" timestamp="1634529154112">
       <screen x="0" y="0" width="1920" height="1160" />
     </state>
-    <state width="1867" height="296" key="GridCell.Tab.1.right/0.0.1920.1160@0.0.1920.1160" timestamp="1634031352268" />
+    <state width="1867" height="296" key="GridCell.Tab.1.right/0.0.1920.1160@0.0.1920.1160" timestamp="1634529154112" />
     <state x="437" y="252" key="IDE.errors.dialog" timestamp="1626327551453">
       <screen x="0" y="0" width="1920" height="1160" />
     </state>
@@ -442,18 +448,18 @@
       <screen x="0" y="0" width="1920" height="1160" />
     </state>
     <state x="312" y="51" key="SettingsEditor/0.0.1920.1160@0.0.1920.1160" timestamp="1631001947697" />
-    <state x="452" y="248" key="Vcs.Push.Dialog.v2" timestamp="1631079715888">
+    <state x="452" y="248" key="Vcs.Push.Dialog.v2" timestamp="1634531434407">
       <screen x="0" y="0" width="1920" height="1160" />
     </state>
-    <state x="452" y="248" key="Vcs.Push.Dialog.v2/0.0.1920.1160@0.0.1920.1160" timestamp="1631079715888" />
-    <state width="968" height="588" key="XDebugger.FullValuePopup" timestamp="1634018416198">
+    <state x="452" y="248" key="Vcs.Push.Dialog.v2/0.0.1920.1160@0.0.1920.1160" timestamp="1634531434407" />
+    <state width="968" height="588" key="XDebugger.FullValuePopup" timestamp="1634521105978">
       <screen x="0" y="0" width="1920" height="1160" />
     </state>
-    <state width="968" height="588" key="XDebugger.FullValuePopup/0.0.1920.1160@0.0.1920.1160" timestamp="1634018416198" />
-    <state x="731" y="475" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1634033792715">
+    <state width="968" height="588" key="XDebugger.FullValuePopup/0.0.1920.1160@0.0.1920.1160" timestamp="1634521105978" />
+    <state x="731" y="475" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1634531429683">
       <screen x="0" y="0" width="1920" height="1160" />
     </state>
-    <state x="731" y="475" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1920.1160@0.0.1920.1160" timestamp="1634033792715" />
+    <state x="731" y="475" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1920.1160@0.0.1920.1160" timestamp="1634531429683" />
     <state x="400" y="244" key="com.intellij.xdebugger.impl.breakpoints.ui.BreakpointsDialogFactory$2" timestamp="1634007893993">
       <screen x="0" y="0" width="1920" height="1160" />
     </state>
@@ -506,6 +512,7 @@
     <SUITE FILE_PATH="coverage/joe_python$frog.coverage" NAME="frog Coverage Results" MODIFIED="1629703773559" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/数码测色计" />
     <SUITE FILE_PATH="coverage/joe_python$xzqh.coverage" NAME="xzqh Coverage Results" MODIFIED="1627352686461" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/joe_python$sql_ma.coverage" NAME="sql_ma Coverage Results" MODIFIED="1631079694290" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/SQL解析" />
+    <SUITE FILE_PATH="coverage/joe_python$xmyy.coverage" NAME="xmyy Coverage Results" MODIFIED="1634530369039" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/药品" />
     <SUITE FILE_PATH="coverage/joe_python$tb.coverage" NAME="tb Coverage Results" MODIFIED="1627349825472" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/joe_python$hdfs_test__1_.coverage" NAME="hdfs_test (1) Coverage Results" MODIFIED="1627352268084" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>

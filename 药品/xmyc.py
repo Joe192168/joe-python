@@ -4,9 +4,6 @@ import time
 import datetime
 import random
 import openpyxl
-import sys
-import traceback
-from lxml import etree
 from openpyxl import Workbook
 from selenium import webdriver
 from selenium.webdriver.support import expected_conditions as EC
