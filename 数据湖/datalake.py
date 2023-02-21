@@ -11,8 +11,8 @@ import json
 from translate import Translator
 
 #百度翻译账号
-appid = '20210203000689585'
-secretKey = 'kqD9YO_jFfvjCmplPHDv'
+appid = '20230220001568685'
+secretKey = 'DoKaFuEaqW35mE7SW64P'
 url_baidu = 'http://api.fanyi.baidu.com/api/trans/vip/translate'
 
 #百度翻译
@@ -25,6 +25,7 @@ def translateBaidu(text, f='en', t='zh'):
     response = urllib.request.urlopen(url)
     content = response.read().decode('utf-8')
     data = json.loads(content)
+    print(data)
     result = str(data['trans_result'][0]['dst'])
     print(result)
     return result
@@ -85,16 +86,31 @@ for i,item in enumerate(items):
     res.encoding='utf-8'
     print(res.status_code)
     #因为该页面有多组标签数据，只获取第一组数据即可，通过正则表达进行过滤
-    pertern = re.compile(r'<pre.*?><code.*?><span class="line"><span.*?>(.*?)</span></span></code></pre>[^\1]+',re.S)
+    pertern = re.compile(r'<div id="body-inner">.*?<h3.*?>(.*?)</h3>.*?</div>[^\1]+',re.S)
     soup = BeautifulSoup(res.text, 'html.parser')
     data = soup.find_all('body')
     data = str(data)
     fun_text = re.findall(pertern, data)
+    #获取语法元素
     for k,fitem in enumerate(fun_text):
+        #翻译函数描述
+        fun_des = translateBaidu(item[1])
+        #获取参数的li元素
+        li_list = soup.select('#body-inner ul')
+        #非空判断
+        if li_list:
+            str_list = []
+            for li in li_list[0].find_all('li'):
+                #拼接语法和参数
+                parameter = li.text.split(":")
+                parameter_translation = translateBaidu(parameter[1])
+                str_list.append('. '+parameter[0]+": "+parameter_translation)
+                str_list.append('</br>')
+        #拼接
+        params = fitem.strip() + '</br>' + ''.join(str_list)
         print(fitem)
-        descriptive_translation = translateBaidu(item[1])
         #从新拼接参数
-        v_item = (''+item[0].strip()+'',''+fitem.strip()+'',''+descriptive_translation+'')
+        v_item = (''+item[0].strip()+'',''+params+'',''+fun_des+'')
     #print(v_item)
     #调用插入数据方法
     insert(v_item)
