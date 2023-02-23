@@ -35,13 +35,13 @@ def create():
     #mysql连接数据库
     #conn = pymysql.connect("localhost", "root", "root", "test")#连接数据库
     #postgresql链接数据库
-    conn = psycopg2.connect(database="edw", user="gpadmin", password="gpadmin123", host="192.168.0.233", port="5432")
+    conn = psycopg2.connect(database="edw", user="gpadmin", password="gpadmin123", host="192.168.0.219", port="5432")
     cur = conn.cursor()
-    cur.execute("drop table if exists t_fun_max")
+    cur.execute("drop table if exists t_fun_datalake")
     #mysql脚本
-    #cur.execute("create table t_fun_max(id int primary key auto_increment,name varchar(200),grammar varchar(1000),describe1 varchar(1000));")
+    #cur.execute("create table t_fun_datalake(id int primary key auto_increment,name varchar(200),grammar varchar(1000),describe1 varchar(1000));")
     #postgresql脚本
-    cur.execute("create table t_fun_max(id serial primary key, name varchar,grammar varchar,describe1 varchar);")
+    cur.execute("create table t_fun_datalake(id serial primary key, name varchar,grammar varchar,describe1 varchar);")
 
     conn.commit()
     cur.close()
