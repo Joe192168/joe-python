@@ -7,134 +7,119 @@ pygame.init()
 # 定义颜色
 BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
-GREEN = (0, 255, 0)
 RED = (255, 0, 0)
+GREEN = (0, 255, 0)
 
-# 定义屏幕大小和方块大小
-SCREEN_WIDTH = 800
-SCREEN_HEIGHT = 600
-BLOCK_SIZE = 40
-
-# 初始化屏幕
-screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+# 定义屏幕大小
+WIDTH, HEIGHT = 800, 600
+screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("坦克大战")
 
 # 定义时钟
 clock = pygame.time.Clock()
 
-# 定义字体
-font = pygame.font.SysFont(None, 35)
+# 创建简单的坦克图形
+player_tank_image = pygame.Surface((40, 40), pygame.SRCALPHA)
+pygame.draw.rect(player_tank_image, GREEN, (10, 10, 20, 20))  # 坦克车身
+pygame.draw.rect(player_tank_image, GREEN, (18, 0, 4, 10))    # 坦克炮管
+
+enemy_tank_image = pygame.Surface((40, 40), pygame.SRCALPHA)
+pygame.draw.rect(enemy_tank_image, RED, (10, 10, 20, 20))     # 敌方坦克车身
+pygame.draw.rect(enemy_tank_image, RED, (18, 0, 4, 10))       # 敌方坦克炮管
 
 # 定义坦克类
-class Tank(pygame.sprite.Sprite):
-    def __init__(self, color, x, y):
-        super().__init__()
-        self.image = pygame.Surface((BLOCK_SIZE, BLOCK_SIZE))
-        self.image.fill(color)
-        self.rect = self.image.get_rect()
-        self.rect.x = x
-        self.rect.y = y
-        self.direction = 'up'
-        self.speed = 2
+class Tank:
+    def __init__(self, x, y, image):
+        self.x = x
+        self.y = y
+        self.image = image
+        self.speed = 5
+        self.bullets = []
 
-    def update(self):
-        if self.direction == 'up':
-            self.rect.y -= self.speed
-        elif self.direction == 'down':
-            self.rect.y += self.speed
-        elif self.direction == 'left':
-            self.rect.x -= self.speed
-        elif self.direction == 'right':
-            self.rect.x += self.speed
+    def move(self, dx, dy):
+        self.x += dx * self.speed
+        self.y += dy * self.speed
 
-    def change_direction(self, direction):
-        self.direction = direction
+    def draw(self):
+        screen.blit(self.image, (self.x, self.y))
+
+    def shoot(self):
+        bullet = Bullet(self.x + 15, self.y)  # 子弹从坦克中心发射
+        self.bullets.append(bullet)
 
 # 定义子弹类
-class Bullet(pygame.sprite.Sprite):
-    def __init__(self, x, y, direction):
-        super().__init__()
-        self.image = pygame.Surface((10, 10))
-        self.image.fill(WHITE)
-        self.rect = self.image.get_rect()
-        self.rect.x = x
-        self.rect.y = y
-        self.direction = direction
-        self.speed = 5
+class Bullet:
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
+        self.speed = 10
 
-    def update(self):
-        if self.direction == 'up':
-            self.rect.y -= self.speed
-        elif self.direction == 'down':
-            self.rect.y += self.speed
-        elif self.direction == 'left':
-            self.rect.x -= self.speed
-        elif self.direction == 'right':
-            self.rect.x += self.speed
+    def move(self):
+        self.y -= self.speed  # 子弹向上移动
 
-        if self.rect.x < 0 or self.rect.x > SCREEN_WIDTH or self.rect.y < 0 or self.rect.y > SCREEN_HEIGHT:
-            self.kill()
+    def draw(self):
+        pygame.draw.circle(screen, RED, (int(self.x), int(self.y)), 5)
 
-# 定义玩家和敌人
-player = Tank(GREEN, SCREEN_WIDTH // 2, SCREEN_HEIGHT - BLOCK_SIZE)
-enemy = Tank(RED, SCREEN_WIDTH // 2, BLOCK_SIZE)
+# 创建玩家坦克
+player_tank = Tank(WIDTH // 2, HEIGHT - 60, player_tank_image)
 
-# 定义精灵组
-all_sprites = pygame.sprite.Group()
-all_sprites.add(player)
-all_sprites.add(enemy)
+# 创建敌方坦克列表
+enemy_tanks = []
+for _ in range(5):
+    enemy_tank = Tank(random.randint(0, WIDTH - 40), random.randint(0, HEIGHT // 2), enemy_tank_image)
+    enemy_tanks.append(enemy_tank)
 
-bullets = pygame.sprite.Group()
+# 游戏主循环
+running = True
+while running:
+    screen.fill(BLACK)
 
-# 定义分数
-score = 0
+    # 处理事件
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            running = False
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_SPACE:
+                player_tank.shoot()
 
-# 定义游戏结束标志
-game_over = False
+    # 处理玩家坦克移动
+    keys = pygame.key.get_pressed()
+    if keys[pygame.K_LEFT]:
+        player_tank.move(-1, 0)
+    if keys[pygame.K_RIGHT]:
+        player_tank.move(1, 0)
+    if keys[pygame.K_UP]:
+        player_tank.move(0, -1)
+    if keys[pygame.K_DOWN]:
+        player_tank.move(0, 1)
 
-# 主游戏循环
-def main():
-    global score, game_over
+    # 绘制玩家坦克
+    player_tank.draw()
 
-    while not game_over:
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                game_over = True
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_UP:
-                    player.change_direction('up')
-                if event.key == pygame.K_DOWN:
-                    player.change_direction('down')
-                if event.key == pygame.K_LEFT:
-                    player.change_direction('left')
-                if event.key == pygame.K_RIGHT:
-                    player.change_direction('right')
-                if event.key == pygame.K_SPACE:
-                    bullet = Bullet(player.rect.x + BLOCK_SIZE // 2 - 5, player.rect.y + BLOCK_SIZE // 2 - 5, player.direction)
-                    all_sprites.add(bullet)
-                    bullets.add(bullet)
+    # 处理玩家子弹
+    for bullet in player_tank.bullets[:]:
+        bullet.move()
+        bullet.draw()
 
-        # 更新精灵
-        all_sprites.update()
+        # 移除屏幕外的子弹
+        if bullet.y < 0:
+            player_tank.bullets.remove(bullet)
 
-        # 检查子弹是否击中敌人
-        for bullet in bullets:
-            if pygame.sprite.collide_rect(bullet, enemy):
-                enemy.kill()
-                bullet.kill()
-                score += 1
-                enemy = Tank(RED, random.randint(0, SCREEN_WIDTH - BLOCK_SIZE), random.randint(0, SCREEN_HEIGHT - BLOCK_SIZE))
-                all_sprites.add(enemy)
+        # 检测子弹是否击中敌方坦克
+        for enemy_tank in enemy_tanks[:]:
+            if (bullet.x < enemy_tank.x + 40 and bullet.x + 10 > enemy_tank.x and
+                bullet.y < enemy_tank.y + 40 and bullet.y + 20 > enemy_tank.y):
+                player_tank.bullets.remove(bullet)
+                enemy_tanks.remove(enemy_tank)
+                break
 
-        # 绘制屏幕
-        screen.fill(BLACK)
-        all_sprites.draw(screen)
-        pygame.display.flip()
+    # 绘制敌方坦克
+    for enemy_tank in enemy_tanks:
+        enemy_tank.draw()
 
-        # 控制游戏速度
-        clock.tick(60)
+    # 更新显示
+    pygame.display.flip()
+    clock.tick(30)
 
-    pygame.quit()
-
-if __name__ == "__main__":
-    main()
+# 退出游戏
+pygame.quit()
