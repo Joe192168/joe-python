@@ -1,7 +1,0 @@
-flask
-setuptools
-fastapi
-uvicorn
-python-multipart
-paddlepaddle
-paddleocr
