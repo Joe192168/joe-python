@@ -103,7 +103,7 @@ class LogProcessorApp:
                     sql_match = re.search(r'==>  Preparing: (.*)$', line)
                     if sql_match:
                         sql = sql_match.group(1).strip()
-                        if sql.startswith('insert into t_system_resources'):
+                        if sql.startswith('insert into t_system_resources') or sql.startswith('update t_system_resources'):
                             # 查找下一行的 Parameters
                             if i + 1 < len(lines) and '==> Parameters: ' in lines[i + 1]:
                                 params = self.parse_parameters(lines[i + 1].strip())
