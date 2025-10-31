@@ -11,11 +11,23 @@ from tkinter import ttk, filedialog, messagebox
 from datetime import datetime, timedelta
 import calendar
 from dateutil.relativedelta import relativedelta
-from tkcalendar import DateEntry
 import threading
 import time
 import schedule
 import logging
+import sys
+
+# 尝试导入 tkcalendar，如果失败则尝试从资源路径导入
+try:
+    from tkcalendar import DateEntry
+except ImportError:
+    # 如果是打包环境，尝试从资源路径导入
+    if getattr(sys, 'frozen', False):
+        base_dir = os.path.dirname(sys.executable)
+        sys.path.append(os.path.join(base_dir, 'tkcalendar'))
+        from tkcalendar import DateEntry
+    else:
+        raise
 
 class DataExporter:
     @staticmethod
@@ -257,12 +269,26 @@ class DataExporterApp:
         
         # 状态标签
         self.status_label = ttk.Label(self.main_frame, text="就绪", foreground="green")
-        self.status_label.grid(row=10, column=0, columnspan=3, pady=10, sticky="w")
+        self.status_label.grid(row=11, column=0, columnspan=3, pady=10, sticky="w")
     
     def setup_logging(self):
         """设置日志配置"""
-        # 创建日志文件，与程序在同一目录
-        log_file = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data_export.log")
+        if getattr(sys, 'frozen', False):
+            # 如果是打包的EXE环境，使用EXE所在目录
+            base_dir = os.path.dirname(sys.executable)
+            # 添加资源路径到系统路径
+            sys.path.append(os.path.join(base_dir, 'tkcalendar'))
+            sys.path.append(os.path.join(base_dir, 'openpyxl'))
+        else:
+            # 否则，使用脚本所在目录
+            base_dir = os.path.dirname(os.path.abspath(__file__))
+        
+        log_file = os.path.join(base_dir, "data_export.log")
+        
+        # 显式检查并创建空文件（如果不存在）
+        if not os.path.exists(log_file):
+            with open(log_file, 'w', encoding='utf-8') as f:
+                pass  # 创建空文件
         
         logging.basicConfig(
             level=logging.INFO,
@@ -307,32 +333,38 @@ class DataExporterApp:
         # 初始化时间控件
         self.create_time_controls()
         
-        # 保存文件夹
-        ttk.Label(self.main_frame, text="保存文件夹:").grid(row=4, column=0, sticky="w", pady=5)
-        self.save_folder_var = tk.StringVar()
-        self.save_folder_entry = ttk.Entry(self.main_frame, textvariable=self.save_folder_var, width=40)
-        self.save_folder_entry.grid(row=4, column=1, sticky="we", pady=5)
+        # 备份文件夹
+        ttk.Label(self.main_frame, text="备份文件夹:").grid(row=4, column=0, sticky="w", pady=5)
+        self.backup_folder_var = tk.StringVar()
+        self.backup_folder_entry = ttk.Entry(self.main_frame, textvariable=self.backup_folder_var, width=40)
+        self.backup_folder_entry.grid(row=4, column=1, sticky="we", pady=5)
+        
+        # 上传文件夹
+        ttk.Label(self.main_frame, text="上传文件夹:").grid(row=5, column=0, sticky="w", pady=5)
+        self.upload_folder_var = tk.StringVar()
+        self.upload_folder_entry = ttk.Entry(self.main_frame, textvariable=self.upload_folder_var, width=40)
+        self.upload_folder_entry.grid(row=5, column=1, sticky="we", pady=5)
         
         # 文件格式选择
-        ttk.Label(self.main_frame, text="文件格式:").grid(row=5, column=0, sticky="w", pady=5)
+        ttk.Label(self.main_frame, text="文件格式:").grid(row=6, column=0, sticky="w", pady=5)
         self.format_frame = ttk.Frame(self.main_frame)
-        self.format_frame.grid(row=5, column=1, sticky="w")
+        self.format_frame.grid(row=6, column=1, sticky="w")
         
         self.format_var = tk.StringVar(value="Excel")
         ttk.Radiobutton(self.format_frame, text="Excel (.xlsx)", variable=self.format_var, value="Excel").pack(side=tk.LEFT)
         ttk.Radiobutton(self.format_frame, text="CSV (.csv)", variable=self.format_var, value="CSV").pack(side=tk.LEFT, padx=10)
         
         # 文件名格式
-        ttk.Label(self.main_frame, text="文件名格式:").grid(row=6, column=0, sticky="w", pady=5)
+        ttk.Label(self.main_frame, text="文件名格式:").grid(row=7, column=0, sticky="w", pady=5)
         self.filename_format_var = tk.StringVar(value="hqmsmjz_YYYYMmm")
         self.filename_format_entry = ttk.Entry(self.main_frame, textvariable=self.filename_format_var, width=40)
-        self.filename_format_entry.grid(row=6, column=1, sticky="we", pady=5)
+        self.filename_format_entry.grid(row=7, column=1, sticky="we", pady=5)
         
         # 文件名预览
-        ttk.Label(self.main_frame, text="文件名预览:").grid(row=7, column=0, sticky="w", pady=5)
+        ttk.Label(self.main_frame, text="文件名预览:").grid(row=8, column=0, sticky="w", pady=5)
         self.filename_preview_var = tk.StringVar()
         self.filename_preview_label = ttk.Label(self.main_frame, textvariable=self.filename_preview_var)
-        self.filename_preview_label.grid(row=7, column=1, sticky="w", pady=5)
+        self.filename_preview_label.grid(row=8, column=1, sticky="w", pady=5)
         
         # 更新文件名预览
         self.update_filename_preview()
@@ -351,8 +383,8 @@ class DataExporterApp:
         # 结束时间标签
         ttk.Label(self.time_controls_frame, text="结束时间:").grid(row=1, column=0, sticky="w", padx=5, pady=5)
         
-        if granularity in ["day", "month"]:
-            # 日期选择控件
+        if granularity == "day":
+            # 日期选择控件 - 仅用于"日"粒度
             self.start_date_var = tk.StringVar()
             self.start_date_entry = DateEntry(
                 self.time_controls_frame, 
@@ -375,6 +407,41 @@ class DataExporterApp:
             today = datetime.now()
             self.start_date_entry.set_date(today)
             self.end_date_entry.set_date(today)
+            
+        elif granularity == "month":
+            # 为"月"粒度创建专门的年月选择器
+            current_year = datetime.now().year
+            current_month = datetime.now().month
+            
+            # 年份选项
+            years = [str(y) for y in range(current_year - 10, current_year + 11)]
+            # 月份选项
+            months = [f"{m:02d}" for m in range(1, 13)]
+            
+            # 开始时间 - 年和月
+            start_frame = ttk.Frame(self.time_controls_frame)
+            start_frame.grid(row=0, column=1, sticky="w", padx=5, pady=5)
+            
+            self.start_year_var = tk.StringVar(value=str(current_year))
+            ttk.Combobox(start_frame, textvariable=self.start_year_var, values=years, width=8).pack(side=tk.LEFT)
+            ttk.Label(start_frame, text="年").pack(side=tk.LEFT, padx=2)
+            
+            self.start_month_var = tk.StringVar(value=f"{current_month:02d}")
+            ttk.Combobox(start_frame, textvariable=self.start_month_var, values=months, width=5).pack(side=tk.LEFT, padx=5)
+            ttk.Label(start_frame, text="月").pack(side=tk.LEFT)
+            
+            # 结束时间 - 年和月
+            end_frame = ttk.Frame(self.time_controls_frame)
+            end_frame.grid(row=1, column=1, sticky="w", padx=5, pady=5)
+            
+            self.end_year_var = tk.StringVar(value=str(current_year))
+            ttk.Combobox(end_frame, textvariable=self.end_year_var, values=years, width=8).pack(side=tk.LEFT)
+            ttk.Label(end_frame, text="年").pack(side=tk.LEFT, padx=2)
+            
+            self.end_month_var = tk.StringVar(value=f"{current_month:02d}")
+            ttk.Combobox(end_frame, textvariable=self.end_month_var, values=months, width=5).pack(side=tk.LEFT, padx=5)
+            ttk.Label(end_frame, text="月").pack(side=tk.LEFT)
+            
         elif granularity == "year":
             # 年份选择控件
             current_year = datetime.now().year
@@ -387,6 +454,7 @@ class DataExporterApp:
             self.end_year_var = tk.StringVar(value=str(current_year))
             self.end_year_combo = ttk.Combobox(self.time_controls_frame, textvariable=self.end_year_var, values=years, width=8)
             self.end_year_combo.grid(row=1, column=1, sticky="w", padx=5, pady=5)
+            
         elif granularity == "quarter":
             # 季度选择控件
             current_year = datetime.now().year
@@ -412,6 +480,7 @@ class DataExporterApp:
             ttk.Label(end_frame, text="季度:").pack(side=tk.LEFT, padx=5)
             self.end_quarter_var = tk.StringVar(value="4")
             ttk.Combobox(end_frame, textvariable=self.end_quarter_var, values=quarters, width=4).pack(side=tk.LEFT)
+            
         elif granularity == "week":
             # 周选择控件
             current_year = datetime.now().year
@@ -444,14 +513,18 @@ class DataExporterApp:
     
     def create_buttons(self):
         """创建按钮"""
-        # 浏览按钮
-        browse_button = ttk.Button(self.main_frame, text="浏览...", command=self.browse_save_folder)
-        browse_button.grid(row=4, column=2, sticky="w", padx=5)
+        # 备份文件夹浏览按钮
+        backup_browse_button = ttk.Button(self.main_frame, text="浏览...", command=self.browse_backup_folder)
+        backup_browse_button.grid(row=4, column=2, sticky="w", padx=5)
+        
+        # 上传文件夹浏览按钮
+        upload_browse_button = ttk.Button(self.main_frame, text="浏览...", command=self.browse_upload_folder)
+        upload_browse_button.grid(row=5, column=2, sticky="w", padx=5)
         
         # 快速日期范围按钮
-        ttk.Label(self.main_frame, text="快速日期范围:").grid(row=8, column=0, sticky="w", pady=5)
+        ttk.Label(self.main_frame, text="快速日期范围:").grid(row=9, column=0, sticky="w", pady=5)
         date_range_frame = ttk.Frame(self.main_frame)
-        date_range_frame.grid(row=8, column=1, sticky="w", pady=5)
+        date_range_frame.grid(row=9, column=1, sticky="w", pady=5)
         
         ttk.Button(date_range_frame, text="今天", command=lambda: self.set_date_range("today")).pack(side=tk.LEFT, padx=2)
         ttk.Button(date_range_frame, text="本周", command=lambda: self.set_date_range("week")).pack(side=tk.LEFT, padx=2)
@@ -461,17 +534,17 @@ class DataExporterApp:
         
         # 导出按钮
         export_button = ttk.Button(self.main_frame, text="导出数据", command=self.export_data)
-        export_button.grid(row=9, column=0, columnspan=3, pady=10)
+        export_button.grid(row=10, column=0, columnspan=3, pady=10)
     
     def create_scheduler_controls(self):
         """创建定时任务控件"""
         # 定时任务标题
-        ttk.Separator(self.main_frame, orient='horizontal').grid(row=10, column=0, columnspan=3, sticky="we", pady=10)
-        ttk.Label(self.main_frame, text="定时任务设置", font=("Arial", 10, "bold")).grid(row=11, column=0, sticky="w", pady=5)
+        ttk.Separator(self.main_frame, orient='horizontal').grid(row=11, column=0, columnspan=3, sticky="we", pady=10)
+        ttk.Label(self.main_frame, text="定时任务设置", font=("Arial", 10, "bold")).grid(row=12, column=0, sticky="w", pady=5)
         
         # 定时任务框架
         scheduler_frame = ttk.Frame(self.main_frame)
-        scheduler_frame.grid(row=11, column=1, columnspan=2, sticky="we", pady=5)
+        scheduler_frame.grid(row=12, column=1, columnspan=2, sticky="we", pady=5)
         
         # 定时任务类型
         ttk.Label(scheduler_frame, text="执行频率:").grid(row=0, column=0, sticky="w", padx=5)
@@ -538,11 +611,18 @@ class DataExporterApp:
             minute_combo.pack(side=tk.LEFT, padx=5)
             ttk.Label(self.schedule_time_frame, text="分").pack(side=tk.LEFT)
     
-    def browse_save_folder(self):
-        """浏览保存文件夹"""
-        folder_path = filedialog.askdirectory(title="选择保存文件夹")
+    def browse_backup_folder(self):
+        """浏览备份文件夹"""
+        folder_path = filedialog.askdirectory(title="选择备份文件夹")
         if folder_path:
-            self.save_folder_var.set(folder_path)
+            self.backup_folder_var.set(folder_path)
+            self.update_filename_preview()
+    
+    def browse_upload_folder(self):
+        """浏览上传文件夹"""
+        folder_path = filedialog.askdirectory(title="选择上传文件夹")
+        if folder_path:
+            self.upload_folder_var.set(folder_path)
             self.update_filename_preview()
     
     def update_filename_preview(self):
@@ -579,32 +659,47 @@ class DataExporterApp:
         """获取时间值"""
         granularity = self.granularity_var.get()
         
-        if granularity in ["day", "month"]:
+        if granularity == "day":
             start_date = self.start_date_entry.get_date()
             end_date = self.end_date_entry.get_date()
+            return start_date.strftime("%Y-%m-%d"), end_date.strftime("%Y-%m-%d")
             
-            if granularity == "day":
-                return start_date.strftime("%Y-%m-%d"), end_date.strftime("%Y-%m-%d")
-            else:  # month
-                return start_date.strftime("%Y-%m"), end_date.strftime("%Y-%m")
+        elif granularity == "month":
+            # 使用年月选择器
+            start_year = self.start_year_var.get()
+            start_month = self.start_month_var.get()
+            end_year = self.end_year_var.get()
+            end_month = self.end_month_var.get()
+            
+            return f"{start_year}-{start_month}", f"{end_year}-{end_month}"
+            
         elif granularity == "year":
             return self.start_year_var.get(), self.end_year_var.get()
+            
         elif granularity == "quarter":
             start_quarter = self.start_quarter_var.get()
             end_quarter = self.end_quarter_var.get()
             return f"{self.start_year_var.get()}-{start_quarter}", f"{self.end_year_var.get()}-{end_quarter}"
+            
         elif granularity == "week":
             start_week = self.start_week_var.get()
             end_week = self.end_week_var.get()
             return f"{self.start_year_var.get()}-{start_week}", f"{self.end_year_var.get()}-{end_week}"
+        
+        # 默认返回值，防止返回 None
+        return "", ""
     
     def set_date_range(self, range_type):
         """设置日期范围"""
         today = datetime.now()
         
+        # 初始化 start_date 和 end_date
+        start_date = today
+        end_date = today
+        
         if range_type == "today":
-            start_date = today
-            end_date = today
+            # start_date 和 end_date 已经初始化为 today
+            pass
         elif range_type == "week":
             # 本周开始（周一）
             start_date = today - timedelta(days=today.weekday())
@@ -633,12 +728,21 @@ class DataExporterApp:
         # 更新控件
         granularity = self.granularity_var.get()
         
-        if granularity in ["day", "month"]:
+        if granularity == "day":
             self.start_date_entry.set_date(start_date)
             self.end_date_entry.set_date(end_date)
+            
+        elif granularity == "month":
+            # 设置年月选择器
+            self.start_year_var.set(str(start_date.year))
+            self.start_month_var.set(f"{start_date.month:02d}")
+            self.end_year_var.set(str(end_date.year))
+            self.end_month_var.set(f"{end_date.month:02d}")
+            
         elif granularity == "year":
             self.start_year_var.set(str(start_date.year))
             self.end_year_var.set(str(end_date.year))
+            
         elif granularity == "quarter":
             start_quarter = (start_date.month - 1) // 3 + 1
             end_quarter = (end_date.month - 1) // 3 + 1
@@ -646,6 +750,7 @@ class DataExporterApp:
             self.start_quarter_var.set(f"{start_quarter}")
             self.end_year_var.set(str(end_date.year))
             self.end_quarter_var.set(f"{end_quarter}")
+            
         elif granularity == "week":
             # 计算ISO周数
             start_iso_year, start_iso_week, _ = start_date.isocalendar()
@@ -660,7 +765,8 @@ class DataExporterApp:
         # 获取输入值
         api_base_url = self.api_base_url_var.get()
         id_param = self.id_entry.get()
-        save_folder = self.save_folder_var.get()
+        backup_folder = self.backup_folder_var.get()
+        upload_folder = self.upload_folder_var.get()
         file_format = self.format_var.get().lower()
         
         # 获取时间值
@@ -684,13 +790,18 @@ class DataExporterApp:
             messagebox.showerror("错误", "请选择开始时间和结束时间")
             return
             
-        if not save_folder:
-            messagebox.showerror("错误", "请选择保存文件夹")
+        if not backup_folder:
+            messagebox.showerror("错误", "请选择备份文件夹")
+            return
+            
+        if not upload_folder:
+            messagebox.showerror("错误", "请选择上传文件夹")
             return
             
         # 生成文件名
         filename = self.generate_filename()
-        save_path = os.path.join(save_folder, filename)
+        backup_path = os.path.join(backup_folder, filename)
+        upload_path = os.path.join(upload_folder, filename)
         
         # 更新状态
         self.status_label.config(text="正在获取数据...", foreground="blue")
@@ -722,13 +833,17 @@ class DataExporterApp:
             success = False
             if file_format == "excel":
                 # 使用pandas导出Excel
-                success = DataExporter.export_to_excel_with_pandas(cellset, save_path)
+                success_backup = DataExporter.export_to_excel_with_pandas(cellset, backup_path)
+                success_upload = DataExporter.export_to_excel_with_pandas(cellset, upload_path)
+                success = success_backup and success_upload
             elif file_format == "csv":
-                success = DataExporter.export_to_csv(cellset, save_path)
+                success_backup = DataExporter.export_to_csv(cellset, backup_path)
+                success_upload = DataExporter.export_to_csv(cellset, upload_path)
+                success = success_backup and success_upload
             
             if success:
-                self.status_label.config(text=f"导出成功! 文件已保存到: {save_path}", foreground="green")
-                logging.info(f"导出成功: {save_path}")
+                self.status_label.config(text=f"导出成功! 文件已保存到: {backup_path} 和 {upload_path}", foreground="green")
+                logging.info(f"导出成功: {backup_path} 和 {upload_path}")
             else:
                 self.status_label.config(text="导出失败", foreground="red")
                 logging.error("导出数据时出错")
@@ -748,8 +863,11 @@ class DataExporterApp:
     def start_scheduler(self):
         """启动定时任务"""
         # 验证必要的设置
-        if not self.save_folder_var.get():
-            messagebox.showerror("错误", "请先选择保存文件夹")
+        if not self.backup_folder_var.get():
+            messagebox.showerror("错误", "请先选择备份文件夹")
+            return
+        if not self.upload_folder_var.get():
+            messagebox.showerror("错误", "请先选择上传文件夹")
             return
             
         # 配置定时任务
@@ -793,7 +911,7 @@ class DataExporterApp:
                 
                 english_day = day_mapping.get(schedule_day)
                 if english_day and english_day in day_methods:
-                    day_methods[english_day]().at(f"{hours:02d}:{minutes:02d}").do(self.scheduled_export)
+                    day_methods[english_day].at(f"{hours:02d}:{minutes:02d}").do(self.scheduled_export)
                     logging.info(f"定时任务已设置: 每周 {schedule_day} {hours:02d}:{minutes:02d} 执行")
                 else:
                     messagebox.showerror("错误", "无效的星期几设置")
@@ -871,6 +989,35 @@ class DataExporterApp:
 
 # 主程序入口
 if __name__ == "__main__":
-    root = tk.Tk()
-    app = DataExporterApp(root)
-    root.mainloop()
+    try:
+        # 添加启动延迟，防止窗口立即关闭
+        time.sleep(1)
+        
+        root = tk.Tk()
+        app = DataExporterApp(root)
+        
+        # 添加启动日志
+        logging.info("应用程序启动成功")
+        root.mainloop()
+    except Exception as e:
+        # 记录启动错误
+        logging.critical(f"应用程序启动失败: {str(e)}", exc_info=True)
+        
+        # 创建错误提示窗口
+        error_root = tk.Tk()
+        error_root.title("启动错误")
+        error_root.geometry("400x200")
+        
+        ttk.Label(error_root, text="应用程序启动失败", font=("Arial", 14, "bold"), foreground="red").pack(pady=20)
+        ttk.Label(error_root, text=f"错误信息: {str(e)}").pack(pady=10)
+        ttk.Label(error_root, text="请查看日志文件获取详细信息").pack(pady=10)
+        
+        # 添加日志文件位置提示
+        if getattr(sys, 'frozen', False):
+            base_dir = os.path.dirname(sys.executable)
+        else:
+            base_dir = os.path.dirname(os.path.abspath(__file__))
+        log_file = os.path.join(base_dir, "data_export.log")
+        ttk.Label(error_root, text=f"日志文件位置: {log_file}").pack(pady=10)
+        
+        error_root.mainloop()
